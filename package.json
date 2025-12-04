@@ -1,0 +1,59 @@
+{
+  "name": "rn-smooth-ui",
+  "version": "1.0.0",
+  "description": "A smooth and modern UI component library for React Native",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "prepack": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "cd examples/ExampleApp && npm start",
+    "example:ios": "cd examples/ExampleApp && npm run ios",
+    "example:android": "cd examples/ExampleApp && npm run android",
+    "example:web": "cd examples/ExampleApp && npm run web",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "publish:patch": "npm run version:patch && npm publish",
+    "publish:minor": "npm run version:minor && npm publish",
+    "publish:major": "npm run version:major && npm publish"
+  },
+  "keywords": [
+    "react-native",
+    "ui",
+    "components",
+    "button",
+    "card",
+    "typescript",
+    "expo"
+  ],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7",
+    "@types/react-native": "^0.72.8",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.4",
+    "react": "^19.2.1",
+    "react-native": "^0.82.1",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,47 @@
+# Source files (we publish dist/ instead)
+src/
+examples/
+
+# Development files
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+*.swo
+.expo/
+
+# Config files
+tsconfig.json
+.eslintrc*
+.prettierrc*
+.editorconfig
+babel.config.js
+metro.config.js
+
+# Testing
+__tests__/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+coverage/
+
+# Documentation (README.md and LICENSE are included)
+*.md
+!README.md
+QUICK_START.md
+PUBLISHING.md
+SETUP.md
+
+# Build artifacts
+*.tsbuildinfo
+*.log
+.DS_Store
+
+# Misc
+.env
+.env.local
+node_modules/
+package-lock.json
+
