@@ -1,20 +1,20 @@
-# Prismaui
+# Prizmux
 
 A modern, developer-first React Native component system built for flexibility, customization, and real-world mobile apps.
 
-Prismaui provides clean, production-ready UI primitives that you fully own — no heavy UI kits, no locked abstractions, no unnecessary bloat.
+Prizmux provides clean, production-ready UI primitives that you fully own — no heavy UI kits, no locked abstractions, no unnecessary bloat.
 
 ---
 
 ## ✨ Philosophy
 
-Prismaui is built around one core idea:
+Prizmux is built around one core idea:
 
 > Developers should own their UI.
 
-Instead of installing a massive UI framework, Prismaui allows you to copy components directly into your project. You can modify, extend, and adapt them without fighting the library.
+Instead of installing a massive UI framework, Prizmux allows you to copy components directly into your project. You can modify, extend, and adapt them without fighting the library.
 
-Inspired by modern system-based design approaches, Prismaui focuses on:
+Inspired by modern system-based design approaches, Prizmux focuses on:
 
 - 🎯 Mobile-first components
 - 🎨 Strong design tokens
@@ -25,7 +25,7 @@ Inspired by modern system-based design approaches, Prismaui focuses on:
 
 ---
 
-## 🚀 Why Prismaui?
+## 🚀 Why Prizmux?
 
 Most React Native UI libraries are:
 
@@ -34,7 +34,7 @@ Most React Native UI libraries are:
 - Heavy with dependencies
 - Styled in ways that are difficult to override
 
-Prismaui is different.
+Prizmux is different.
 
 - Lightweight
 - Minimal dependencies
@@ -62,7 +62,7 @@ Not the other way around.
 
 ## 🧱 Architecture
 
-Prismaui follows a system-first structure:
+Prizmux follows a system-first structure:
 
 ```
 
@@ -90,7 +90,7 @@ Every component:
 
 ## 🎨 Theming
 
-Prismaui uses centralized design tokens:
+Prizmux uses centralized design tokens:
 
 ```ts
 export const theme = {
