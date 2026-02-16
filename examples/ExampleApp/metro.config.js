@@ -14,7 +14,9 @@ config.resolver = {
     path.resolve(monorepoRoot, 'node_modules'),
   ],
   extraNodeModules: {
-    'rn-smooth-ui': path.resolve(monorepoRoot, 'src'),
+    'prizmux': path.resolve(monorepoRoot, 'src'),
+    'react': path.resolve(projectRoot, 'node_modules/react'),
+    'react-native': path.resolve(projectRoot, 'node_modules/react-native'),
   },
 };
 

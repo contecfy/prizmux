@@ -1,6 +1,6 @@
 {
-  "name": "rn-smooth-ui",
-  "version": "1.0.0",
+  "name": "prizmux",
+  "version": "1.0.1",
   "description": "A smooth and modern UI component library for React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

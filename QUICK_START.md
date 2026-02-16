@@ -2,7 +2,7 @@
 
 ## 🚀 Running the Example App
 
-The example app showcases all the components in `rn-smooth-ui`. Here's how to run it:
+The example app showcases all the components in `prizmux`. Here's how to run it:
 
 ### Step 1: Install Example App Dependencies
 
@@ -38,7 +38,7 @@ You can also run from the project root:
 # From project root
 npm run example        # Start Expo dev server
 npm run example:ios    # Start on iOS
-npm run example:android # Start on Android  
+npm run example:android # Start on Android
 npm run example:web    # Start on Web
 ```
 
@@ -92,4 +92,3 @@ After running the example app:
 1. Explore the components in `src/components/`
 2. Check out the example usage in `examples/ExampleApp/App.tsx`
 3. Modify components and see changes in real-time!
-

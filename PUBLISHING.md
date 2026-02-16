@@ -34,6 +34,7 @@ npm publish
 ```
 
 For the first publish, you can use:
+
 ```bash
 npm publish --access public
 ```
@@ -74,6 +75,7 @@ npm run publish:major
 ### Option 3: Specify Version Manually
 
 Edit `package.json` version field, then:
+
 ```bash
 npm publish
 ```
@@ -100,11 +102,13 @@ Before publishing, make sure:
 ## 🔍 What Gets Published
 
 The following files are included (defined in `package.json` `files` field):
+
 - `dist/` - Compiled JavaScript and TypeScript definitions
 - `README.md` - Documentation
 - `LICENSE` - License file
 
 The following are excluded (via `.npmignore`):
+
 - `src/` - Source files
 - `examples/` - Example app
 - `node_modules/` - Dependencies
@@ -135,14 +139,14 @@ npm version patch
 # 5. Publish
 npm publish
 
-# Done! Users can now update with: npm install rn-smooth-ui@latest
+# Done! Users can now update with: npm install prizmux@latest
 ```
 
 ## 🔐 Publishing Scoped Packages
 
-If you want to publish as a scoped package (e.g., `@yourname/rn-smooth-ui`):
+If you want to publish as a scoped package (e.g., `@yourname/prizmux`):
 
-1. Update `package.json` name: `"name": "@yourname/rn-smooth-ui"`
+1. Update `package.json` name: `"name": "@yourname/prizmux"`
 2. Publish with: `npm publish --access public`
 
 ## 🚨 Important Notes
@@ -172,7 +176,7 @@ npm run publish:minor
 npm run publish:major
 
 # View published package
-npm view rn-smooth-ui
+npm view prizmux
 ```
 
 ## 📚 Resources
@@ -180,4 +184,3 @@ npm view rn-smooth-ui
 - [npm Publishing Guide](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
 - [Semantic Versioning](https://semver.org/)
 - [npm CLI Documentation](https://docs.npmjs.com/cli/v8/commands)
-

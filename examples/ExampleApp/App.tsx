@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Button, Card } from 'rn-smooth-ui';
+import { Button, Card } from 'prizmux';
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ export default function App() {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>RN Smooth UI</Text>
+        <Text style={styles.title}>Prizmux</Text>
         <Text style={styles.subtitle}>Component Showcase</Text>
 
         {/* Button Variants */}

@@ -1,20 +1,23 @@
 # RN Smooth UI Example App
 
-This is an example React Native app showcasing the components from `rn-smooth-ui`.
+This is an example React Native app showcasing the components from `prizmux`.
 
 ## Setup
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start the Expo development server:
+
 ```bash
 npm start
 ```
 
 Or from the root directory:
+
 ```bash
 npm run example
 ```
@@ -29,10 +32,10 @@ npm run example
 ## What's Included
 
 This example app demonstrates:
+
 - Button variants (filled, outline)
 - Button sizes (small, medium, large)
 - Button states (loading, disabled)
 - Full width buttons
 - Card components
 - Various use cases and combinations
-

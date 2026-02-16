@@ -8,7 +8,7 @@ module.exports = function(api) {
         {
           root: ['./'],
           alias: {
-            'rn-smooth-ui': '../../src',
+            'prizmux': '../../src',
           },
           extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
         },
