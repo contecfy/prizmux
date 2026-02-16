@@ -1,123 +1,105 @@
-# rn-smooth-ui
+# Prismaui
 
-A smooth and modern UI component library for React Native.
+A modern, developer-first React Native component system built for flexibility, customization, and real-world mobile apps.
 
-## Installation
+Prismaui provides clean, production-ready UI primitives that you fully own — no heavy UI kits, no locked abstractions, no unnecessary bloat.
 
-```bash
-npm install rn-smooth-ui
-# or
-yarn add rn-smooth-ui
+---
+
+## ✨ Philosophy
+
+Prismaui is built around one core idea:
+
+> Developers should own their UI.
+
+Instead of installing a massive UI framework, Prismaui allows you to copy components directly into your project. You can modify, extend, and adapt them without fighting the library.
+
+Inspired by modern system-based design approaches, Prismaui focuses on:
+
+- 🎯 Mobile-first components
+- 🎨 Strong design tokens
+- 🌙 Built-in dark mode support
+- ⚡ Smooth interactions & animations
+- 🧱 Clean, composable primitives
+- 🧠 Production-ready patterns
+
+---
+
+## 🚀 Why Prismaui?
+
+Most React Native UI libraries are:
+
+- Too opinionated
+- Hard to customize
+- Heavy with dependencies
+- Styled in ways that are difficult to override
+
+Prismaui is different.
+
+- Lightweight
+- Minimal dependencies
+- Built for real production apps
+- Designed to scale with your system
+
+You control the components.
+Not the other way around.
+
+---
+
+## 📦 Core Features
+
+- Button (variants, loading, animation)
+- Input (label, error, secure support)
+- Card (composable structure)
+- Sheet / Modal (mobile-native UX)
+- Toast system
+- Theming & design tokens
+- Variant system
+- Dark mode ready
+- Fully typed with TypeScript
+
+---
+
+## 🧱 Architecture
+
+Prismaui follows a system-first structure:
+
 ```
 
-## Usage
+/components
+/ui
+button.tsx
+input.tsx
+card.tsx
 
-```tsx
-import { Button, Card } from 'rn-smooth-ui';
+/lib
+theme.ts
+variants.ts
+cn.ts
 
-function App() {
-  return (
-    <Card>
-      <Button 
-        title="Click me" 
-        onPress={() => console.log('Pressed')}
-        variant="filled"
-        size="medium"
-      />
-    </Card>
-  );
-}
 ```
 
-## Components
+Every component:
 
-### Button
+- Reads from design tokens
+- Supports variants
+- Is fully customizable
+- Is safe to edit directly
 
-A customizable button component with multiple variants, sizes, and states.
+---
 
-**Props:**
-- `title` (string, required) - Button text
-- `onPress` (function, required) - Press handler
-- `variant` ('filled' | 'outline') - Button style variant
-- `size` ('small' | 'medium' | 'large') - Button size
-- `isLoading` (boolean) - Show loading indicator
-- `disabled` (boolean) - Disable button
-- `icon` (ReactNode) - Icon component
-- `iconPosition` ('left' | 'right') - Icon position
-- `fullWidth` (boolean) - Full width button
-- `style` (ViewStyle) - Custom button styles
-- `textStyle` (TextStyle) - Custom text styles
+## 🎨 Theming
 
-**Example:**
-```tsx
-<Button
-  title="Submit"
-  onPress={handleSubmit}
-  variant="filled"
-  size="large"
-  isLoading={loading}
-  fullWidth
-/>
+Prismaui uses centralized design tokens:
+
+```ts
+export const theme = {
+  radius: 12,
+  spacing: 8,
+  colors: {
+    primary: "#2563eb",
+    background: "#0f172a",
+    foreground: "#ffffff",
+  },
+};
 ```
-
-### Card
-
-A card container component with shadow and rounded corners.
-
-**Props:**
-- `children` (ReactNode, required) - Card content
-- `style` (ViewStyle) - Custom card styles
-
-**Example:**
-```tsx
-<Card style={{ margin: 16 }}>
-  <Text>Card content</Text>
-</Card>
-```
-
-## Theme
-
-The library includes a theme system with colors and spacing utilities.
-
-```tsx
-import { Colors, spacing } from 'rn-smooth-ui';
-
-// Colors
-Colors.light.primary
-Colors.light.secondary
-// ... etc
-
-// Spacing
-spacing.xs
-spacing.sm
-spacing.md
-// ... etc
-```
-
-## Development
-
-### Running the Example App
-
-To see all components in action:
-
-```bash
-# Install example app dependencies
-cd examples/ExampleApp
-npm install
-
-# Start the example app
-npm start
-
-# Or from root directory
-npm run example
-```
-
-Then:
-- Press `i` for iOS simulator
-- Press `a` for Android emulator
-- Press `w` for web browser
-- Scan QR code with Expo Go app for physical device
-
-## License
-
-ISC
