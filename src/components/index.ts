@@ -4,3 +4,4 @@ export * from './BottomSheet';
 export * from './ImagePreview';
 export * from './HeaderWithBack'
 export * from './EmptyState';
+export * from './PhoneInput';
