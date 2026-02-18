@@ -1,8 +1,26 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View, Alert } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+} from "react-native";
 import { Button } from "../../lib/components/Button/Button";
 import { Card } from "../../lib/components/Card/Card";
 import BottomSheet from "../../lib/components/BottomSheet/BottomSheet";
+import { ImagePreview } from "../../lib/components/ImagePreview/ImagePreview";
+import { LucideChevronLeft, LucideChevronRight } from "lucide-react-native";
+
+const SINGLE_IMAGE =
+  "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg";
+const MULTIPLE_IMAGES = [
+  "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg",
+  "https://images.pexels.com/photos/173229/pexels-photo-173229.jpeg",
+  "https://images.pexels.com/photos/32114607/pexels-photo-32114607.jpeg",
+];
 
 export default function ComponentsDemoScreen() {
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
@@ -12,6 +30,11 @@ export default function ComponentsDemoScreen() {
   const [noHeaderSheetVisible, setNoHeaderSheetVisible] = useState(false);
   const [actionSheetVisible, setActionSheetVisible] = useState(false);
   const [noDragSheetVisible, setNoDragSheetVisible] = useState(false);
+
+  // ImagePreview states
+  const [singleImageVisible, setSingleImageVisible] = useState(false);
+  const [galleryVisible, setGalleryVisible] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
 
   const handlePress = (buttonName: string) => {
     Alert.alert("Button Pressed", `You pressed: ${buttonName}`);
@@ -42,7 +65,6 @@ export default function ComponentsDemoScreen() {
         <Text style={styles.sectionDescription}>
           Filled and outline button styles
         </Text>
-
         <View style={styles.buttonGroup}>
           <Button
             title="Filled Primary"
@@ -63,7 +85,6 @@ export default function ComponentsDemoScreen() {
         <Text style={styles.sectionDescription}>
           Small, medium, and large button sizes
         </Text>
-
         <View style={styles.buttonGroup}>
           <Button
             title="Small Button"
@@ -92,7 +113,6 @@ export default function ComponentsDemoScreen() {
         <Text style={styles.sectionDescription}>
           Loading, disabled, and active states
         </Text>
-
         <View style={styles.buttonGroup}>
           <Button
             title="Loading Demo"
@@ -121,7 +141,6 @@ export default function ComponentsDemoScreen() {
         <Text style={styles.sectionDescription}>
           Buttons that span the full container width
         </Text>
-
         <View style={styles.buttonGroup}>
           <Button
             title="Full Width Filled"
@@ -146,7 +165,6 @@ export default function ComponentsDemoScreen() {
         </Text>
       </Card>
 
-      {/* Basic Card */}
       <Card>
         <Text style={styles.cardTitle}>Basic Card</Text>
         <Text style={styles.cardContent}>
@@ -155,7 +173,6 @@ export default function ComponentsDemoScreen() {
         </Text>
       </Card>
 
-      {/* Card with Button */}
       <Card>
         <Text style={styles.cardTitle}>Interactive Card</Text>
         <Text style={styles.cardContent}>
@@ -179,7 +196,6 @@ export default function ComponentsDemoScreen() {
         </View>
       </Card>
 
-      {/* Custom Styled Card */}
       <Card style={styles.customCard}>
         <Text style={styles.cardTitle}>Custom Styled Card</Text>
         <Text style={styles.cardContent}>
@@ -195,7 +211,6 @@ export default function ComponentsDemoScreen() {
         />
       </Card>
 
-      {/* Nested Cards */}
       <Card>
         <Text style={styles.cardTitle}>Nested Card Example</Text>
         <Text style={styles.cardContent}>
@@ -213,7 +228,6 @@ export default function ComponentsDemoScreen() {
         </Card>
       </Card>
 
-      {/* Statistics Card */}
       <Card>
         <Text style={styles.cardTitle}>Statistics Card</Text>
         <View style={styles.statsContainer}>
@@ -242,12 +256,10 @@ export default function ComponentsDemoScreen() {
         </Text>
       </Card>
 
-      {/* Basic BottomSheet */}
       <Card>
         <Text style={styles.cardTitle}>Basic BottomSheet</Text>
         <Text style={styles.cardContent}>
-          Default sheet with title, drag handle, close button, and backdrop
-          dismiss.
+          Default sheet with title, drag handle, close button, and backdrop dismiss.
         </Text>
         <Button
           title="Open Basic Sheet"
@@ -257,7 +269,6 @@ export default function ComponentsDemoScreen() {
         />
       </Card>
 
-      {/* No Header BottomSheet */}
       <Card>
         <Text style={styles.cardTitle}>No Header Sheet</Text>
         <Text style={styles.cardContent}>
@@ -272,7 +283,6 @@ export default function ComponentsDemoScreen() {
         />
       </Card>
 
-      {/* Action Sheet */}
       <Card>
         <Text style={styles.cardTitle}>Action Sheet</Text>
         <Text style={styles.cardContent}>
@@ -286,12 +296,11 @@ export default function ComponentsDemoScreen() {
         />
       </Card>
 
-      {/* No Drag / No Swipe Sheet */}
       <Card>
         <Text style={styles.cardTitle}>No Drag Handle Sheet</Text>
         <Text style={styles.cardContent}>
-          Sheet with drag handle and swipe-to-close disabled. Must use the
-          close button or tap the backdrop.
+          Drag handle and swipe-to-close disabled. Must use the close button or
+          tap the backdrop.
         </Text>
         <Button
           title="Open No Drag Sheet"
@@ -301,9 +310,58 @@ export default function ComponentsDemoScreen() {
         />
       </Card>
 
-      {/* ─── BottomSheet instances ───────────────────────────────── */}
+      {/* ─── ImagePreview Section ────────────────────────────────── */}
+      <Card style={styles.sectionCard}>
+        <Text style={styles.sectionTitle}>ImagePreview Component</Text>
+        <Text style={styles.sectionDescription}>
+          Tap an image to view it in full screen
+        </Text>
+      </Card>
 
-      {/* Basic */}
+      {/* Avatar style — tap to preview */}
+      <Card>
+        <Text style={styles.cardTitle}>User Profile</Text>
+        <View style={styles.profileRow}>
+          <Pressable onPress={() => setSingleImageVisible(true)}>
+            <Image
+              source={{ uri: SINGLE_IMAGE }}
+              style={styles.avatar}
+            />
+          </Pressable>
+          <View style={styles.profileInfo}>
+            <Text style={styles.profileName}>John Doe</Text>
+            <Text style={styles.profileRole}>Software Engineer</Text>
+            <Text style={styles.profileHint}>Tap avatar to preview</Text>
+          </View>
+        </View>
+      </Card>
+
+      {/* Feed style — tap any image to open gallery from that position */}
+      <Card>
+        <Text style={styles.cardTitle}>Photo Feed</Text>
+        <Text style={styles.cardContent}>
+          Tap any photo to open the full gallery.
+        </Text>
+        <View style={styles.feedGrid}>
+          {MULTIPLE_IMAGES.map((uri, index) => (
+            <Pressable
+              key={index}
+              onPress={() => {
+                setGalleryIndex(index);
+                setGalleryVisible(true);
+              }}
+            >
+              <Image
+                source={{ uri }}
+                style={styles.feedImage}
+                resizeMode="cover"
+              />
+            </Pressable>
+          ))}
+        </View>
+      </Card>
+
+      {/* ─── BottomSheet instances ───────────────────────────────── */}
       <BottomSheet
         visible={basicSheetVisible}
         onClose={() => setBasicSheetVisible(false)}
@@ -321,19 +379,16 @@ export default function ComponentsDemoScreen() {
         />
       </BottomSheet>
 
-      {/* No Header */}
       <BottomSheet
         visible={noHeaderSheetVisible}
         onClose={() => setNoHeaderSheetVisible(false)}
         showCloseButton={false}
       >
         <Text style={styles.sheetBodyText}>
-          No title or close button here. Swipe down or tap the backdrop to
-          dismiss.
+          No title or close button here. Swipe down or tap the backdrop to dismiss.
         </Text>
       </BottomSheet>
 
-      {/* Action Sheet */}
       <BottomSheet
         visible={actionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
@@ -355,7 +410,6 @@ export default function ComponentsDemoScreen() {
         </View>
       </BottomSheet>
 
-      {/* No Drag */}
       <BottomSheet
         visible={noDragSheetVisible}
         onClose={() => setNoDragSheetVisible(false)}
@@ -374,6 +428,23 @@ export default function ComponentsDemoScreen() {
           onPress={() => setNoDragSheetVisible(false)}
         />
       </BottomSheet>
+
+      {/* ─── ImagePreview instances ──────────────────────────────── */}
+      <ImagePreview
+        visible={singleImageVisible}
+        images={SINGLE_IMAGE}
+        title="John Doe"
+        onClose={() => setSingleImageVisible(false)}
+      />
+
+      <ImagePreview
+        visible={galleryVisible}
+        nextIcon={<LucideChevronRight color={"#fff"}/> } 
+        prevIcon={<LucideChevronLeft color={"#fff"}/> }
+        images={MULTIPLE_IMAGES}
+        initialIndex={galleryIndex}
+        onClose={() => setGalleryVisible(false)}
+      />
     </ScrollView>
   );
 }
@@ -472,7 +543,6 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: "#E5E7EB",
   },
-  // BottomSheet demo styles
   sheetBodyText: {
     fontSize: 14,
     color: "#4B5563",
@@ -482,5 +552,43 @@ const styles = StyleSheet.create({
   actionList: {
     gap: 12,
     paddingBottom: 8,
+  },
+  // ImagePreview styles
+  profileRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+  },
+  profileInfo: {
+    flex: 1,
+  },
+  profileName: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#1F2937",
+  },
+  profileRole: {
+    fontSize: 14,
+    color: "#6B7280",
+    marginTop: 2,
+  },
+  profileHint: {
+    fontSize: 12,
+    color: "#9CA3AF",
+    marginTop: 4,
+  },
+  feedGrid: {
+    flexDirection: "row",
+    gap: 6,
+  },
+  feedImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
   },
 });
