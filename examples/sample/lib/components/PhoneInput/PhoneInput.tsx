@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Animated,
+  Dimensions,
   FlatList,
   Modal,
   Pressable,
@@ -9,13 +11,13 @@ import {
   View,
 } from 'react-native';
 import { COUNTRIES, Country } from './countries';
-import type { PhoneInputProps, PhoneInputValue } from './PhoneInput.types';
+import type { PhoneInputProps } from './PhoneInput.types';
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const DEFAULT_COUNTRY = COUNTRIES.find((c) => c.code === 'US')!;
 
 function detectCountryFromInput(input: string, pool: Country[]): Country | null {
   if (!input.startsWith('+')) return null;
-  // sort longest dial code first so +1868 matches before +1
   const sorted = [...pool].sort((a, b) => b.dial.length - a.dial.length);
   return sorted.find((c) => input.startsWith(c.dial)) ?? null;
 }
@@ -46,14 +48,12 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   labelStyle,
   errorStyle,
 }) => {
-  // Build the pool once — either the full list or filtered to allowed codes
   const countryPool = useMemo(() => {
     if (!allowedCountries || allowedCountries.length === 0) return COUNTRIES;
     const set = new Set(allowedCountries.map((c) => c.toUpperCase()));
     return COUNTRIES.filter((c) => set.has(c.code));
   }, [allowedCountries]);
 
-  // Resolve initial country — must be inside the pool
   const initialCountry = useMemo(() => {
     return (
       countryPool.find((c) => c.code === defaultCountryCode) ??
@@ -62,13 +62,50 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
     );
   }, [countryPool, defaultCountryCode]);
 
-  const [country, setCountry] = useState<Country>(
-    value?.country ?? initialCountry
-  );
+  const [country, setCountry] = useState<Country>(value?.country ?? initialCountry);
   const [number, setNumber] = useState(value?.number ?? '');
   const [pickerVisible, setPickerVisible] = useState(false);
   const [search, setSearch] = useState('');
   const inputRef = useRef<TextInput>(null);
+
+  // Animation values — same pattern as BottomSheet
+  const slideAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
+  const backdropAnim = useRef(new Animated.Value(0)).current;
+  const [sheetHeight, setSheetHeight] = useState(SCREEN_HEIGHT * 0.85);
+
+  const openPicker = useCallback(() => {
+    setPickerVisible(true);
+    Animated.parallel([
+      Animated.timing(backdropAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        useNativeDriver: true,
+        bounciness: 0,
+      }),
+    ]).start();
+  }, [backdropAnim, slideAnim]);
+
+  const closePicker = useCallback(() => {
+    Animated.parallel([
+      Animated.timing(backdropAnim, {
+        toValue: 0,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: sheetHeight,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setPickerVisible(false);
+      setSearch('');
+    });
+  }, [backdropAnim, slideAnim, sheetHeight]);
 
   useEffect(() => {
     if (value) {
@@ -85,7 +122,6 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   );
 
   const handleNumberChange = (text: string) => {
-    // Auto-detect country from pasted full number — only within the allowed pool
     if (text.startsWith('+')) {
       const detected = detectCountryFromInput(text, countryPool);
       if (detected) {
@@ -102,13 +138,11 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
 
   const handleSelectCountry = (selected: Country) => {
     setCountry(selected);
-    setPickerVisible(false);
-    setSearch('');
     emit(selected, number);
-    setTimeout(() => inputRef.current?.focus(), 100);
+    closePicker();
+    setTimeout(() => inputRef.current?.focus(), 350);
   };
 
-  // Search filters within the pool only
   const filteredCountries = useMemo(() => {
     const q = search.toLowerCase().trim();
     if (!q) return countryPool;
@@ -135,11 +169,10 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
           inputRowStyle,
         ]}
       >
-        {/* Country selector — hidden if only one country in pool */}
         {countryPool.length > 1 ? (
           <Pressable
             style={[styles.selector, selectorStyle]}
-            onPress={() => !disabled && setPickerVisible(true)}
+            onPress={() => !disabled && openPicker()}
             accessibilityLabel={`Selected country: ${country.name} ${country.dial}`}
             accessibilityRole="button"
           >
@@ -148,7 +181,6 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
             {dropdownIcon ?? <Text style={styles.defaultDropdownIcon}>▾</Text>}
           </Pressable>
         ) : (
-          // Single country — show selector but no dropdown arrow, not tappable
           <View style={[styles.selector, selectorStyle]}>
             {renderFlagNode(country)}
             <Text style={styles.dialCode}>{country.dial}</Text>
@@ -173,63 +205,85 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
 
       {error && <Text style={[styles.error, errorStyle]}>{error}</Text>}
 
+      {/* Picker modal — animated exactly like BottomSheet */}
       <Modal
         visible={pickerVisible}
-        animationType="slide"
         transparent
-        onRequestClose={() => setPickerVisible(false)}
+        animationType="none"
+        onRequestClose={closePicker}
         statusBarTranslucent
       >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.pickerSheet}>
-            <View style={styles.pickerHeader}>
-              <Text style={styles.pickerTitle}>{pickerTitle}</Text>
-              <Pressable
-                onPress={() => { setPickerVisible(false); setSearch(''); }}
-                style={styles.pickerClose}
-                hitSlop={10}
-              >
-                <Text style={styles.pickerCloseText}>✕</Text>
-              </Pressable>
-            </View>
+        {/* Animated backdrop */}
+        <Pressable style={styles.backdropPressable} onPress={closePicker}>
+          <Animated.View
+            style={[styles.backdrop, { opacity: backdropAnim }]}
+          />
+        </Pressable>
 
-            <View style={styles.searchContainer}>
-              <TextInput
-                style={styles.searchInput}
-                value={search}
-                onChangeText={setSearch}
-                placeholder={searchPlaceholder}
-                placeholderTextColor="#9CA3AF"
-                autoCorrect={false}
-                clearButtonMode="while-editing"
-              />
-            </View>
+        {/* Animated sheet */}
+        <Animated.View
+          style={[
+            styles.pickerSheet,
+            { transform: [{ translateY: slideAnim }] },
+          ]}
+          onLayout={(e) => {
+            const h = e.nativeEvent.layout.height;
+            setSheetHeight(h);
+            slideAnim.setValue(h);
+            openPicker();
+          }}
+        >
+          {/* Drag handle */}
+          <View style={styles.dragHandleContainer}>
+            <View style={styles.dragHandle} />
+          </View>
 
-            <FlatList
-              data={filteredCountries}
-              keyExtractor={(item) => item.code}
-              renderItem={({ item }) => (
-                <Pressable
-                  style={[
-                    styles.countryRow,
-                    item.code === country.code && styles.countryRowSelected,
-                  ]}
-                  onPress={() => handleSelectCountry(item)}
-                  android_ripple={{ color: '#F3F4F6' }}
-                >
-                  {renderFlagNode(item)}
-                  <Text style={styles.countryName} numberOfLines={1}>
-                    {item.name}
-                  </Text>
-                  <Text style={styles.countryDial}>{item.dial}</Text>
-                </Pressable>
-              )}
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
+          {/* Header */}
+          <View style={styles.pickerHeader}>
+            <Text style={styles.pickerTitle}>{pickerTitle}</Text>
+            <Pressable onPress={closePicker} style={styles.pickerClose} hitSlop={10}>
+              <Text style={styles.pickerCloseText}>✕</Text>
+            </Pressable>
+          </View>
+
+          {/* Search */}
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              value={search}
+              onChangeText={setSearch}
+              placeholder={searchPlaceholder}
+              placeholderTextColor="#9CA3AF"
+              autoCorrect={false}
+              clearButtonMode="while-editing"
             />
           </View>
-        </View>
+
+          {/* List */}
+          <FlatList
+            data={filteredCountries}
+            keyExtractor={(item) => item.code}
+            renderItem={({ item }) => (
+              <Pressable
+                style={[
+                  styles.countryRow,
+                  item.code === country.code && styles.countryRowSelected,
+                ]}
+                onPress={() => handleSelectCountry(item)}
+                android_ripple={{ color: '#F3F4F6' }}
+              >
+                {renderFlagNode(item)}
+                <Text style={styles.countryName} numberOfLines={1}>
+                  {item.name}
+                </Text>
+                <Text style={styles.countryDial}>{item.dial}</Text>
+              </Pressable>
+            )}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+          />
+        </Animated.View>
       </Modal>
     </View>
   );
@@ -310,26 +364,50 @@ const styles = StyleSheet.create({
     color: '#EF4444',
     marginTop: 4,
   },
-  modalBackdrop: {
-    flex: 1,
+  // Modal / sheet
+  backdropPressable: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1,
+  },
+  backdrop: {
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'flex-end',
   },
   pickerSheet: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    maxHeight: SCREEN_HEIGHT * 0.9,
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: '85%',
+    zIndex: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 10,
     paddingBottom: 24,
+  },
+  dragHandleContainer: {
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  dragHandle: {
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: '#E5E7EB',
   },
   pickerHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    paddingBottom: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E5E7EB',
   },
   pickerTitle: {
     fontSize: 17,
@@ -352,8 +430,8 @@ const styles = StyleSheet.create({
   searchContainer: {
     paddingHorizontal: 16,
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#E5E7EB',
   },
   searchInput: {
     backgroundColor: '#F9FAFB',
