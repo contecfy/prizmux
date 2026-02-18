@@ -67,7 +67,9 @@ export default function ComponentsDemoScreen() {
         </Text>
         <View style={styles.buttonGroup}>
           <Button
-            title="Filled Primary"
+            // title="Filled Primary"
+            borderRadius={0}
+            icon={<Text style={{ fontSize: 16, color: "#fff" }}>★</Text>}
             variant="filled"
             onPress={() => handlePress("Filled Primary")}
           />

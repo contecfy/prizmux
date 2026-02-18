@@ -38,6 +38,7 @@ export default function TabTwoScreen() {
   action={
     <Button
       title="Book Now"
+      icon={<LucideChevronLeft size={16} color="#FFFFFF" style={{ transform: [{ rotate: '180deg' }] }} />}
       variant="filled"
       size="large"
       fullWidth

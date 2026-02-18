@@ -1,17 +1,21 @@
-import { ViewStyle, TextStyle } from 'react-native';
 import { ReactNode } from 'react';
+import { ViewStyle, TextStyle } from 'react-native';
 
 export interface ButtonProps {
-  title: string;
+  title?: string;                        // optional — supports icon-only buttons
   onPress: () => void;
+  onLongPress?: () => void;
   variant?: 'filled' | 'outline';
   size?: 'small' | 'medium' | 'large';
   isLoading?: boolean;
+  disabled?: boolean;
   icon?: ReactNode;
   iconPosition?: 'left' | 'right';
-  disabled?: boolean;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
   fullWidth?: boolean;
+  borderRadius?: number;                 // NEW — no longer hardcoded
+  hitSlop?: number;                      // NEW — easier tap target
+  accessibilityLabel?: string;           // NEW — screen reader support
+  style?: ViewStyle;
+  contentStyle?: ViewStyle;             // NEW — style the inner content wrapper
+  textStyle?: TextStyle;
 }
-

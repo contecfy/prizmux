@@ -1,4 +1,3 @@
-import { Colors } from '../../theme/colors';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -7,48 +6,43 @@ import {
   Text,
   View,
   type TextStyle,
-  type ViewStyle
+  type ViewStyle,
 } from 'react-native';
 import type { ButtonProps } from './Button.types';
 
-// Button Configuration - All styles defined here for maintainability
 const BUTTON_CONFIG = {
   colors: {
-    primary: Colors.light.primary,
+    primary: '#6366F1',
     primaryDisabled: '#9CA3AF',
-    outlineBorder: Colors.light.primary,
+    outlineBorder: '#6366F1',
     outlineBorderDisabled: '#9CA3AF',
     text: {
       filled: '#FFFFFF',
-      outline: Colors.light.primary,
+      outline: '#6366F1',
       outlineDisabled: '#9CA3AF',
     },
-    shadow: Colors.light.primary,
+    shadow: '#6366F1',
   },
   sizes: {
     small: {
       paddingVertical: 10,
       paddingHorizontal: 16,
       fontSize: 14,
-      iconSize: 16,
       gap: 6,
     },
     medium: {
       paddingVertical: 14,
       paddingHorizontal: 20,
       fontSize: 16,
-      iconSize: 20,
       gap: 8,
     },
     large: {
       paddingVertical: 16,
       paddingHorizontal: 24,
       fontSize: 18,
-      iconSize: 22,
       gap: 10,
     },
   },
-  borderRadius: 12,
   shadow: {
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -62,70 +56,85 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'filled',
   size = 'medium',
   onPress,
+  onLongPress,
   isLoading = false,
   disabled = false,
   style,
+  contentStyle,
   textStyle,
   icon,
   iconPosition = 'left',
   fullWidth = false,
+  borderRadius = 0,              // default 12 — same as before, now overridable
+  hitSlop,
+  accessibilityLabel,
 }) => {
   const isDisabled = disabled || isLoading;
   const sizeConfig = BUTTON_CONFIG.sizes[size];
   const isFilled = variant === 'filled';
 
-  // Get base button style
   const getButtonStyle = () => {
     const baseStyle = isFilled ? styles.filledButton : styles.outlineButton;
     const sizeStyle = styles[`${size}Button` as keyof typeof styles] as ViewStyle;
-    const disabledStyle = isDisabled 
-      ? (isFilled ? styles.filledButtonDisabled : styles.outlineButtonDisabled)
+    const disabledStyle = isDisabled
+      ? isFilled
+        ? styles.filledButtonDisabled
+        : styles.outlineButtonDisabled
       : undefined;
-    
+
     return [
       baseStyle,
       sizeStyle,
       disabledStyle,
       fullWidth && styles.fullWidth,
+      { borderRadius },           // applied from prop, not hardcoded
       style,
     ].filter(Boolean) as ViewStyle[];
   };
 
-  // Get text style
   const getTextStyle = () => {
-    const baseTextStyle = isFilled ? styles.filledButtonText : styles.outlineButtonText;
-    const sizeTextStyle = styles[`${size}ButtonText` as keyof typeof styles];
-    const disabledTextStyle = isDisabled && !isFilled 
-      ? styles.outlineButtonTextDisabled 
-      : null;
-    
-    return [
-      baseTextStyle,
-      sizeTextStyle,
-      disabledTextStyle,
-      textStyle,
-    ];
+    const baseTextStyle = isFilled
+      ? styles.filledButtonText
+      : styles.outlineButtonText;
+    const sizeTextStyle = styles[
+      `${size}ButtonText` as keyof typeof styles
+    ] as TextStyle;
+    const disabledTextStyle =
+      isDisabled && !isFilled ? styles.outlineButtonTextDisabled : null;
+
+    return [baseTextStyle, sizeTextStyle, disabledTextStyle, textStyle];
   };
 
-  // Get loading indicator color
   const getLoadingColor = () => {
     if (isFilled) return BUTTON_CONFIG.colors.text.filled;
-    return BUTTON_CONFIG.colors.text.outline;
+    return isDisabled
+      ? BUTTON_CONFIG.colors.text.outlineDisabled
+      : BUTTON_CONFIG.colors.text.outline;
   };
 
   return (
     <Pressable
       style={getButtonStyle()}
       onPress={onPress}
+      onLongPress={onLongPress}
       disabled={isDisabled}
+      hitSlop={hitSlop}
+      accessibilityLabel={accessibilityLabel ?? title}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: isDisabled, busy: isLoading }}
     >
-      <View style={styles.buttonContent}>
+      <View style={[styles.buttonContent, contentStyle]}>
         {isLoading ? (
           <ActivityIndicator size="small" color={getLoadingColor()} />
         ) : (
           <>
             {icon && iconPosition === 'left' && (
-              <View style={[styles.iconContainer, { marginRight: sizeConfig.gap }]}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  title ? { marginRight: sizeConfig.gap } : undefined,
+                ]}
+              >
                 {icon}
               </View>
             )}
@@ -135,7 +144,12 @@ export const Button: React.FC<ButtonProps> = ({
               </Text>
             )}
             {icon && iconPosition === 'right' && (
-              <View style={[styles.iconContainer, { marginLeft: sizeConfig.gap }]}>
+              <View
+                style={[
+                  styles.iconContainer,
+                  title ? { marginLeft: sizeConfig.gap } : undefined,
+                ]}
+              >
                 {icon}
               </View>
             )}
@@ -147,12 +161,10 @@ export const Button: React.FC<ButtonProps> = ({
 };
 
 const styles = StyleSheet.create({
-  // Base Button Styles
   filledButton: {
     backgroundColor: BUTTON_CONFIG.colors.primary,
-    borderRadius: BUTTON_CONFIG.borderRadius,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     shadowColor: BUTTON_CONFIG.colors.shadow,
     ...BUTTON_CONFIG.shadow,
   },
@@ -163,15 +175,13 @@ const styles = StyleSheet.create({
   outlineButton: {
     borderWidth: 2,
     borderColor: BUTTON_CONFIG.colors.outlineBorder,
-    borderRadius: BUTTON_CONFIG.borderRadius,
     backgroundColor: 'transparent',
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   outlineButtonDisabled: {
     borderColor: BUTTON_CONFIG.colors.outlineBorderDisabled,
   },
-  // Size Variants
   smallButton: {
     paddingVertical: BUTTON_CONFIG.sizes.small.paddingVertical,
     paddingHorizontal: BUTTON_CONFIG.sizes.small.paddingHorizontal,
@@ -184,14 +194,13 @@ const styles = StyleSheet.create({
     paddingVertical: BUTTON_CONFIG.sizes.large.paddingVertical,
     paddingHorizontal: BUTTON_CONFIG.sizes.large.paddingHorizontal,
   },
-  // Text Styles
   filledButtonText: {
     color: BUTTON_CONFIG.colors.text.filled,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   outlineButtonText: {
     color: BUTTON_CONFIG.colors.text.outline,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   outlineButtonTextDisabled: {
     color: BUTTON_CONFIG.colors.text.outlineDisabled,
@@ -205,7 +214,6 @@ const styles = StyleSheet.create({
   largeButtonText: {
     fontSize: BUTTON_CONFIG.sizes.large.fontSize,
   },
-  // Layout Styles
   buttonContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -219,4 +227,3 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-
