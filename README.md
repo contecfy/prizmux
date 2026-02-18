@@ -1,96 +1,92 @@
-# Prizmux
+# 👽 Prizmux
 
-A modern, developer-first React Native component system built for flexibility, customization, and real-world mobile apps.
+A developer-first React Native component system.
 
-Prizmux provides clean, production-ready UI primitives that you fully own — no heavy UI kits, no locked abstractions, no unnecessary bloat.
+Prizmux gives you production-ready UI primitives that you actually own.
+No bloated UI kits. No locked abstractions. No fighting the framework.
 
----
-
-## ✨ Philosophy
-
-Prizmux is built around one core idea:
-
-> Developers should own their UI.
-
-Instead of installing a massive UI framework, Prizmux allows you to copy components directly into your project. You can modify, extend, and adapt them without fighting the library.
-
-Inspired by modern system-based design approaches, Prizmux focuses on:
-
-- 🎯 Mobile-first components
-- 🎨 Strong design tokens
-- 🌙 Built-in dark mode support
-- ⚡ Smooth interactions & animations
-- 🧱 Clean, composable primitives
-- 🧠 Production-ready patterns
+Just clean components you can copy, modify, and ship.
 
 ---
 
-## 🚀 Why Prizmux?
+## Philosophy
+
+Prizmux is built around a simple idea:
+
+> You should control your UI — not your UI library.
+
+Instead of installing a massive dependency that dictates how your app looks and behaves, Prizmux lets you bring components directly into your codebase.
+
+Edit them. Refactor them. Break them. Improve them.
+
+They’re yours.
+
+The system is inspired by modern design-token and system-based approaches, but built specifically for real-world mobile apps.
+
+---
+
+## Why Prizmux?
 
 Most React Native UI libraries are:
 
-- Too opinionated
-- Hard to customize
-- Heavy with dependencies
-- Styled in ways that are difficult to override
+* Over-opinionated
+* Hard to override
+* Packed with unnecessary dependencies
+* Designed more for demos than production
 
-Prizmux is different.
+Prizmux takes a different approach.
 
-- Lightweight
-- Minimal dependencies
-- Built for real production apps
-- Designed to scale with your system
+It’s lightweight.
+It scales with your system.
+It stays out of your way.
 
-You control the components.
-Not the other way around.
+You stay in control.
 
 ---
 
-## 📦 Core Features
+## Core Components
 
-- Button (variants, loading, animation)
-- Input (label, error, secure support)
-- Card (composable structure)
-- Sheet / Modal (mobile-native UX)
-- Toast system
-- Theming & design tokens
-- Variant system
-- Dark mode ready
-- Fully typed with TypeScript
+* Button (variants, loading states, subtle animation)
+* Input (label, validation, secure support)
+* Card (composable structure)
+* Sheet / Modal (mobile-native UX)
+* Toast system
+* Theming & design tokens
+* Variant system
+* Dark mode support
+* Fully typed with TypeScript
 
 ---
 
-## 🧱 Architecture
+## Architecture
 
 Prizmux follows a system-first structure:
 
 ```
-
 /components
-/ui
-button.tsx
-input.tsx
-card.tsx
+  /ui
+    button.tsx
+    input.tsx
+    card.tsx
 
 /lib
-theme.ts
-variants.ts
-cn.ts
-
+  theme.ts
+  variants.ts
+  cn.ts
 ```
 
 Every component:
 
-- Reads from design tokens
-- Supports variants
-- Is fully customizable
-- Is safe to edit directly
+* Reads from centralized design tokens
+* Supports variants
+* Is safe to edit directly
+* Is built for production, not playgrounds
 
 ---
 
-## 🎨 Theming
+## Theming
 
-Prizmux uses centralized design tokens:
+Design tokens live in one place:
 
 ```ts
 export const theme = {
