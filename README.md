@@ -2,100 +2,158 @@
 
 A developer-first React Native component system.
 
-Prizmux gives you production-ready UI primitives that you actually own.
-No bloated UI kits. No locked abstractions. No fighting the framework.
-
-Just clean components you can copy, modify, and ship.
-
----
-
-## Philosophy
-
-Prizmux is built around a simple idea:
-
 > You should control your UI — not your UI library.
 
-Instead of installing a massive dependency that dictates how your app looks and behaves, Prizmux lets you bring components directly into your codebase.
-
-Edit them. Refactor them. Break them. Improve them.
-
-They’re yours.
-
-The system is inspired by modern design-token and system-based approaches, but built specifically for real-world mobile apps.
+Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Just clean components you can copy, modify, and ship.
 
 ---
 
 ## Why Prizmux?
 
-Most React Native UI libraries are:
+Most React Native UI libraries are over-opinionated, hard to override, and packed with unnecessary dependencies. Prizmux takes a different approach — lightweight, zero forced dependencies, and fully typed.
 
-* Over-opinionated
-* Hard to override
-* Packed with unnecessary dependencies
-* Designed more for demos than production
-
-Prizmux takes a different approach.
-
-It’s lightweight.
-It scales with your system.
-It stays out of your way.
-
-You stay in control.
+Every component follows the same rule: **bring your own icons, images, and navigation**. The package never pulls in lucide, expo-image, expo-router, or any other third-party library on your behalf.
 
 ---
 
-## Core Components
+## Components
 
-* Button (variants, loading states, subtle animation)
-* Input (label, validation, secure support)
-* Card (composable structure)
-* Sheet / Modal (mobile-native UX)
-* Toast system
-* Theming & design tokens
-* Variant system
-* Dark mode support
-* Fully typed with TypeScript
+### Button
+Variants, sizes, loading state, icon support (left or right), icon-only mode, and full accessibility out of the box.
+
+```tsx
+<Button
+  title="Continue"
+  variant="filled"
+  size="medium"
+  borderRadius={8}
+  icon={<ArrowRight size={18} color="#fff" />}
+  iconPosition="right"
+  onPress={() => {}}
+/>
+```
+
+---
+
+### Card
+Composable container with shadow and rounded corners. Put anything inside.
+
+```tsx
+<Card>
+  <Text>Hello world</Text>
+</Card>
+```
+
+---
+
+### BottomSheet
+Swipeable sheet with drag handle, backdrop dismiss, and close button. Bring your own close icon.
+
+```tsx
+<BottomSheet
+  visible={visible}
+  onClose={() => setVisible(false)}
+  title="Options"
+  closeIcon={<X size={16} color="#333" />}
+>
+  <Text>Sheet content</Text>
+</BottomSheet>
+```
+
+---
+
+### ImagePreview
+Full screen image viewer with single image and gallery support. Bring your own nav icons.
+
+```tsx
+<ImagePreview
+  visible={visible}
+  images={['https://...']}
+  onClose={() => setVisible(false)}
+  closeIcon={<X size={24} color="#fff" />}
+  prevIcon={<ChevronLeft size={32} color="#fff" />}
+  nextIcon={<ChevronRight size={32} color="#fff" />}
+/>
+```
+
+Trigger it by wrapping any image in a `Pressable`:
+
+```tsx
+<Pressable onPress={() => setVisible(true)}>
+  <Image source={{ uri: '...' }} style={styles.avatar} />
+</Pressable>
+```
+
+---
+
+### HeaderWithBack
+Navigation header with back button, optional avatar, optional title position, and up to 4 right-side action icons with badge support.
+
+```tsx
+<HeaderWithBack
+  title="John Doe"
+  onBackPress={() => router.back()}
+  avatar={<Image source={{ uri: '...' }} style={{ width: 40, height: 40 }} />}
+  actions={[
+    { icon: <Bell size={22} color="#333" />, onPress: () => {}, badge: 3 },
+    { icon: <Phone size={22} color="#333" />, onPress: () => {} },
+  ]}
+/>
+```
+
+---
+
+### EmptyState
+Placeholder UI for empty lists or zero-data screens. Bring your own icon and action button.
+
+```tsx
+<EmptyState
+  title="No bookings yet"
+  description="Start by booking a service."
+  icon={<CalendarX size={80} color="rgba(99,102,241,0.3)" />}
+  action={
+    <Button title="Book Now" variant="filled" onPress={() => {}} />
+  }
+/>
+```
 
 ---
 
 ## Architecture
 
-Prizmux follows a system-first structure:
-
 ```
 /components
-  /ui
-    button.tsx
-    input.tsx
-    card.tsx
-
-/lib
-  theme.ts
-  variants.ts
-  cn.ts
+  /Button
+    Button.tsx
+    Button.types.ts
+    index.ts
+  /Card
+    Card.tsx
+    Card.types.ts
+    index.ts
+  /BottomSheet
+    BottomSheet.tsx
+    BottomSheet.types.ts
+    index.ts
+  /ImagePreview
+    ImagePreview.tsx
+    ImagePreview.types.ts
+    index.ts
+  /HeaderWithBack
+    HeaderWithBack.tsx
+    HeaderWithBack.types.ts
+    index.ts
+  /EmptyState
+    EmptyState.tsx
+    EmptyState.types.ts
+    index.ts
 ```
-
-Every component:
-
-* Reads from centralized design tokens
-* Supports variants
-* Is safe to edit directly
-* Is built for production, not playgrounds
 
 ---
 
-## Theming
+## Design Decisions
 
-Design tokens live in one place:
-
-```ts
-export const theme = {
-  radius: 12,
-  spacing: 8,
-  colors: {
-    primary: "#2563eb",
-    background: "#0f172a",
-    foreground: "#ffffff",
-  },
-};
-```
+- **No icon library required** — every component that needs an icon accepts `ReactNode`. Pass lucide, react-native-vector-icons, an SVG, or a plain emoji.
+- **No navigation dependency** — `HeaderWithBack` requires you to pass `onBackPress`. Use expo-router, react-navigation, or anything else.
+- **No image library required** — `ImagePreview` and `HeaderWithBack` accept `ReactNode` for avatar/image slots. Use expo-image, the built-in RN Image, or anything you want.
+- **Fully typed** — every component ships with a `.types.ts` file.
