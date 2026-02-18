@@ -119,6 +119,41 @@ Placeholder UI for empty lists or zero-data screens. Bring your own icon and act
 
 ---
 
+### PhoneInput
+International phone number input with a searchable country picker, auto-detection when a full number is pasted, and a clean ISO code fallback when no flag renderer is provided.
+
+```tsx
+<PhoneInput
+  label="Phone Number"
+  defaultCountryCode="UG"
+  value={phone}
+  onChange={setPhone}
+  placeholder="712 345 678"
+  renderFlag={(country) => (
+    <CountryFlag isoCode={country.code} size={22} />
+  )}
+/>
+```
+
+`onChange` returns an object with three fields:
+
+```ts
+{
+  country: Country;   // full country object
+  number: string;     // local number only  e.g. "712345678"
+  full: string;       // complete number    e.g. "+256712345678"
+}
+```
+
+**Flags** — no flag library is bundled. Pass any renderer via `renderFlag`, or leave it out and the component falls back to a clean ISO code label (`UG`, `US`).
+
+```bash
+# optional — only if you want actual flag images
+npm install react-native-country-flag
+```
+
+---
+
 ## Architecture
 
 ```
@@ -147,6 +182,11 @@ Placeholder UI for empty lists or zero-data screens. Bring your own icon and act
     EmptyState.tsx
     EmptyState.types.ts
     index.ts
+  /PhoneInput
+    PhoneInput.tsx
+    PhoneInput.types.ts
+    countries.ts
+    index.ts
 ```
 
 ---
@@ -156,4 +196,5 @@ Placeholder UI for empty lists or zero-data screens. Bring your own icon and act
 - **No icon library required** — every component that needs an icon accepts `ReactNode`. Pass lucide, react-native-vector-icons, an SVG, or a plain emoji.
 - **No navigation dependency** — `HeaderWithBack` requires you to pass `onBackPress`. Use expo-router, react-navigation, or anything else.
 - **No image library required** — `ImagePreview` and `HeaderWithBack` accept `ReactNode` for avatar/image slots. Use expo-image, the built-in RN Image, or anything you want.
+- **No flag library required** — `PhoneInput` accepts a `renderFlag` prop. Use `react-native-country-flag`, a custom SVG, or rely on the built-in ISO fallback.
 - **Fully typed** — every component ships with a `.types.ts` file.

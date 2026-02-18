@@ -2,6 +2,7 @@
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 
 export default function HomeScreen() {
   const [phone, setPhone] = useState<PhoneInputValue | undefined>();
@@ -12,17 +13,46 @@ export default function HomeScreen() {
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Phone Number</Text>
-        <PhoneInput
-          label="Enter your phone number"
-          defaultCountryCode="UG"
-          value={phone}
-          onChange={setPhone}
-          placeholder="712 345 678"
-        />
+      <PhoneInput
+  label="Phone Number"
+  defaultCountryCode="UG"
+  value={phone}
+  onChange={setPhone}
+  renderFlag={(country) => (
+    <CountryFlag isoCode={country.code} size={22} />
+  )}
+/>
         {phone?.full && (
           <Text style={styles.result}>Full number: {phone.full}</Text>
         )}
       </View>
+
+    
+<PhoneInput
+  defaultCountryCode="UG"
+  allowedCountries={['UG', 'KE', 'TZ', 'RW', 'BI']}
+  onChange={setPhone}
+   renderFlag={(country) => (
+    <CountryFlag isoCode={country.code} size={22} />
+  )}
+/>
+
+<PhoneInput
+  defaultCountryCode="UG"
+  allowedCountries={['UG']}
+  onChange={setPhone}
+   renderFlag={(country) => (
+    <CountryFlag isoCode={country.code} size={22} />
+  )}
+/>
+
+<PhoneInput
+  defaultCountryCode="US"
+  onChange={setPhone}
+   renderFlag={(country) => (
+    <CountryFlag isoCode={country.code} size={22} />
+  )}
+/>
     </View>
   );
 }

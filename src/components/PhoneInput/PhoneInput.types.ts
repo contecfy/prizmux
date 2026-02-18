@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
-import { Country } from './Countries';
+import { Country } from './countries';
 
 export interface PhoneInputValue {
   country: Country;
@@ -12,6 +12,7 @@ export interface PhoneInputProps {
   value?: PhoneInputValue;
   onChange: (value: PhoneInputValue) => void;
   defaultCountryCode?: string;         // ISO code e.g. 'UG', 'US' — defaults to 'US'
+  allowedCountries?: string[];         // restrict to specific ISO codes e.g. ['UG', 'KE', 'TZ']
   placeholder?: string;
   label?: string;
   error?: string;
@@ -21,8 +22,9 @@ export interface PhoneInputProps {
   pickerTitle?: string;
   searchPlaceholder?: string;
 
-  // Custom icons
-  dropdownIcon?: ReactNode;            // icon next to the flag/dial code
+  // Custom rendering
+  dropdownIcon?: ReactNode;
+  renderFlag?: (country: Country) => ReactNode;
 
   // Styles
   containerStyle?: ViewStyle;
