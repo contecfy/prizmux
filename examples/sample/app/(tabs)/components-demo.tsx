@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Alert } from "react-native";
 import { Button } from "../../lib/components/Button/Button";
 import { Card } from "../../lib/components/Card/Card";
+import BottomSheet from "../../lib/components/BottomSheet/BottomSheet";
 
 export default function ComponentsDemoScreen() {
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
+
+  // BottomSheet states
+  const [basicSheetVisible, setBasicSheetVisible] = useState(false);
+  const [noHeaderSheetVisible, setNoHeaderSheetVisible] = useState(false);
+  const [actionSheetVisible, setActionSheetVisible] = useState(false);
+  const [noDragSheetVisible, setNoDragSheetVisible] = useState(false);
 
   const handlePress = (buttonName: string) => {
     Alert.alert("Button Pressed", `You pressed: ${buttonName}`);
@@ -226,6 +233,147 @@ export default function ComponentsDemoScreen() {
           </View>
         </View>
       </Card>
+
+      {/* ─── BottomSheet Section ─────────────────────────────────── */}
+      <Card style={styles.sectionCard}>
+        <Text style={styles.sectionTitle}>BottomSheet Component</Text>
+        <Text style={styles.sectionDescription}>
+          Swipeable bottom sheet with various configurations
+        </Text>
+      </Card>
+
+      {/* Basic BottomSheet */}
+      <Card>
+        <Text style={styles.cardTitle}>Basic BottomSheet</Text>
+        <Text style={styles.cardContent}>
+          Default sheet with title, drag handle, close button, and backdrop
+          dismiss.
+        </Text>
+        <Button
+          title="Open Basic Sheet"
+          variant="filled"
+          fullWidth
+          onPress={() => setBasicSheetVisible(true)}
+        />
+      </Card>
+
+      {/* No Header BottomSheet */}
+      <Card>
+        <Text style={styles.cardTitle}>No Header Sheet</Text>
+        <Text style={styles.cardContent}>
+          Sheet without a title or close button — only the drag handle and swipe
+          gesture to dismiss.
+        </Text>
+        <Button
+          title="Open No Header Sheet"
+          variant="outline"
+          fullWidth
+          onPress={() => setNoHeaderSheetVisible(true)}
+        />
+      </Card>
+
+      {/* Action Sheet */}
+      <Card>
+        <Text style={styles.cardTitle}>Action Sheet</Text>
+        <Text style={styles.cardContent}>
+          Sheet used as an action menu with a list of choices inside.
+        </Text>
+        <Button
+          title="Open Action Sheet"
+          variant="filled"
+          fullWidth
+          onPress={() => setActionSheetVisible(true)}
+        />
+      </Card>
+
+      {/* No Drag / No Swipe Sheet */}
+      <Card>
+        <Text style={styles.cardTitle}>No Drag Handle Sheet</Text>
+        <Text style={styles.cardContent}>
+          Sheet with drag handle and swipe-to-close disabled. Must use the
+          close button or tap the backdrop.
+        </Text>
+        <Button
+          title="Open No Drag Sheet"
+          variant="outline"
+          fullWidth
+          onPress={() => setNoDragSheetVisible(true)}
+        />
+      </Card>
+
+      {/* ─── BottomSheet instances ───────────────────────────────── */}
+
+      {/* Basic */}
+      <BottomSheet
+        visible={basicSheetVisible}
+        onClose={() => setBasicSheetVisible(false)}
+        title="Basic Bottom Sheet"
+      >
+        <Text style={styles.sheetBodyText}>
+          This is the default bottom sheet. You can swipe it down, tap the
+          backdrop, or press the close button to dismiss it.
+        </Text>
+        <Button
+          title="Got it"
+          variant="filled"
+          fullWidth
+          onPress={() => setBasicSheetVisible(false)}
+        />
+      </BottomSheet>
+
+      {/* No Header */}
+      <BottomSheet
+        visible={noHeaderSheetVisible}
+        onClose={() => setNoHeaderSheetVisible(false)}
+        showCloseButton={false}
+      >
+        <Text style={styles.sheetBodyText}>
+          No title or close button here. Swipe down or tap the backdrop to
+          dismiss.
+        </Text>
+      </BottomSheet>
+
+      {/* Action Sheet */}
+      <BottomSheet
+        visible={actionSheetVisible}
+        onClose={() => setActionSheetVisible(false)}
+        title="Choose an Action"
+      >
+        <View style={styles.actionList}>
+          {["Edit", "Duplicate", "Share", "Delete"].map((action) => (
+            <Button
+              key={action}
+              title={action}
+              variant={action === "Delete" ? "outline" : "filled"}
+              fullWidth
+              onPress={() => {
+                setActionSheetVisible(false);
+                handlePress(action);
+              }}
+            />
+          ))}
+        </View>
+      </BottomSheet>
+
+      {/* No Drag */}
+      <BottomSheet
+        visible={noDragSheetVisible}
+        onClose={() => setNoDragSheetVisible(false)}
+        title="No Drag Sheet"
+        showDragHandle={false}
+        swipeToClose={false}
+      >
+        <Text style={styles.sheetBodyText}>
+          Drag handle and swipe-to-close are both disabled. Use the close
+          button or tap outside to dismiss.
+        </Text>
+        <Button
+          title="Close"
+          variant="outline"
+          fullWidth
+          onPress={() => setNoDragSheetVisible(false)}
+        />
+      </BottomSheet>
     </ScrollView>
   );
 }
@@ -323,5 +471,16 @@ const styles = StyleSheet.create({
   statDivider: {
     width: 1,
     backgroundColor: "#E5E7EB",
+  },
+  // BottomSheet demo styles
+  sheetBodyText: {
+    fontSize: 14,
+    color: "#4B5563",
+    lineHeight: 22,
+    marginBottom: 20,
+  },
+  actionList: {
+    gap: 12,
+    paddingBottom: 8,
   },
 });
