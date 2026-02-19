@@ -23,7 +23,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-    <Header title='Prizmux ui' showBack backIcon={<LucideChevronLeft size={22} color="#000000" />} onBackPress={() => router.back()} />
+    <Header title='Prizmux ui' showBack backIcon={<LucideChevronLeft size={22} color="#000000" />}  />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
         {/* Header row with menu trigger */}
