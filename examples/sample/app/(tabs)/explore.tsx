@@ -20,6 +20,7 @@ export default function TabTwoScreen() {
         title="John Doe"
         backIcon={<LucideChevronLeft size={22} color="#000000" />}
         onBackPress={() => router.back()}
+        showBack
         titlePosition="left"
         avatar={
           <Image

@@ -1,17 +1,20 @@
+import { router } from '@/.expo/types/router';
 import { Alert } from '@/lib/components/Alert';
 import { Button } from '@/lib/components/Button';
 import { FAB } from '@/lib/components/Fab';
+import { Header } from '@/lib/components/Header/Header';
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
 import { Sidebar } from '@/lib/components/Sidebar';
-import { BookOpen, Filter, Heart, Menu, Plus, ShoppingCart, Star, Trash2, User, Users, Wallet } from 'lucide-react-native';
+import { Bell, BookOpen, Filter, Heart, LucideChevronLeft, Menu, Phone, Plus, ShoppingCart, Star, Trash2, User, Users, Wallet } from 'lucide-react-native';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const [phone, setPhone] = useState<PhoneInputValue | undefined>();
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [setAutoToast] = useState(false);
 
   const [textOnlyAlert, setTextOnlyAlert] = useState(false);
   const [confirmAlert, setConfirmAlert] = useState(false);
@@ -20,6 +23,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+    <Header title='Prizmux ui' showBack backIcon={<LucideChevronLeft size={22} color="#000000" />} onBackPress={() => router.back()} />
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
         {/* Header row with menu trigger */}
@@ -268,5 +272,35 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    gap: 12,
+  },
+  headerButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+  },
+  headerActions: {
+    flexDirection: 'row',
+    gap: 8,
   },
 });
