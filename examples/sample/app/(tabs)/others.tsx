@@ -2,13 +2,16 @@ import { Alert } from '@/lib/components/Alert';
 import { Button } from '@/lib/components/Button';
 import { FAB } from '@/lib/components/Fab';
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
-import { Filter, Plus, Star, Trash2 } from 'lucide-react-native';
+import { Sidebar } from '@/lib/components/Sidebar';
+import { BookOpen, Filter, Heart, Menu, Plus, ShoppingCart, Star, Trash2, User, Users, Wallet } from 'lucide-react-native';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const [phone, setPhone] = useState<PhoneInputValue | undefined>();
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const [textOnlyAlert, setTextOnlyAlert] = useState(false);
   const [confirmAlert, setConfirmAlert] = useState(false);
@@ -16,9 +19,16 @@ export default function HomeScreen() {
   const [customAlert, setCustomAlert] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>Welcome to Prizmux!</Text>
+
+        {/* Header row with menu trigger */}
+        <View style={styles.topBar}>
+          <Text style={styles.title}>Welcome to Prizmux!</Text>
+          <Pressable onPress={() => setSidebarVisible(true)} style={styles.menuButton}>
+            <Menu size={24} color="#111827" />
+          </Pressable>
+        </View>
 
         {/* Phone Input */}
         <View style={styles.card}>
@@ -41,32 +51,12 @@ export default function HomeScreen() {
         {/* Alert triggers */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Alerts</Text>
-
-          <Button
-            title="Text Only"
-            variant="outline"
-            fullWidth
-            onPress={() => setTextOnlyAlert(true)}
-          />
-          <Button
-            title="Confirm / Destructive"
-            variant="outline"
-            fullWidth
-            onPress={() => setConfirmAlert(true)}
-          />
-          <Button
-            title="With Icon"
-            variant="outline"
-            fullWidth
-            onPress={() => setIconAlert(true)}
-          />
-          <Button
-            title="Custom Styled"
-            variant="filled"
-            fullWidth
-            onPress={() => setCustomAlert(true)}
-          />
+          <Button title="Text Only" variant="outline" fullWidth onPress={() => setTextOnlyAlert(true)} />
+          <Button title="Confirm / Destructive" variant="outline" fullWidth onPress={() => setConfirmAlert(true)} />
+          <Button title="With Icon" variant="outline" fullWidth onPress={() => setIconAlert(true)} />
+          <Button title="Custom Styled" variant="filled" fullWidth onPress={() => setCustomAlert(true)} />
         </View>
+
       </ScrollView>
 
       {/* FAB */}
@@ -76,7 +66,68 @@ export default function HomeScreen() {
         position="bottom-right"
       />
 
-      {/* 1. Text only — no buttons, just dismiss on backdrop tap */}
+      {/* Sidebar */}
+      <Sidebar
+        visible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+        side="right"
+        
+        items={[
+          {
+            id: 'cart',
+            title: 'Cart',
+            icon: <ShoppingCart size={20} color="#620A32" />,
+            badge: 3,
+            badgeColor: '#620A32',
+            onPress: () => console.log('cart'),
+          },
+          {
+            id: 'myorders',
+            title: 'My Orders',
+            icon: <ShoppingCart size={20} color="#620A32" />,
+            onPress: () => console.log('orders'),
+          },
+          {
+            id: 'favourites',
+            title: 'Favourites',
+            icon: <Heart size={20} color="#620A32" />,
+            badge: 5,
+            badgeColor: '#620A32',
+            onPress: () => console.log('favourites'),
+          },
+          {
+            id: 'profile',
+            title: 'Profile',
+            icon: <User size={20} color="#620A32" />,
+            onPress: () => console.log('profile'),
+          },
+          {
+            id: 'workers',
+            title: 'Source Skilled Workers',
+            icon: <Users size={20} color="#620A32" />,
+            onPress: () => console.log('workers'),
+          },
+          {
+            id: 'skilling',
+            title: 'Agriculture Skilling',
+            icon: <BookOpen size={20} color="#620A32" />,
+            onPress: () => console.log('skilling'),
+          },
+          {
+            id: 'loans',
+            title: 'Loans',
+            icon: <Wallet size={20} color="#620A32" />,
+            onPress: () => console.log('loans'),
+          },
+        ]}
+        header={
+          <View style={styles.sidebarHeader}>
+            <Text style={styles.sidebarHeaderText}>Menu</Text>
+          </View>
+        }
+      />
+
+      {/* Alert 1 — text only */}
       <Alert
         visible={textOnlyAlert}
         onClose={() => setTextOnlyAlert(false)}
@@ -84,7 +135,7 @@ export default function HomeScreen() {
         message="The app will be unavailable from 2am to 4am tonight for scheduled maintenance."
       />
 
-      {/* 2. Two buttons side by side */}
+      {/* Alert 2 — confirm / destructive */}
       <Alert
         visible={confirmAlert}
         onClose={() => setConfirmAlert(false)}
@@ -92,12 +143,7 @@ export default function HomeScreen() {
         message="This action cannot be undone. Your booking will be permanently removed."
       >
         <View style={styles.row}>
-          <Button
-            title="Cancel"
-            variant="outline"
-            style={styles.flex}
-            onPress={() => setConfirmAlert(false)}
-          />
+          <Button title="Cancel" variant="outline" style={styles.flex} onPress={() => setConfirmAlert(false)} />
           <Button
             title="Delete"
             variant="filled"
@@ -108,7 +154,7 @@ export default function HomeScreen() {
         </View>
       </Alert>
 
-      {/* 3. Icon + stacked buttons */}
+      {/* Alert 3 — icon + stacked buttons */}
       <Alert
         visible={iconAlert}
         onClose={() => setIconAlert(false)}
@@ -117,21 +163,11 @@ export default function HomeScreen() {
         icon={<Star size={44} color="#F59E0B" />}
         borderRadius={24}
       >
-        <Button
-          title="Rate now"
-          variant="filled"
-          fullWidth
-          onPress={() => setIconAlert(false)}
-        />
-        <Button
-          title="Not now"
-          variant="outline"
-          fullWidth
-          onPress={() => setIconAlert(false)}
-        />
+        <Button title="Rate now" variant="filled" fullWidth onPress={() => setIconAlert(false)} />
+        <Button title="Not now" variant="outline" fullWidth onPress={() => setIconAlert(false)} />
       </Alert>
 
-      {/* 4. Fully custom — dark bg, no title, custom colors */}
+      {/* Alert 4 — fully custom */}
       <Alert
         visible={customAlert}
         onClose={() => setCustomAlert(false)}
@@ -158,7 +194,7 @@ export default function HomeScreen() {
           onPress={() => setCustomAlert(false)}
         />
       </Alert>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -172,11 +208,29 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
     gap: 16,
   },
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 8,
+  },
+  menuButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   card: {
     backgroundColor: '#FFFFFF',
@@ -205,5 +259,14 @@ const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  sidebarHeader: {
+    padding: 16,
+    backgroundColor: '#620A32',
+  },
+  sidebarHeaderText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });

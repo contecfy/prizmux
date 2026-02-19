@@ -2,12 +2,12 @@ import { Image } from 'expo-image';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { router } from 'expo-router';
 import { Phone, Bell, LucideChevronLeft, PackageOpen } from 'lucide-react-native';
-import { HeaderWithBack } from '@/lib/components/HeaderWithBack';
 import { Button } from '@/lib/components/Button';
 import { EmptyState } from '@/lib/components/EmptyState';
 import { Toast } from '@/lib/components/Toast';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
+import { Header } from '@/lib/components/Header';
 
 export default function TabTwoScreen() {
   const [autoToast, setAutoToast] = useState(false);
@@ -16,7 +16,7 @@ export default function TabTwoScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HeaderWithBack
+      <Header
         title="John Doe"
         backIcon={<LucideChevronLeft size={22} color="#000000" />}
         onBackPress={() => router.back()}

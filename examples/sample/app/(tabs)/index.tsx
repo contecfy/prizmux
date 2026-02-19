@@ -60,7 +60,7 @@ export default function HomeScreen() {
 <FAB
   icon={<Plus size={24} color="#fff" />}
   onPress={() => {}}
-  position="bottom-right"
+  position="bottom-left"
   borderRadius={16}
   backgroundColor="#166534"
 />

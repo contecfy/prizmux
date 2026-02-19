@@ -1,4 +1,4 @@
-# 👽 Prizmux
+# Prizmux
 
 A developer-first React Native component system.
 
@@ -26,7 +26,7 @@ npm install prizmux
 | `Card` | Composable container, put anything inside |
 | `BottomSheet` | Swipeable sheet with drag handle and backdrop dismiss |
 | `ImagePreview` | Full screen image viewer with gallery support |
-| `HeaderWithBack` | Navigation header with back button, avatar, and action icons with badges |
+| `Header` | Navigation header with or without a back button, avatar, and action icons with badges |
 | `EmptyState` | Placeholder UI for empty lists and zero-data screens |
 | `PhoneInput` | International phone input with searchable country picker and auto-detection |
 | `Toast` | Auto, manual, and swipe-to-dismiss notifications |

@@ -1,11 +1,12 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import type { HeaderWithBackProps } from './HeaderWithBack.types';
+import React from 'react'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import type { HeaderProps } from './Header.types'
 
-export const HeaderWithBack: React.FC<HeaderWithBackProps> = ({
+export const Header: React.FC<HeaderProps> = ({
   title,
   avatar,
   titlePosition = 'center',
+  showBack = false,
   onBackPress,
   backIcon,
   actions = [],
@@ -15,22 +16,27 @@ export const HeaderWithBack: React.FC<HeaderWithBackProps> = ({
       ? styles.titleLeft
       : titlePosition === 'right'
       ? styles.titleRight
-      : styles.titleCenter;
+      : styles.titleCenter
 
-  const visibleActions = actions.slice(0, 4);
+  const visibleActions = actions.slice(0, 4)
 
   return (
     <View style={styles.header}>
-      {/* Back button */}
-      <Pressable
-        onPress={onBackPress}
-        style={styles.backButton}
-        android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
-      >
-        {backIcon ?? <Text style={styles.backIcon}>‹</Text>}
-      </Pressable>
+      
+      {/* Back Button (optional) */}
+      {showBack ? (
+        <Pressable
+          onPress={onBackPress}
+          style={styles.backButton}
+          android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
+        >
+          {backIcon ?? <Text style={styles.backIcon}>‹</Text>}
+        </Pressable>
+      ) : (
+        <View style={styles.leftSpacer} />
+      )}
 
-      {/* Avatar — render as-is if provided */}
+      {/* Avatar */}
       {avatar && <View style={styles.avatarContainer}>{avatar}</View>}
 
       {/* Title */}
@@ -38,7 +44,7 @@ export const HeaderWithBack: React.FC<HeaderWithBackProps> = ({
         {title}
       </Text>
 
-      {/* Right actions */}
+      {/* Actions */}
       <View style={styles.actionsContainer}>
         {visibleActions.map((action, index) => (
           <Pressable
@@ -61,8 +67,8 @@ export const HeaderWithBack: React.FC<HeaderWithBackProps> = ({
         ))}
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   header: {
@@ -74,6 +80,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
   },
+
+  leftSpacer: {
+    width: 40,
+    height: 40,
+  },
+
   backButton: {
     width: 40,
     height: 40,
@@ -82,12 +94,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   backIcon: {
     fontSize: 28,
     color: '#111827',
     lineHeight: 32,
     fontWeight: '300',
   },
+
   avatarContainer: {
     marginLeft: 6,
     width: 40,
@@ -97,6 +111,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   title: {
     flex: 1,
     fontSize: 18,
@@ -104,14 +119,17 @@ const styles = StyleSheet.create({
     color: '#111827',
     marginHorizontal: 8,
   },
+
   titleLeft: { textAlign: 'left' },
   titleCenter: { textAlign: 'center' },
   titleRight: { textAlign: 'right' },
+
   actionsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
   },
+
   actionButton: {
     width: 40,
     height: 40,
@@ -119,6 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   badge: {
     position: 'absolute',
     top: 4,
@@ -131,9 +150,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 3,
   },
+
   badgeText: {
     fontSize: 10,
     fontWeight: '700',
     color: '#FFFFFF',
   },
-});
+})
