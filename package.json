@@ -71,10 +71,10 @@
     "prizmux"
   ],
   "author": "Lukwago Joel Jr",
-   "license": "MIT",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/contecfy/prizmux"
+    "url": "git+https://github.com/contecfy/prizmux.git"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
