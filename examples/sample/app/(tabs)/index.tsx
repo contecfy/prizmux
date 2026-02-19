@@ -1,5 +1,7 @@
 
+import { FAB } from '@/lib/components/Fab';
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
+import { Filter, Plus } from 'lucide-react-native';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
@@ -52,6 +54,43 @@ export default function HomeScreen() {
    renderFlag={(country) => (
     <CountryFlag isoCode={country.code} size={22} />
   )}
+/>
+
+{/* // Icon only — classic circle FAB */}
+<FAB
+  icon={<Plus size={24} color="#fff" />}
+  onPress={() => {}}
+  position="bottom-right"
+  borderRadius={16}
+  backgroundColor="#166534"
+/>
+{/* 
+// Icon + label — extended FAB */}
+{/* <FAB
+  icon={<Plus size={20} color="#fff" />}
+  label="New Booking"
+  labelPosition="right"
+  onPress={() => {}}
+  position="bottom-right"
+  borderRadius={16}
+/> */}
+
+{/* // Label only */}
+{/* <FAB
+  label="Add Item"
+  onPress={() => {}}
+  position="bottom-center"
+  backgroundColor="#166534"
+/> */}
+
+{/* // Top left, custom size and color */}
+<FAB
+  icon={<Filter size={20} color="#fff" />}
+  onPress={() => {}}
+  position="top-left"
+  size="small"
+  backgroundColor="#991B1B"
+  offsetY={60}
 />
     </View>
   );
