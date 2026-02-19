@@ -20,18 +20,19 @@ npm install prizmux
 
 ## Components
 
-| Component | Description |
-|---|---|
-| `Button` | Variants, sizes, loading state, icon support, full accessibility |
-| `Card` | Composable container, put anything inside |
-| `BottomSheet` | Swipeable sheet with drag handle and backdrop dismiss |
-| `ImagePreview` | Full screen image viewer with gallery support |
-| `Header` | Navigation header with or without a back button, avatar, and action icons with badges |
-| `EmptyState` | Placeholder UI for empty lists and zero-data screens |
-| `PhoneInput` | International phone input with searchable country picker and auto-detection |
-| `Toast` | Auto, manual, and swipe-to-dismiss notifications |
-| `FAB` | Floating action button with icon, label, or both |
-| `Alert` | Customizable modal alert — bring your own buttons |
+| Component      | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
+| `Alert`        | Customizable modal alert — bring your own buttons                                     |
+| `BottomSheet`  | Swipeable sheet with drag handle and backdrop dismiss                                 |
+| `Button`       | Variants, sizes, loading state, icon support, full accessibility                      |
+| `Card`         | Composable container, put anything inside                                             |
+| `EmptyState`   | Placeholder UI for empty lists and zero-data screens                                  |
+| `FAB`          | Floating action button with icon, label, or both                                      |
+| `Header`       | Navigation header with or without a back button, avatar, and action icons with badges |
+| `ImagePreview` | Full screen image viewer with gallery support                                         |
+| `PhoneInput`   | International phone input with searchable country picker and auto-detection           |
+| `Sidebar`      | Collapsible navigation panel with customizable items, icons, and active states        |
+| `Toast`        | Auto, manual, and swipe-to-dismiss notifications                                      |
 
 ---
 
