@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="./logo.png" alt="Prizmux Logo" width="160" />
+</p>
 # Prizmux
 
 A developer-first React Native component system.
