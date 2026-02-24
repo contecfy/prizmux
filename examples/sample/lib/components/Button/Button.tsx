@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   ActivityIndicator,
+  Animated,
   Pressable,
   StyleSheet,
   Text,
@@ -65,13 +66,33 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   iconPosition = 'left',
   fullWidth = false,
-  borderRadius = 0,              // default 12 — same as before, now overridable
+  borderRadius = 0,
   hitSlop,
   accessibilityLabel,
 }) => {
   const isDisabled = disabled || isLoading;
   const sizeConfig = BUTTON_CONFIG.sizes[size];
   const isFilled = variant === 'filled';
+
+  // ----- ADD: Scale animation for touch feedback -----
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.96,
+      useNativeDriver: true,
+      bounciness: 0,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      bounciness: 0,
+    }).start();
+  };
+  // ----------------------------------------------------
 
   const getButtonStyle = () => {
     const baseStyle = isFilled ? styles.filledButton : styles.outlineButton;
@@ -87,7 +108,7 @@ export const Button: React.FC<ButtonProps> = ({
       sizeStyle,
       disabledStyle,
       fullWidth && styles.fullWidth,
-      { borderRadius },           // applied from prop, not hardcoded
+      { borderRadius },
       style,
     ].filter(Boolean) as ViewStyle[];
   };
@@ -113,50 +134,50 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <Pressable
-      style={getButtonStyle()}
-      onPress={onPress}
-      onLongPress={onLongPress}
-      disabled={isDisabled}
-      hitSlop={hitSlop}
-      accessibilityLabel={accessibilityLabel ?? title}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: isDisabled, busy: isLoading }}
-    >
-      <View style={[styles.buttonContent, contentStyle]}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color={getLoadingColor()} />
-        ) : (
-          <>
-            {icon && iconPosition === 'left' && (
-              <View
-                style={[
-                  styles.iconContainer,
-                  title ? { marginRight: sizeConfig.gap } : undefined,
-                ]}
-              >
-                {icon}
-              </View>
-            )}
-            {title && (
-              <Text style={getTextStyle()}>
-                {title}
-              </Text>
-            )}
-            {icon && iconPosition === 'right' && (
-              <View
-                style={[
-                  styles.iconContainer,
-                  title ? { marginLeft: sizeConfig.gap } : undefined,
-                ]}
-              >
-                {icon}
-              </View>
-            )}
-          </>
-        )}
-      </View>
-    </Pressable>
+    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+      <Pressable
+        style={getButtonStyle()}
+        onPress={onPress}
+        onLongPress={onLongPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={isDisabled}
+        hitSlop={hitSlop}
+        accessibilityLabel={accessibilityLabel ?? title}
+        accessibilityRole="button"
+        accessibilityState={{ disabled: isDisabled, busy: isLoading }}
+      >
+        <View style={[styles.buttonContent, contentStyle]}>
+          {isLoading ? (
+            <ActivityIndicator size="small" color={getLoadingColor()} />
+          ) : (
+            <>
+              {icon && iconPosition === 'left' && (
+                <View
+                  style={[
+                    styles.iconContainer,
+                    title ? { marginRight: sizeConfig.gap } : undefined,
+                  ]}
+                >
+                  {icon}
+                </View>
+              )}
+              {title && <Text style={getTextStyle()}>{title}</Text>}
+              {icon && iconPosition === 'right' && (
+                <View
+                  style={[
+                    styles.iconContainer,
+                    title ? { marginLeft: sizeConfig.gap } : undefined,
+                  ]}
+                >
+                  {icon}
+                </View>
+              )}
+            </>
+          )}
+        </View>
+      </Pressable>
+    </Animated.View>
   );
 };
 
