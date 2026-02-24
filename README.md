@@ -35,7 +35,7 @@ npm install prizmux
 | `Header`       | Navigation header with or without a back button, avatar, and action icons with badges |
 | `ImagePreview` | Full screen image viewer with gallery support                                         |
 | `PhoneInput`   | International phone input with searchable country picker and auto-detection           |
-| `Sidebar`      | Collapsible navigation panel with customizable items, icons, and active states        |
+| `ContextMenu`      | Collapsible navigation panel with customizable items, icons, and active states        |
 | `Toast`        | Auto, manual, and swipe-to-dismiss notifications                                      |
 
 ---

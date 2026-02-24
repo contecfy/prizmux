@@ -1,11 +1,10 @@
-import { router } from '@/.expo/types/router';
 import { Alert } from '@/lib/components/Alert';
 import { Button } from '@/lib/components/Button';
 import { FAB } from '@/lib/components/Fab';
 import { Header } from '@/lib/components/Header/Header';
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
-import { Sidebar } from '@/lib/components/Sidebar';
-import { Bell, BookOpen, Filter, Heart, LucideChevronLeft, Menu, Phone, Plus, ShoppingCart, Star, Trash2, User, Users, Wallet } from 'lucide-react-native';
+import { ContextMenu } from '@/lib/components/ContextMenu/ContextMenu';
+import { BookOpen, Filter, Heart, LucideChevronLeft, Menu, Plus, ShoppingCart, Star, Trash2, User, Users, Wallet } from 'lucide-react-native';
 import { useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
@@ -71,66 +70,65 @@ export default function HomeScreen() {
       />
 
       {/* Sidebar */}
-      <Sidebar
-        visible={sidebarVisible}
-        onClose={() => setSidebarVisible(false)}
-        side="right"
-        
-        items={[
-          {
-            id: 'cart',
-            title: 'Cart',
-            icon: <ShoppingCart size={20} color="#620A32" />,
-            badge: 3,
-            badgeColor: '#620A32',
-            onPress: () => console.log('cart'),
-          },
-          {
-            id: 'myorders',
-            title: 'My Orders',
-            icon: <ShoppingCart size={20} color="#620A32" />,
-            onPress: () => console.log('orders'),
-          },
-          {
-            id: 'favourites',
-            title: 'Favourites',
-            icon: <Heart size={20} color="#620A32" />,
-            badge: 5,
-            badgeColor: '#620A32',
-            onPress: () => console.log('favourites'),
-          },
-          {
-            id: 'profile',
-            title: 'Profile',
-            icon: <User size={20} color="#620A32" />,
-            onPress: () => console.log('profile'),
-          },
-          {
-            id: 'workers',
-            title: 'Source Skilled Workers',
-            icon: <Users size={20} color="#620A32" />,
-            onPress: () => console.log('workers'),
-          },
-          {
-            id: 'skilling',
-            title: 'Agriculture Skilling',
-            icon: <BookOpen size={20} color="#620A32" />,
-            onPress: () => console.log('skilling'),
-          },
-          {
-            id: 'loans',
-            title: 'Loans',
-            icon: <Wallet size={20} color="#620A32" />,
-            onPress: () => console.log('loans'),
-          },
-        ]}
-        header={
-          <View style={styles.sidebarHeader}>
-            <Text style={styles.sidebarHeaderText}>Menu</Text>
-          </View>
-        }
-      />
-
+     <ContextMenu
+  visible={sidebarVisible}
+  animation='none'
+  onClose={() => setSidebarVisible(false)}
+  position={{ top: 60, right: 16 }} // anchors it under the menu button
+  backgroundColor="#fff"
+  borderRadius={12}
+  showIconBackground={true}
+  iconBackgroundColor="rgba(98, 10, 50, 0.06)"
+  iconBorderRadius={8}
+  items={[
+    {
+      id: 'cart',
+      title: 'Cart',
+      icon: <ShoppingCart size={20} color="#620A32" />,
+      badge: 3,
+      badgeColor: '#620A32',
+      onPress: () => console.log('cart'),
+    },
+    {
+      id: 'myorders',
+      title: 'My Orders',
+      icon: <ShoppingCart size={20} color="#620A32" />,
+      onPress: () => console.log('orders'),
+    },
+    {
+      id: 'favourites',
+      title: 'Favourites',
+      icon: <Heart size={20} color="#620A32" />,
+      badge: 5,
+      badgeColor: '#620A32',
+      onPress: () => console.log('favourites'),
+    },
+    {
+      id: 'profile',
+      title: 'Profile',
+      icon: <User size={20} color="#620A32" />,
+      onPress: () => console.log('profile'),
+    },
+    {
+      id: 'workers',
+      title: 'Source Skilled Workers',
+      icon: <Users size={20} color="#620A32" />,
+      onPress: () => console.log('workers'),
+    },
+    {
+      id: 'skilling',
+      title: 'Agriculture Skilling',
+      icon: <BookOpen size={20} color="#620A32" />,
+      onPress: () => console.log('skilling'),
+    },
+    {
+      id: 'loans',
+      title: 'Loans',
+      icon: <Wallet size={20} color="#620A32" />,
+      onPress: () => console.log('loans'),
+    },
+  ]}
+/>
       {/* Alert 1 — text only */}
       <Alert
         visible={textOnlyAlert}
