@@ -28,7 +28,7 @@ npm install prizmux
 | -------------- | ------------------------------------------------------------------------------------- |
 | `Alert`        | Customizable modal alert — bring your own buttons                                     |
 | `BottomSheet`  | Swipeable sheet with drag handle and backdrop dismiss                                 |
-| `Button`       | Variants, sizes, loading state, icon support (your own icons), with touch feed back                      |
+| `Button`       | Variants, sizes, loading state, icon support (your own icons), with touch feedback                      |
 | `Card`         | Composable container, put anything inside                                             |
 | `EmptyState`   | Placeholder UI for empty lists and zero-data screens                                  |
 | `FAB`          | Floating action button with icon, label, or both                                      |
