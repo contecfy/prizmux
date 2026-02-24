@@ -7,5 +7,5 @@ export * from './Fab';
 export * from './Header';
 export * from './ImagePreview';
 export * from './PhoneInput';
-export * from './Sidebar';
+export * from './ContextMenu';
 export * from './Toast';
