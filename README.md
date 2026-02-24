@@ -50,6 +50,12 @@ npm install prizmux
 
 ---
 
+Contact
+
+Have questions, suggestions, or just want to say hi? Reach out via email:
+
+📧 contecfy@gmail.com
+
 ## License
 
 MIT
