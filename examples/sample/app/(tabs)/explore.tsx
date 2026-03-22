@@ -22,6 +22,8 @@ export default function TabTwoScreen() {
   const [bsDefault, setBsDefault] = useState(false);
   const [bsCenter, setBsCenter] = useState(false);
   const [bsCustom, setBsCustom] = useState(false);
+  const [bsLeftCloseTitleRight, setBsLeftCloseTitleRight] = useState(false);
+  const [bsLeftCloseNoTitle, setBsLeftCloseNoTitle] = useState(false);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
@@ -51,7 +53,7 @@ export default function TabTwoScreen() {
           },
           {
             icon: <Phone size={22} color={theme.text} />,
-            onPress: () => {}
+            onPress: () => { }
           },
         ]}
       />
@@ -119,6 +121,22 @@ export default function TabTwoScreen() {
           backgroundColor="#000"
           textColor="#fff"
           pressedBackgroundColor="#444"
+        />
+
+        <Button
+          title="Close Left / Title Right"
+          variant="outline"
+          onPress={() => setBsLeftCloseTitleRight(true)}
+          borderColor={theme.text}
+          textColor={theme.text}
+        />
+
+        <Button
+          title="Close Left / No Title"
+          variant="filled"
+          onPress={() => setBsLeftCloseNoTitle(true)}
+          backgroundColor="#EF4444"
+          textColor="#fff"
         />
 
         <View style={{ height: 1, backgroundColor: theme.border, marginVertical: 12 }} />
@@ -231,7 +249,7 @@ export default function TabTwoScreen() {
         onClose={() => setBsCenter(false)}
         title="Centered Title"
         titlePosition="center"
-        closePosition="right"
+        closePosition="left"
         backgroundColor={theme.background}
         titleStyle={{ color: theme.text }}
         headerBorderBottomColor={theme.border}
@@ -258,13 +276,41 @@ export default function TabTwoScreen() {
           <Text style={{ color: theme.background, textAlign: 'center' }}>
             Inverted colors, no header border, close on left, title on right.
           </Text>
-          <Button 
-            title="Cool" 
-            onPress={() => setBsCustom(false)} 
-            backgroundColor={theme.background} 
-            textColor={theme.text} 
+          <Button
+            title="Cool"
+            onPress={() => setBsCustom(false)}
+            backgroundColor={theme.background}
+            textColor={theme.text}
             showShadow={false}
           />
+        </View>
+      </BottomSheet>
+      <BottomSheet
+        visible={bsLeftCloseTitleRight}
+        onClose={() => setBsLeftCloseTitleRight(false)}
+        title="Settings Menu"
+        titlePosition="right"
+        closePosition="left"
+        backgroundColor={theme.background}
+        titleStyle={{ color: theme.text }}
+      >
+        <View style={{ gap: 12 }}>
+          <Text style={{ color: theme.text }}>Close is on the extreme left, title on the extreme right.</Text>
+          <Button title="Continue" onPress={() => setBsLeftCloseTitleRight(false)} backgroundColor={theme.text} textColor={theme.background} />
+        </View>
+      </BottomSheet>
+
+      <BottomSheet
+        visible={bsLeftCloseNoTitle}
+        onClose={() => setBsLeftCloseNoTitle(false)}
+        closePosition="left"
+        backgroundColor={theme.background}
+        showDragHandle={true}
+      >
+        <View style={{ gap: 12, paddingVertical: 10 }}>
+          <Text style={{ color: theme.text, fontSize: 18, fontWeight: 'bold' }}>No Header Title</Text>
+          <Text style={{ color: theme.text }}>Just a close button on the left and a drag handle.</Text>
+          <Button title="Dismiss" onPress={() => setBsLeftCloseNoTitle(false)} variant="outline" borderColor="#EF4444" textColor="#EF4444" />
         </View>
       </BottomSheet>
     </SafeAreaView>

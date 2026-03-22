@@ -79,6 +79,7 @@ export default function ComponentsDemoScreen() {
             onPress={() => handlePress("Filled Primary")}
             backgroundColor={theme.text}
             textColor={theme.background}
+            borderRadius={100}
           />
           <Button
             title="Outline Primary"
@@ -522,8 +523,8 @@ export default function ComponentsDemoScreen() {
 
       <ImagePreview
         visible={galleryVisible}
-        nextIcon={<LucideChevronRight color={theme.background}/> } 
-        prevIcon={<LucideChevronLeft color={theme.background}/> }
+        nextIcon={<LucideChevronRight color={theme.background} />}
+        prevIcon={<LucideChevronLeft color={theme.background} />}
         images={MULTIPLE_IMAGES}
         initialIndex={galleryIndex}
         onClose={() => setGalleryVisible(false)}

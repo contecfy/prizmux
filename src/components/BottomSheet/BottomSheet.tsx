@@ -165,79 +165,77 @@ const DefaultCloseIcon = () => (
             openModal();
           }
         }}
+        {...panResponder.panHandlers}
       >
-        {/* Interaction Wrapper: Handles drag gestures for handle + header */}
-        <View {...panResponder.panHandlers}>
-          {/* Drag handle */}
-          {showDragHandle && (
-            <View style={[styles.dragHandleContainer, handleContainerStyle]}>
-              <View
-                style={[
-                  styles.dragHandle,
-                  handleColor ? { backgroundColor: handleColor } : undefined,
-                  handleStyle,
-                ]}
-              />
-            </View>
-          )}
-
-          {/* Header */}
-          {(title || showCloseButton) && (
+        {/* Drag handle */}
+        {showDragHandle && (
+          <View style={[styles.dragHandleContainer, handleContainerStyle]}>
             <View
               style={[
-                styles.header,
-                {
-                  borderBottomWidth: showHeaderBorder ? StyleSheet.hairlineWidth : 0,
-                  borderBottomColor: headerBorderBottomColor ?? styles.header.borderBottomColor,
-                },
-                headerStyle,
+                styles.dragHandle,
+                handleColor ? { backgroundColor: handleColor } : undefined,
+                handleStyle,
               ]}
-            >
-              {/* Left Slot: Extreme Left */}
-              <View style={[styles.headerSlot, { alignItems: 'flex-start' }]}>
-                {showCloseButton && closePosition === 'left' && (
-                  <Pressable
-                    style={[styles.closeButton, { marginLeft: 0 }, closeButtonStyle]}
-                    onPress={closeModal}
-                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  >
-                    {closeIcon ?? (
-                      <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
-                    )}
-                  </Pressable>
-                )}
-                {title && titlePosition === 'left' && (
-                  <Text style={[styles.title, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
-                )}
-              </View>
+            />
+          </View>
+        )}
 
-              {/* Center Slot: Extreme Center */}
-              <View style={[styles.headerSlot, { alignItems: 'center' }]}>
-                {title && titlePosition === 'center' && (
-                  <Text style={[styles.title, { textAlign: 'center' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
-                )}
-              </View>
-
-              {/* Right Slot: Extreme Right */}
-              <View style={[styles.headerSlot, { alignItems: 'flex-end' }]}>
-                {title && titlePosition === 'right' && (
-                  <Text style={[styles.title, { textAlign: 'right' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
-                )}
-                {showCloseButton && closePosition === 'right' && (
-                  <Pressable
-                    style={[styles.closeButton, { marginRight: 0 }, closeButtonStyle]}
-                    onPress={closeModal}
-                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  >
-                    {closeIcon ?? (
-                      <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
-                    )}
-                  </Pressable>
-                )}
-              </View>
+        {/* Header */}
+        {(title || showCloseButton) && (
+          <View
+            style={[
+              styles.header,
+              {
+                borderBottomWidth: showHeaderBorder ? StyleSheet.hairlineWidth : 0,
+                borderBottomColor: headerBorderBottomColor ?? styles.header.borderBottomColor,
+              },
+              headerStyle,
+            ]}
+          >
+            {/* Left Slot: Extreme Left */}
+            <View style={[styles.headerSlot, { alignItems: 'flex-start' }]}>
+              {showCloseButton && closePosition === 'left' && (
+                <Pressable
+                  style={[styles.closeButton, { marginLeft: 0 }, closeButtonStyle]}
+                  onPress={closeModal}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                  {closeIcon ?? (
+                    <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
+                  )}
+                </Pressable>
+              )}
+              {title && titlePosition === 'left' && (
+                <Text style={[styles.title, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+              )}
             </View>
-          )}
-        </View>
+
+            {/* Center Slot: Extreme Center */}
+            <View style={[styles.headerSlot, { alignItems: 'center' }]}>
+              {title && titlePosition === 'center' && (
+                <Text style={[styles.title, { textAlign: 'center' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+              )}
+            </View>
+
+            {/* Right Slot: Extreme Right */}
+            <View style={[styles.headerSlot, { alignItems: 'flex-end' }]}>
+              {title && titlePosition === 'right' && (
+                <Text style={[styles.title, { textAlign: 'right' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+              )}
+              {showCloseButton && closePosition === 'right' && (
+                <Pressable
+                  style={[styles.closeButton, { marginRight: 0 }, closeButtonStyle]}
+                  onPress={closeModal}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                  {closeIcon ?? (
+                    <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
+                  )}
+                </Pressable>
+              )}
+            </View>
+          </View>
+        )}
 
         {/* Content */}
         <View style={[styles.contentContainer, contentContainerStyle]}>
