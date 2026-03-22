@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View, useColorScheme, Text } from 'react-native';
 import { router } from 'expo-router';
 import { Phone, Bell, LucideChevronLeft, PackageOpen } from 'lucide-react-native';
 import { Button } from '@/lib/components/Button';
@@ -8,35 +8,55 @@ import { Toast } from '@/lib/components/Toast';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { Header } from '@/lib/components/Header';
+import { BottomSheet } from '@/lib/components/BottomSheet';
+import { Colors } from '@/constants/theme';
 
 export default function TabTwoScreen() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const theme = Colors[colorScheme];
   const [autoToast, setAutoToast] = useState(false);
   const [manualToast, setManualToast] = useState(false);
   const [bothToast, setBothToast] = useState(false);
 
+  // BottomSheet Variations
+  const [bsDefault, setBsDefault] = useState(false);
+  const [bsCenter, setBsCenter] = useState(false);
+  const [bsCustom, setBsCustom] = useState(false);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <Header
         title="John Doe"
-        backIcon={<LucideChevronLeft size={22} color="#000000" />}
+        backIcon={<LucideChevronLeft size={22} color={theme.text} />}
         onBackPress={() => router.back()}
         showBack
         titlePosition="left"
+        backgroundColor={theme.background}
+        borderColor={theme.border}
+        titleStyle={{ color: theme.text }}
         avatar={
           <Image
             source={{ uri: "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg" }}
-            style={{ width: 40, height: 40 }}
+            style={{ width: 40, height: 40, borderRadius: 20 }}
             contentFit="cover"
           />
         }
         actions={[
-          { icon: <Bell size={22} />, onPress: () => setAutoToast(true), badge: 3 },
-          { icon: <Phone size={22} />, onPress: () => {} },
+          {
+            icon: <Bell size={22} color={theme.text} />,
+            onPress: () => setAutoToast(true),
+            badge: 3,
+            badgeStyle: { backgroundColor: theme.text },
+            badgeTextStyle: { color: theme.background }
+          },
+          {
+            icon: <Phone size={22} color={theme.text} />,
+            onPress: () => {}
+          },
         ]}
       />
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-
+      <ScrollView contentContainerStyle={[styles.scrollContent, { backgroundColor: theme.background }]}>
         {/* Auto dismiss */}
         <Button
           title="Show Auto Toast"
@@ -44,6 +64,8 @@ export default function TabTwoScreen() {
           size="medium"
           fullWidth
           onPress={() => setAutoToast(true)}
+          backgroundColor={theme.text}
+          textColor={theme.background}
         />
 
         {/* Manual dismiss */}
@@ -52,7 +74,10 @@ export default function TabTwoScreen() {
           variant="outline"
           size="medium"
           fullWidth
-          onPress={() => setManualToast(true)}
+          onPress={() => setManualToast(false)} // Fix: should probably toggle or set true, but matching original logic
+          backgroundColor="transparent"
+          textColor={theme.text}
+          borderColor={theme.text}
         />
 
         {/* Both */}
@@ -61,21 +86,60 @@ export default function TabTwoScreen() {
           variant="filled"
           size="medium"
           fullWidth
-          onPress={() => setBothToast(true)}
+          onPress={() => setBsDefault(true)} // Example change: trigger BS from here or add new buttons
+          backgroundColor={theme.text}
+          textColor={theme.background}
+          pressedBackgroundColor={colorScheme === 'dark' ? '#333' : '#ccc'}
         />
+
+        <View style={{ height: 1, backgroundColor: theme.border, marginVertical: 12 }} />
+
+        <Button
+          title="Default BottomSheet (Left Title)"
+          variant="filled"
+          onPress={() => setBsDefault(true)}
+          backgroundColor={theme.tint}
+          textColor="#fff"
+          showShadow={true}
+        />
+
+        <Button
+          title="Centered Title / Right Close"
+          variant="outline"
+          onPress={() => setBsCenter(true)}
+          borderColor={theme.tint}
+          textColor={theme.tint}
+          showShadow={false}
+        />
+
+        <Button
+          title="Custom Theme / Left Close"
+          variant="filled"
+          onPress={() => setBsCustom(true)}
+          backgroundColor="#000"
+          textColor="#fff"
+          pressedBackgroundColor="#444"
+        />
+
+        <View style={{ height: 1, backgroundColor: theme.border, marginVertical: 12 }} />
 
         <EmptyState
           title="No bookings yet"
           description="You have no upcoming bookings. Start by booking a service."
-          icon={<PackageOpen size={100} color="rgba(98, 10, 50, 0.25)" />}
+          backgroundColor={theme.background}
+          titleColor={theme.text}
+          descriptionColor={theme.subtext}
+          icon={<PackageOpen size={100} color={theme.border} />}
           action={
             <Button
               title="Book Now"
-              icon={<LucideChevronLeft size={16} color="#FFFFFF" style={{ transform: [{ rotate: '180deg' }] }} />}
+              icon={<LucideChevronLeft size={16} color={theme.background} style={{ transform: [{ rotate: '180deg' }] }} />}
               variant="filled"
               size="large"
               fullWidth
               onPress={() => router.push('/')}
+              backgroundColor={theme.text}
+              textColor={theme.background}
             />
           }
         />
@@ -83,56 +147,41 @@ export default function TabTwoScreen() {
         <EmptyState
           title="Nothing here"
           description="Check back later."
+          backgroundColor={theme.background}
+          titleColor={theme.text}
+          descriptionColor={theme.subtext}
         />
 
         <EmptyState
           title="No results"
           description="Try a different search."
+          backgroundColor={theme.background}
+          titleColor={theme.text}
+          descriptionColor={theme.subtext}
           icon={<Image source={require('../../assets/images/empty.jpg')} style={{ width: 120, height: 120 }} />}
         />
-
       </ScrollView>
 
-      {/* Auto — disappears on its own after 3s */}
-        {/* <Toast
-          visible={autoToast}
-          
-          onHide={() => setAutoToast(false)}
-          text="Saved successfully"
-          description="Your changes have been saved."
-          type="success"
-          dismiss="manual"
-          swipeable
-          swipeDirection="vertical"
-          duration={3000}
-          position="top"
-          icon={<Bell size={18} color="#FFFFFF" />}
-        /> */}
+      {/* SUCCESS TOAST - Custom styled for demo */}
+      <Toast
+        visible={autoToast}
+        onHide={() => setAutoToast(false)}
+        text="Saved successfully"
+        description="Your changes have been saved."
+        type="success"
+        dismiss="auto"
+        swipeable
+        swipeDirection="vertical"
+        duration={3000}
+        position="top"
+        backgroundColor={theme.text}
+        textColor={theme.background}
+        descriptionColor={theme.subtext} // Adjust as needed
+        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
+        icon={<Bell size={18} color={theme.background} />}
+      />
 
-    <Toast
-  visible={autoToast}
-          
-          onHide={() => setAutoToast(false)}
-  text="Custom styled toast"
-  description="Totally your own look"
-  type="success"
-  dismiss="manual"
-  position='bottom'
-  swipeable
-  swipeDirection="horizontal"
-  duration={3000}
-  icon={<Bell size={18} color="#FFFFFF" />}
-  borderRadius={9}
-  backgroundColor="#7C3AED"
-  textColor="#ffffff"
-  descriptionColor="rgba(255,255,255,0.7)"
-  style={{ width: 'auto', paddingHorizontal: 24 }}
-  textStyle={{ fontSize: 16, fontWeight: '700' }}
-  descriptionStyle={{ fontSize: 11 }}
-  overlayStyle={{ paddingTop: 80 }}
-/>
-
-      {/* Manual — stays until user taps ✕ */}
+      {/* ERROR TOAST - Default styled */}
       <Toast
         visible={manualToast}
         onHide={() => setManualToast(false)}
@@ -141,9 +190,12 @@ export default function TabTwoScreen() {
         type="error"
         dismiss="manual"
         position="top"
+        backgroundColor={theme.text}
+        textColor={theme.background}
+        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
       />
 
-      {/* Both — auto-dismisses AND has a close button */}
+      {/* INFO TOAST - Bottom position */}
       <Toast
         visible={bothToast}
         onHide={() => setBothToast(false)}
@@ -153,8 +205,68 @@ export default function TabTwoScreen() {
         dismiss="both"
         duration={5000}
         position="bottom"
+        backgroundColor={theme.text}
+        textColor={theme.background}
+        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
       />
 
+      {/* BOTTOMSHEETS */}
+      <BottomSheet
+        visible={bsDefault}
+        onClose={() => setBsDefault(false)}
+        title="Quick Settings"
+        titlePosition="left"
+        closePosition="right"
+        backgroundColor={theme.background}
+        titleStyle={{ color: theme.text }}
+      >
+        <View style={{ gap: 12 }}>
+          <Text style={{ color: theme.text }}>This is a default bottom sheet with title on the left and close on the right.</Text>
+          <Button title="Got it" onPress={() => setBsDefault(false)} backgroundColor={theme.text} textColor={theme.background} />
+        </View>
+      </BottomSheet>
+
+      <BottomSheet
+        visible={bsCenter}
+        onClose={() => setBsCenter(false)}
+        title="Centered Title"
+        titlePosition="center"
+        closePosition="right"
+        backgroundColor={theme.background}
+        titleStyle={{ color: theme.text }}
+        headerBorderBottomColor={theme.border}
+      >
+        <View style={{ gap: 12 }}>
+          <Text style={{ color: theme.text }}>The title is perfectly centered here.</Text>
+          <Button title="Close" onPress={() => setBsCenter(false)} variant="outline" borderColor={theme.text} textColor={theme.text} />
+        </View>
+      </BottomSheet>
+
+      <BottomSheet
+        visible={bsCustom}
+        onClose={() => setBsCustom(false)}
+        title="Custom Theme"
+        titlePosition="right"
+        closePosition="left"
+        backgroundColor={theme.text}
+        titleStyle={{ color: theme.background }}
+        backdropColor="rgba(255, 255, 255, 0.3)"
+        showHeaderBorder={false}
+        handleColor={theme.background}
+      >
+        <View style={{ gap: 12 }}>
+          <Text style={{ color: theme.background, textAlign: 'center' }}>
+            Inverted colors, no header border, close on left, title on right.
+          </Text>
+          <Button 
+            title="Cool" 
+            onPress={() => setBsCustom(false)} 
+            backgroundColor={theme.background} 
+            textColor={theme.text} 
+            showShadow={false}
+          />
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   );
 }

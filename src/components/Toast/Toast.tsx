@@ -48,6 +48,7 @@ export const Toast: React.FC<ToastProps> = ({
   iconContainerStyle,
   closeButtonStyle,
   overlayStyle,
+  shadowColor,
 }) => {
   const slideAnim = useRef(new Animated.Value(position === 'top' ? -120 : 120)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -216,6 +217,7 @@ export const Toast: React.FC<ToastProps> = ({
               ],
               opacity: opacityAnim,
             },
+            shadowColor ? { shadowColor } : undefined,
             style,                               // ← full toast override
           ]}
           {...panResponder.panHandlers}
@@ -254,7 +256,7 @@ export const Toast: React.FC<ToastProps> = ({
               accessibilityLabel="Dismiss notification"
               accessibilityRole="button"
             >
-              {closeIcon ?? <DefaultCloseIcon />}
+              {closeIcon ?? <Text style={[styles.defaultCloseIcon, { color: txtColor }]}>✕</Text>}
             </Pressable>
           )}
         </Animated.View>

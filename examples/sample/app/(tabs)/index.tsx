@@ -1,97 +1,117 @@
 
 import { FAB } from '@/lib/components/Fab';
 import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
-import { Filter, Plus } from 'lucide-react-native';
+import { Plus, Filter } from 'lucide-react-native';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
+import { Colors } from '@/constants/theme';
 
 export default function HomeScreen() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const theme = Colors[colorScheme];
   const [phone, setPhone] = useState<PhoneInputValue | undefined>();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Prizmux!</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.title, { color: theme.text }]}>Welcome to Prizmux!</Text>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Phone Number</Text>
-      <PhoneInput
-  label="Phone Number"
-  defaultCountryCode="UG"
-  value={phone}
-  onChange={setPhone}
-  renderFlag={(country) => (
-    <CountryFlag isoCode={country.code} size={22} />
-  )}
-/>
+      <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border, borderWidth: 1, shadowColor: colorScheme === 'dark' ? '#fff' : '#000' }]}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Phone Number</Text>
+        <PhoneInput
+          label="Phone Number"
+          defaultCountryCode="UG"
+          value={phone}
+          onChange={setPhone}
+          backgroundColor={theme.card}
+          borderColor={theme.border}
+          textColor={theme.text}
+          labelColor={theme.subtext}
+          pickerBackgroundColor={theme.background}
+          searchBackgroundColor={theme.card}
+          searchBorderColor={theme.border}
+          placeholderColor={theme.subtext}
+          renderFlag={(country) => (
+            <CountryFlag isoCode={country.code} size={22} />
+          )}
+        />
         {phone?.full && (
-          <Text style={styles.result}>Full number: {phone.full}</Text>
+          <Text style={[styles.result, { color: theme.subtext }]}>Full number: {phone.full}</Text>
         )}
       </View>
 
-    
-<PhoneInput
-  defaultCountryCode="UG"
-  allowedCountries={['UG', 'KE', 'TZ', 'RW', 'BI']}
-  onChange={setPhone}
-   renderFlag={(country) => (
-    <CountryFlag isoCode={country.code} size={22} />
-  )}
-/>
+      <View style={{ gap: 10, marginTop: 20 }}>
+        <PhoneInput
+          defaultCountryCode="UG"
+          allowedCountries={['UG', 'KE', 'TZ', 'RW', 'BI']}
+          onChange={setPhone}
+          backgroundColor={theme.card}
+          borderColor={theme.border}
+          textColor={theme.text}
+          labelColor={theme.subtext}
+          pickerBackgroundColor={theme.background}
+          searchBackgroundColor={theme.card}
+          searchBorderColor={theme.border}
+          placeholderColor={theme.subtext}
+          renderFlag={(country) => (
+            <CountryFlag isoCode={country.code} size={22} />
+          )}
+        />
 
-<PhoneInput
-  defaultCountryCode="UG"
-  allowedCountries={['UG']}
-  onChange={setPhone}
-   renderFlag={(country) => (
-    <CountryFlag isoCode={country.code} size={22} />
-  )}
-/>
+        <PhoneInput
+          defaultCountryCode="UG"
+          allowedCountries={['UG']}
+          onChange={setPhone}
+          backgroundColor={theme.card}
+          borderColor={theme.border}
+          textColor={theme.text}
+          labelColor={theme.subtext}
+          pickerBackgroundColor={theme.background}
+          searchBackgroundColor={theme.card}
+          searchBorderColor={theme.border}
+          placeholderColor={theme.subtext}
+          renderFlag={(country) => (
+            <CountryFlag isoCode={country.code} size={22} />
+          )}
+        />
 
-<PhoneInput
-  defaultCountryCode="US"
-  onChange={setPhone}
-   renderFlag={(country) => (
-    <CountryFlag isoCode={country.code} size={22} />
-  )}
-/>
+        <PhoneInput
+          defaultCountryCode="US"
+          onChange={setPhone}
+          backgroundColor={theme.card}
+          borderColor={theme.border}
+          textColor={theme.text}
+          labelColor={theme.subtext}
+          pickerBackgroundColor={theme.background}
+          searchBackgroundColor={theme.card}
+          searchBorderColor={theme.border}
+          placeholderColor={theme.subtext}
+          renderFlag={(country) => (
+            <CountryFlag isoCode={country.code} size={22} />
+          )}
+        />
+      </View>
 
-{/* // Icon only — classic circle FAB */}
-<FAB
-  icon={<Plus size={24} color="#fff" />}
-  onPress={() => {}}
-  position="bottom-left"
-  borderRadius={16}
-  backgroundColor="#166534"
-/>
-{/* 
-// Icon + label — extended FAB */}
-{/* <FAB
-  icon={<Plus size={20} color="#fff" />}
-  label="New Booking"
-  labelPosition="right"
-  onPress={() => {}}
-  position="bottom-right"
-  borderRadius={16}
-/> */}
+      {/* Circle FAB */}
+      <FAB
+        icon={<Plus size={24} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
+        onPress={() => {}}
+        position="bottom-left"
+        borderRadius={16}
+        backgroundColor={theme.text} // Black in light, White in dark
+        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
+      />
 
-{/* // Label only */}
-{/* <FAB
-  label="Add Item"
-  onPress={() => {}}
-  position="bottom-center"
-  backgroundColor="#166534"
-/> */}
-
-{/* // Top left, custom size and color */}
-<FAB
-  icon={<Filter size={20} color="#fff" />}
-  onPress={() => {}}
-  position="top-left"
-  size="small"
-  backgroundColor="#991B1B"
-  offsetY={60}
-/>
+      {/* Circle FAB Top Left */}
+      <FAB
+        icon={<Filter size={20} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
+        onPress={() => {}}
+        position="top-left"
+        size="small"
+        backgroundColor={theme.text}
+        offsetY={60}
+        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
+      />
     </View>
   );
 }
@@ -100,19 +120,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F9FAFB',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#111827',
     marginBottom: 24,
   },
   card: {
-    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
-    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.06,
     shadowRadius: 6,
@@ -122,11 +138,9 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
   },
   result: {
     fontSize: 13,
-    color: '#6B7280',
     marginTop: 4,
   },
 });

@@ -18,4 +18,16 @@ export interface ButtonProps {
   style?: ViewStyle;
   contentStyle?: ViewStyle;             // NEW — style the inner content wrapper
   textStyle?: TextStyle;
+  // Color Overrides
+  backgroundColor?: string;
+  textColor?: string;
+  borderColor?: string;
+  disabledBackgroundColor?: string;
+  disabledTextColor?: string;
+  disabledBorderColor?: string;
+  loadingColor?: string;
+  // Shadow & Feedback
+  showShadow?: boolean;
+  shadowColor?: string;
+  pressedBackgroundColor?: string;
 }

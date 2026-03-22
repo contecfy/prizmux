@@ -33,6 +33,13 @@ export interface FABProps {
   backgroundColor?: string;     // default '#6366F1'
   iconColor?: string;           // useful if passing a plain text icon
   labelColor?: string;
+  shadowColor?: string;
+  disabledBackgroundColor?: string;
+  disabledLabelColor?: string;
+  loadingColor?: string;
+
+  // Shadow
+  showShadow?: boolean;
 
   // State
   disabled?: boolean;

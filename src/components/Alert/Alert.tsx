@@ -26,6 +26,9 @@ export const Alert: React.FC<AlertProps> = ({
   overlayStyle,
   iconContainerStyle,
   contentContainerStyle,
+  shadowColor,
+  titleColor,
+  messageColor,
 }) => {
   const scaleAnim = useRef(new Animated.Value(0.85)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
@@ -75,6 +78,7 @@ export const Alert: React.FC<AlertProps> = ({
                 opacity: opacityAnim,
                 transform: [{ scale: scaleAnim }],
               },
+              shadowColor ? { shadowColor } : undefined,
               style,
             ]}
           >
@@ -87,12 +91,12 @@ export const Alert: React.FC<AlertProps> = ({
 
             {/* Title */}
             {title && (
-              <Text style={[styles.title, titleStyle]}>{title}</Text>
+              <Text style={[styles.title, titleColor ? { color: titleColor } : undefined, titleStyle]}>{title}</Text>
             )}
 
             {/* Message */}
             {message && (
-              <Text style={[styles.message, messageStyle]}>{message}</Text>
+              <Text style={[styles.message, messageColor ? { color: messageColor } : undefined, messageStyle]}>{message}</Text>
             )}
 
             {/* Consumer content — buttons, inputs, anything */}

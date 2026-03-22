@@ -31,6 +31,7 @@ export interface ToastProps {
   backgroundColor?: string;
   textColor?: string;
   descriptionColor?: string;      // separate color for description if needed
+  shadowColor?: string;           // toast shadow
 
   // Shape
   borderRadius?: number;          // default 10

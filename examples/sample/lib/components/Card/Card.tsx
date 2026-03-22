@@ -5,10 +5,22 @@ import { CardProps } from './Card.types';
 export const Card: React.FC<CardProps> = ({
   children,
   style,
+  backgroundColor,
+  shadowColor,
+  borderRadius,
   ...props
 }) => {
   return (
-    <View style={[styles.card, style]} {...props}>
+    <View
+      style={[
+        styles.card,
+        backgroundColor ? { backgroundColor } : undefined,
+        shadowColor ? { shadowColor } : undefined,
+        borderRadius !== undefined ? { borderRadius } : undefined,
+        style,
+      ]}
+      {...props}
+    >
       {children}
     </View>
   );

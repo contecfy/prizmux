@@ -1,18 +1,20 @@
 import React, { useState } from "react";
+import { Image } from "expo-image";
 import {
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
   Alert,
+  useColorScheme,
 } from "react-native";
 import { Button } from "../../lib/components/Button/Button";
 import { Card } from "../../lib/components/Card/Card";
 import BottomSheet from "../../lib/components/BottomSheet/BottomSheet";
 import { ImagePreview } from "../../lib/components/ImagePreview/ImagePreview";
-import { LucideChevronLeft, LucideChevronRight } from "lucide-react-native";
+import { LucideChevronLeft, LucideChevronRight, Star } from "lucide-react-native";
+import { Colors } from "@/constants/theme";
 
 const SINGLE_IMAGE =
   "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg";
@@ -23,6 +25,8 @@ const MULTIPLE_IMAGES = [
 ];
 
 export default function ComponentsDemoScreen() {
+  const colorScheme = useColorScheme() ?? 'light';
+  const theme = Colors[colorScheme];
   const [loadingButton, setLoadingButton] = useState<string | null>(null);
 
   // BottomSheet states
@@ -48,43 +52,49 @@ export default function ComponentsDemoScreen() {
     }, 2000);
   };
 
+  const shadowColor = colorScheme === 'dark' ? '#fff' : '#000';
+
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: theme.background }]}
       contentContainerStyle={styles.contentContainer}
     >
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Prizmux Components Demo</Text>
-        <Text style={styles.subtitle}>Button & Card Showcase</Text>
+        <Text style={[styles.title, { color: theme.text }]}>Prizmux Components Demo</Text>
+        <Text style={[styles.subtitle, { color: theme.subtext }]}>Button & Card Showcase</Text>
       </View>
 
       {/* Button Variants Section */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Button Variants</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Button Variants</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Filled and outline button styles
         </Text>
         <View style={styles.buttonGroup}>
           <Button
-            // title="Filled Primary"
-            borderRadius={0}
-            icon={<Text style={{ fontSize: 16, color: "#fff" }}>★</Text>}
+            title="Filled Primary"
+            icon={<Star size={16} color={theme.background} />}
             variant="filled"
             onPress={() => handlePress("Filled Primary")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
           <Button
             title="Outline Primary"
             variant="outline"
             onPress={() => handlePress("Outline Primary")}
+            backgroundColor="transparent"
+            textColor={theme.text}
+            borderColor={theme.text}
           />
         </View>
       </Card>
 
       {/* Button Sizes Section */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Button Sizes</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Button Sizes</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Small, medium, and large button sizes
         </Text>
         <View style={styles.buttonGroup}>
@@ -93,26 +103,32 @@ export default function ComponentsDemoScreen() {
             size="small"
             variant="filled"
             onPress={() => handlePress("Small")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
           <Button
             title="Medium Button"
             size="medium"
             variant="filled"
             onPress={() => handlePress("Medium")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
           <Button
             title="Large Button"
             size="large"
             variant="filled"
             onPress={() => handlePress("Large")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
         </View>
       </Card>
 
       {/* Button States Section */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Button States</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Button States</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Loading, disabled, and active states
         </Text>
         <View style={styles.buttonGroup}>
@@ -121,26 +137,38 @@ export default function ComponentsDemoScreen() {
             variant="filled"
             isLoading={loadingButton === "loading-demo"}
             onPress={() => handleLoadingDemo("loading-demo")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
+            loadingColor={theme.background}
           />
           <Button
             title="Disabled Filled"
             variant="filled"
             disabled
             onPress={() => handlePress("Disabled Filled")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
+            disabledBackgroundColor={theme.border}
+            disabledTextColor={theme.subtext}
           />
           <Button
             title="Disabled Outline"
             variant="outline"
             disabled
             onPress={() => handlePress("Disabled Outline")}
+            backgroundColor="transparent"
+            textColor={theme.text}
+            borderColor={theme.text}
+            disabledBorderColor={theme.border}
+            disabledTextColor={theme.subtext}
           />
         </View>
       </Card>
 
       {/* Full Width Buttons */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Full Width Buttons</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Full Width Buttons</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Buttons that span the full container width
         </Text>
         <View style={styles.buttonGroup}>
@@ -149,35 +177,40 @@ export default function ComponentsDemoScreen() {
             variant="filled"
             fullWidth
             onPress={() => handlePress("Full Width Filled")}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
           <Button
             title="Full Width Outline"
             variant="outline"
             fullWidth
             onPress={() => handlePress("Full Width Outline")}
+            backgroundColor="transparent"
+            textColor={theme.text}
+            borderColor={theme.text}
           />
         </View>
       </Card>
 
       {/* Card Variations Section */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>Card Component</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>Card Component</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Card component with various content types
         </Text>
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Basic Card</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Basic Card</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           This is a basic card with default styling. It includes shadow, rounded
           corners, and padding.
         </Text>
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Interactive Card</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Interactive Card</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Cards can contain any content, including buttons and other components.
         </Text>
         <View style={styles.cardActions}>
@@ -187,6 +220,9 @@ export default function ComponentsDemoScreen() {
             size="small"
             onPress={() => handlePress("Card Cancel")}
             style={{ flex: 1 }}
+            backgroundColor="transparent"
+            textColor={theme.text}
+            borderColor={theme.text}
           />
           <Button
             title="Confirm"
@@ -194,13 +230,19 @@ export default function ComponentsDemoScreen() {
             size="small"
             onPress={() => handlePress("Card Confirm")}
             style={{ flex: 1 }}
+            backgroundColor={theme.text}
+            textColor={theme.background}
           />
         </View>
       </Card>
 
-      <Card style={styles.customCard}>
-        <Text style={styles.cardTitle}>Custom Styled Card</Text>
-        <Text style={styles.cardContent}>
+      <Card
+        backgroundColor={theme.card}
+        shadowColor={shadowColor}
+        style={[styles.customCard, { borderLeftColor: theme.text, marginBottom: 16 }]}
+      >
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Custom Styled Card</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           This card has custom styling applied, demonstrating the flexibility of
           the Card component.
         </Text>
@@ -210,57 +252,62 @@ export default function ComponentsDemoScreen() {
           size="small"
           fullWidth
           onPress={() => handlePress("Custom Card Action")}
+          backgroundColor={theme.text}
+          textColor={theme.background}
         />
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Nested Card Example</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Nested Card Example</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Cards can contain other cards for complex layouts.
         </Text>
-        <Card style={styles.nestedCard}>
-          <Text style={styles.nestedCardText}>This is a nested card</Text>
+        <Card style={styles.nestedCard} backgroundColor={theme.background} shadowColor={shadowColor}>
+          <Text style={[styles.nestedCardText, { color: theme.subtext }]}>This is a nested card</Text>
           <Button
             title="Nested Action"
             variant="outline"
             size="small"
             fullWidth
             onPress={() => handlePress("Nested Card")}
+            backgroundColor="transparent"
+            textColor={theme.text}
+            borderColor={theme.text}
           />
         </Card>
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Statistics Card</Text>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Statistics Card</Text>
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
-            <Text style={styles.statValue}>1,234</Text>
-            <Text style={styles.statLabel}>Users</Text>
+            <Text style={[styles.statValue, { color: theme.text }]}>1,234</Text>
+            <Text style={[styles.statLabel, { color: theme.subtext }]}>Users</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border }]} />
           <View style={styles.statItem}>
-            <Text style={styles.statValue}>56</Text>
-            <Text style={styles.statLabel}>Projects</Text>
+            <Text style={[styles.statValue, { color: theme.text }]}>56</Text>
+            <Text style={[styles.statLabel, { color: theme.subtext }]}>Projects</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border }]} />
           <View style={styles.statItem}>
-            <Text style={styles.statValue}>98%</Text>
-            <Text style={styles.statLabel}>Success</Text>
+            <Text style={[styles.statValue, { color: theme.text }]}>98%</Text>
+            <Text style={[styles.statLabel, { color: theme.subtext }]}>Success</Text>
           </View>
         </View>
       </Card>
 
       {/* ─── BottomSheet Section ─────────────────────────────────── */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>BottomSheet Component</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>BottomSheet Component</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Swipeable bottom sheet with various configurations
         </Text>
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Basic BottomSheet</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Basic BottomSheet</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Default sheet with title, drag handle, close button, and backdrop dismiss.
         </Text>
         <Button
@@ -268,12 +315,14 @@ export default function ComponentsDemoScreen() {
           variant="filled"
           fullWidth
           onPress={() => setBasicSheetVisible(true)}
+          backgroundColor={theme.text}
+          textColor={theme.background}
         />
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>No Header Sheet</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>No Header Sheet</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Sheet without a title or close button — only the drag handle and swipe
           gesture to dismiss.
         </Text>
@@ -282,12 +331,15 @@ export default function ComponentsDemoScreen() {
           variant="outline"
           fullWidth
           onPress={() => setNoHeaderSheetVisible(true)}
+          backgroundColor="transparent"
+          textColor={theme.text}
+          borderColor={theme.text}
         />
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>Action Sheet</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Action Sheet</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Sheet used as an action menu with a list of choices inside.
         </Text>
         <Button
@@ -295,12 +347,14 @@ export default function ComponentsDemoScreen() {
           variant="filled"
           fullWidth
           onPress={() => setActionSheetVisible(true)}
+          backgroundColor={theme.text}
+          textColor={theme.background}
         />
       </Card>
 
-      <Card>
-        <Text style={styles.cardTitle}>No Drag Handle Sheet</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>No Drag Handle Sheet</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Drag handle and swipe-to-close disabled. Must use the close button or
           tap the backdrop.
         </Text>
@@ -309,20 +363,23 @@ export default function ComponentsDemoScreen() {
           variant="outline"
           fullWidth
           onPress={() => setNoDragSheetVisible(true)}
+          backgroundColor="transparent"
+          textColor={theme.text}
+          borderColor={theme.text}
         />
       </Card>
 
       {/* ─── ImagePreview Section ────────────────────────────────── */}
-      <Card style={styles.sectionCard}>
-        <Text style={styles.sectionTitle}>ImagePreview Component</Text>
-        <Text style={styles.sectionDescription}>
+      <Card style={styles.sectionCard} backgroundColor={theme.card} shadowColor={shadowColor}>
+        <Text style={[styles.sectionTitle, { color: theme.text }]}>ImagePreview Component</Text>
+        <Text style={[styles.sectionDescription, { color: theme.subtext }]}>
           Tap an image to view it in full screen
         </Text>
       </Card>
 
       {/* Avatar style — tap to preview */}
-      <Card>
-        <Text style={styles.cardTitle}>User Profile</Text>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>User Profile</Text>
         <View style={styles.profileRow}>
           <Pressable onPress={() => setSingleImageVisible(true)}>
             <Image
@@ -331,17 +388,17 @@ export default function ComponentsDemoScreen() {
             />
           </Pressable>
           <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>John Doe</Text>
-            <Text style={styles.profileRole}>Software Engineer</Text>
-            <Text style={styles.profileHint}>Tap avatar to preview</Text>
+            <Text style={[styles.profileName, { color: theme.text }]}>John Doe</Text>
+            <Text style={[styles.profileRole, { color: theme.subtext }]}>Software Engineer</Text>
+            <Text style={[styles.profileHint, { color: theme.subtext, opacity: 0.6 }]}>Tap avatar to preview</Text>
           </View>
         </View>
       </Card>
 
       {/* Feed style — tap any image to open gallery from that position */}
-      <Card>
-        <Text style={styles.cardTitle}>Photo Feed</Text>
-        <Text style={styles.cardContent}>
+      <Card backgroundColor={theme.card} shadowColor={shadowColor} style={{ marginBottom: 16 }}>
+        <Text style={[styles.cardTitle, { color: theme.text }]}>Photo Feed</Text>
+        <Text style={[styles.cardContent, { color: theme.subtext }]}>
           Tap any photo to open the full gallery.
         </Text>
         <View style={styles.feedGrid}>
@@ -356,7 +413,7 @@ export default function ComponentsDemoScreen() {
               <Image
                 source={{ uri }}
                 style={styles.feedImage}
-                resizeMode="cover"
+                contentFit="cover"
               />
             </Pressable>
           ))}
@@ -368,8 +425,12 @@ export default function ComponentsDemoScreen() {
         visible={basicSheetVisible}
         onClose={() => setBasicSheetVisible(false)}
         title="Basic Bottom Sheet"
+        backgroundColor={theme.background}
+        textColor={theme.text}
+        backdropColor="rgba(0,0,0,0.5)"
+        handleColor={theme.border}
       >
-        <Text style={styles.sheetBodyText}>
+        <Text style={[styles.sheetBodyText, { color: theme.text }]}>
           This is the default bottom sheet. You can swipe it down, tap the
           backdrop, or press the close button to dismiss it.
         </Text>
@@ -378,6 +439,8 @@ export default function ComponentsDemoScreen() {
           variant="filled"
           fullWidth
           onPress={() => setBasicSheetVisible(false)}
+          backgroundColor={theme.text}
+          textColor={theme.background}
         />
       </BottomSheet>
 
@@ -385,8 +448,10 @@ export default function ComponentsDemoScreen() {
         visible={noHeaderSheetVisible}
         onClose={() => setNoHeaderSheetVisible(false)}
         showCloseButton={false}
+        backgroundColor={theme.background}
+        handleColor={theme.border}
       >
-        <Text style={styles.sheetBodyText}>
+        <Text style={[styles.sheetBodyText, { color: theme.text }]}>
           No title or close button here. Swipe down or tap the backdrop to dismiss.
         </Text>
       </BottomSheet>
@@ -395,6 +460,10 @@ export default function ComponentsDemoScreen() {
         visible={actionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
         title="Choose an Action"
+        backgroundColor={theme.background}
+        textColor={theme.text}
+        handleColor={theme.border}
+        headerStyle={{ borderBottomColor: theme.border }}
       >
         <View style={styles.actionList}>
           {["Edit", "Duplicate", "Share", "Delete"].map((action) => (
@@ -407,6 +476,9 @@ export default function ComponentsDemoScreen() {
                 setActionSheetVisible(false);
                 handlePress(action);
               }}
+              backgroundColor={action === "Delete" ? "transparent" : theme.text}
+              textColor={action === "Delete" ? theme.text : theme.background}
+              borderColor={action === "Delete" ? theme.text : "transparent"}
             />
           ))}
         </View>
@@ -418,8 +490,11 @@ export default function ComponentsDemoScreen() {
         title="No Drag Sheet"
         showDragHandle={false}
         swipeToClose={false}
+        backgroundColor={theme.background}
+        textColor={theme.text}
+        closeIconStyle={{ color: theme.text }}
       >
-        <Text style={styles.sheetBodyText}>
+        <Text style={[styles.sheetBodyText, { color: theme.text }]}>
           Drag handle and swipe-to-close are both disabled. Use the close
           button or tap outside to dismiss.
         </Text>
@@ -428,6 +503,9 @@ export default function ComponentsDemoScreen() {
           variant="outline"
           fullWidth
           onPress={() => setNoDragSheetVisible(false)}
+          backgroundColor="transparent"
+          textColor={theme.text}
+          borderColor={theme.text}
         />
       </BottomSheet>
 
@@ -437,15 +515,22 @@ export default function ComponentsDemoScreen() {
         images={SINGLE_IMAGE}
         title="John Doe"
         onClose={() => setSingleImageVisible(false)}
+        backgroundColor={theme.background}
+        textColor={theme.text}
+        headerBackgroundColor="transparent"
       />
 
       <ImagePreview
         visible={galleryVisible}
-        nextIcon={<LucideChevronRight color={"#fff"}/> } 
-        prevIcon={<LucideChevronLeft color={"#fff"}/> }
+        nextIcon={<LucideChevronRight color={theme.background}/> } 
+        prevIcon={<LucideChevronLeft color={theme.background}/> }
         images={MULTIPLE_IMAGES}
         initialIndex={galleryIndex}
         onClose={() => setGalleryVisible(false)}
+        backgroundColor={theme.background}
+        textColor={theme.text}
+        buttonBackgroundColor={theme.text}
+        headerBackgroundColor="transparent"
       />
     </ScrollView>
   );
@@ -454,7 +539,6 @@ export default function ComponentsDemoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F5F5F5",
   },
   contentContainer: {
     padding: 16,
@@ -467,12 +551,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#1F2937",
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: "#6B7280",
   },
   sectionCard: {
     marginBottom: 16,
@@ -480,12 +562,10 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#1F2937",
     marginBottom: 4,
   },
   sectionDescription: {
     fontSize: 14,
-    color: "#6B7280",
     marginBottom: 16,
   },
   buttonGroup: {
@@ -494,12 +574,10 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#1F2937",
     marginBottom: 8,
   },
   cardContent: {
     fontSize: 14,
-    color: "#4B5563",
     lineHeight: 20,
     marginBottom: 12,
   },
@@ -509,17 +587,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   customCard: {
-    backgroundColor: "#EEF2FF",
     borderLeftWidth: 4,
-    borderLeftColor: "#6366F1",
   },
   nestedCard: {
     marginTop: 12,
-    backgroundColor: "#F9FAFB",
   },
   nestedCardText: {
     fontSize: 14,
-    color: "#6B7280",
     marginBottom: 12,
   },
   statsContainer: {
@@ -534,20 +608,16 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#1F2937",
   },
   statLabel: {
     fontSize: 12,
-    color: "#6B7280",
     marginTop: 4,
   },
   statDivider: {
     width: 1,
-    backgroundColor: "#E5E7EB",
   },
   sheetBodyText: {
     fontSize: 14,
-    color: "#4B5563",
     lineHeight: 22,
     marginBottom: 20,
   },
@@ -555,7 +625,6 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingBottom: 8,
   },
-  // ImagePreview styles
   profileRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -572,16 +641,13 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#1F2937",
   },
   profileRole: {
     fontSize: 14,
-    color: "#6B7280",
     marginTop: 2,
   },
   profileHint: {
     fontSize: 12,
-    color: "#9CA3AF",
     marginTop: 4,
   },
   feedGrid: {

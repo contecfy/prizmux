@@ -28,6 +28,19 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
   closeIcon,
   prevIcon,
   nextIcon,
+  backgroundColor,
+  backdropColor,
+  textColor = '#FFFFFF',
+  headerBackgroundColor,
+  buttonBackgroundColor,
+  loadingColor = '#FFFFFF',
+  style,
+  headerStyle,
+  titleStyle: customTitleStyle,
+  counterStyle,
+  closeButtonStyle: customCloseButtonStyle,
+  navButtonStyle,
+  imageStyle,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   // Only show loader if image takes more than 300ms — avoids flash for cached/fast images
@@ -113,7 +126,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
     <View key={index} style={styles.imageContainer}>
       <Image
         source={{ uri }}
-        style={styles.image}
+        style={[styles.image, imageStyle]}
         resizeMode="contain"
         onLoadStart={() => handleLoadStart(index)}
         onLoad={() => handleLoadEnd(index)}
@@ -121,12 +134,14 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
       />
       {loadingVisible[index] && (
         <View style={styles.loaderOverlay}>
-          <ActivityIndicator size="large" color="#FFFFFF" />
+          <ActivityIndicator size="large" color={loadingColor} />
         </View>
       )}
       {imageErrors[index] && (
         <View style={styles.loaderOverlay}>
-          <Text style={styles.errorText}>Failed to load image</Text>
+          <Text style={[styles.errorText, { color: textColor }]}>
+            Failed to load image
+          </Text>
         </View>
       )}
     </View>
@@ -140,22 +155,44 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
       onRequestClose={onClose}
       statusBarTranslucent
     >
-      <View style={styles.container}>
-
+      <View
+        style={[
+          styles.container,
+          backgroundColor ? { backgroundColor } : undefined,
+          backdropColor ? { backgroundColor: backdropColor } : undefined,
+          style,
+        ]}
+      >
         {/* Header */}
-        <View style={styles.header}>
+        <View
+          style={[
+            styles.header,
+            headerBackgroundColor ? { backgroundColor: headerBackgroundColor } : undefined,
+            headerStyle,
+          ]}
+        >
           {title && (
-            <Text style={styles.title} numberOfLines={1}>
+            <Text
+              style={[styles.title, { color: textColor }, customTitleStyle]}
+              numberOfLines={1}
+            >
               {title}
             </Text>
           )}
           {hasMultipleImages && (
-            <Text style={styles.counter}>
+            <Text style={[styles.counter, { color: textColor }, counterStyle]}>
               {currentIndex + 1} / {imageArray.length}
             </Text>
           )}
-          <Pressable style={styles.closeButton} onPress={onClose}>
-            {closeIcon ?? <DefaultCloseIcon />}
+          <Pressable
+            style={[
+              styles.closeButton,
+              buttonBackgroundColor ? { backgroundColor: buttonBackgroundColor } : undefined,
+              customCloseButtonStyle,
+            ]}
+            onPress={onClose}
+          >
+            {closeIcon ?? <Text style={[styles.defaultIcon, { color: textColor }]}>✕</Text>}
           </Pressable>
         </View>
 
@@ -181,20 +218,30 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
           <>
             {currentIndex > 0 && (
               <TouchableOpacity
-                style={[styles.navButton, styles.prevButton]}
+                style={[
+                  styles.navButton,
+                  styles.prevButton,
+                  buttonBackgroundColor ? { backgroundColor: buttonBackgroundColor } : undefined,
+                  navButtonStyle,
+                ]}
                 onPress={goToPrevious}
                 activeOpacity={0.7}
               >
-                {prevIcon ?? <DefaultPrevIcon />}
+                {prevIcon ?? <Text style={[styles.navIcon, { color: textColor }]}>‹</Text>}
               </TouchableOpacity>
             )}
             {currentIndex < imageArray.length - 1 && (
               <TouchableOpacity
-                style={[styles.navButton, styles.nextButton]}
+                style={[
+                  styles.navButton,
+                  styles.nextButton,
+                  buttonBackgroundColor ? { backgroundColor: buttonBackgroundColor } : undefined,
+                  navButtonStyle,
+                ]}
                 onPress={goToNext}
                 activeOpacity={0.7}
               >
-                {nextIcon ?? <DefaultNextIcon />}
+                {nextIcon ?? <Text style={[styles.navIcon, { color: textColor }]}>›</Text>}
               </TouchableOpacity>
             )}
           </>
@@ -298,7 +345,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '300',
     lineHeight: 20,
-    // marginBottom: 6, // visually center the arrow within the circle
+    marginBottom: 6, // visually center the arrow within the circle
    
   },
 });

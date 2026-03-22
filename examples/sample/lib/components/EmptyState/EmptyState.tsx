@@ -7,12 +7,46 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   icon,
   action,
+  style,
+  titleStyle,
+  descriptionStyle,
+  iconStyle,
+  actionStyle,
+  backgroundColor,
+  titleColor,
+  descriptionColor,
 }) => (
-  <View style={styles.container}>
-    {icon && <View style={styles.iconContainer}>{icon}</View>}
-    <Text style={styles.title}>{title}</Text>
-    <Text style={styles.description}>{description}</Text>
-    {action && <View style={styles.actionContainer}>{action}</View>}
+  <View
+    style={[
+      styles.container,
+      backgroundColor ? { backgroundColor } : undefined,
+      style,
+    ]}
+  >
+    {icon && (
+      <View style={[styles.iconContainer, iconStyle]}>{icon}</View>
+    )}
+    <Text
+      style={[
+        styles.title,
+        titleColor ? { color: titleColor } : undefined,
+        titleStyle,
+      ]}
+    >
+      {title}
+    </Text>
+    <Text
+      style={[
+        styles.description,
+        descriptionColor ? { color: descriptionColor } : undefined,
+        descriptionStyle,
+      ]}
+    >
+      {description}
+    </Text>
+    {action && (
+      <View style={[styles.actionContainer, actionStyle]}>{action}</View>
+    )}
   </View>
 );
 

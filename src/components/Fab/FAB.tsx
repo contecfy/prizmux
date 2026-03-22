@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ViewStyle,
 } from 'react-native';
 import { FABPosition, FABProps, FABSize } from './FAB.types';
 
@@ -53,6 +54,11 @@ export const FAB: React.FC<FABProps> = ({
   backgroundColor = '#6366F1',
   iconColor,
   labelColor = '#FFFFFF',
+  shadowColor,
+  disabledBackgroundColor = '#9CA3AF',
+  disabledLabelColor = '#E5E7EB',
+  loadingColor = '#FFFFFF',
+  showShadow = true,
   disabled = false,
   loading = false,
   style,
@@ -126,22 +132,23 @@ export const FAB: React.FC<FABProps> = ({
           style={[
             styles.button,
             {
-              backgroundColor: disabled ? '#9CA3AF' : backgroundColor,
+              backgroundColor: disabled ? disabledBackgroundColor : backgroundColor,
               borderRadius: radius,
               // Square dimensions only when icon-only or label-only with no icon
               width: isExtended ? undefined : isLabelOnly ? undefined : buttonSize,
               height: buttonSize,
               paddingHorizontal: isExtended || isLabelOnly ? 20 : 0,
-              flexDirection: flexDirection as any,
+              flexDirection: flexDirection as ViewStyle['flexDirection'],
               gap: isExtended ? gap : 0,
             },
+            showShadow ? { shadowColor: shadowColor ?? backgroundColor } : { shadowOpacity: 0, elevation: 0 },
             style,
           ]}
         >
           {loading ? (
             <ActivityIndicator
               size={size === 'large' ? 'large' : 'small'}
-              color="#FFFFFF"
+              color={loadingColor}
             />
           ) : (
             <>
@@ -154,7 +161,7 @@ export const FAB: React.FC<FABProps> = ({
                     styles.label,
                     {
                       fontSize: sizeConfig.fontSize,
-                      color: disabled ? '#E5E7EB' : labelColor,
+                      color: disabled ? disabledLabelColor : labelColor,
                       marginTop:
                         !isHorizontal && hasIcon ? gap / 2 : 0,
                       marginBottom:

@@ -10,8 +10,22 @@ export const Header: React.FC<HeaderProps> = ({
   onBackPress,
   backIcon,
   actions = [],
+  // New props
+  style,
+  titleStyle: customTitleStyle,
+  backButtonStyle,
+  backIconStyle,
+  actionButtonStyle,
+  badgeStyle,
+  badgeTextStyle,
+  avatarContainerStyle,
+  backgroundColor,
+  borderColor,
+  backButtonBackgroundColor,
+  backIconColor,
+  actionIconColor,
 }) => {
-  const titleStyle =
+  const titleAlignStyle =
     titlePosition === 'left'
       ? styles.titleLeft
       : titlePosition === 'right'
@@ -21,26 +35,49 @@ export const Header: React.FC<HeaderProps> = ({
   const visibleActions = actions.slice(0, 4)
 
   return (
-    <View style={styles.header}>
-      
+    <View
+      style={[
+        styles.header,
+        backgroundColor ? { backgroundColor } : undefined,
+        borderColor ? { borderBottomColor: borderColor } : undefined,
+        style,
+      ]}
+    >
       {/* Back Button (optional) */}
       {showBack ? (
         <Pressable
           onPress={onBackPress}
-          style={styles.backButton}
+          style={[
+            styles.backButton,
+            backButtonBackgroundColor ? { backgroundColor: backButtonBackgroundColor } : undefined,
+            backButtonStyle
+          ]}
           android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
         >
-          {backIcon ?? <Text style={styles.backIcon}>‹</Text>}
+          {backIcon ?? (
+            <Text style={[
+              styles.backIcon,
+              backIconColor ? { color: backIconColor } : undefined,
+              backIconStyle
+            ]}>‹</Text>
+          )}
         </Pressable>
       ) : (
         <View style={styles.leftSpacer} />
       )}
 
       {/* Avatar */}
-      {avatar && <View style={styles.avatarContainer}>{avatar}</View>}
+      {avatar && (
+        <View style={[styles.avatarContainer, avatarContainerStyle]}>
+          {avatar}
+        </View>
+      )}
 
       {/* Title */}
-      <Text style={[styles.title, titleStyle]} numberOfLines={1}>
+      <Text
+        style={[styles.title, titleAlignStyle, customTitleStyle]}
+        numberOfLines={1}
+      >
         {title}
       </Text>
 
@@ -50,13 +87,21 @@ export const Header: React.FC<HeaderProps> = ({
           <Pressable
             key={index}
             onPress={action.onPress}
-            style={styles.actionButton}
+            style={[
+              styles.actionButton,
+              actionButtonStyle
+            ]}
             android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
           >
-            {action.icon}
+            {actionIconColor && React.isValidElement(action.icon)
+              ? React.cloneElement(action.icon as React.ReactElement, { color: actionIconColor } as any)
+              : action.icon}
             {action.badge !== undefined && (
-              <View style={styles.badge}>
-                <Text style={styles.badgeText} numberOfLines={1}>
+              <View style={[styles.badge, badgeStyle, action.badgeStyle]}>
+                <Text
+                  style={[styles.badgeText, badgeTextStyle, action.badgeTextStyle]}
+                  numberOfLines={1}
+                >
                   {typeof action.badge === 'number' && action.badge > 99
                     ? '99+'
                     : action.badge}

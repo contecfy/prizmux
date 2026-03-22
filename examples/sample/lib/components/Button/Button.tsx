@@ -66,15 +66,26 @@ export const Button: React.FC<ButtonProps> = ({
   icon,
   iconPosition = 'left',
   fullWidth = false,
-  borderRadius = 0,
+  borderRadius = 8,
   hitSlop,
   accessibilityLabel,
+  // New color overrides
+  backgroundColor,
+  textColor,
+  borderColor,
+  disabledBackgroundColor,
+  disabledTextColor,
+  disabledBorderColor,
+  loadingColor: customLoadingColor,
+  showShadow = true,
+  shadowColor: customShadowColor,
+  pressedBackgroundColor,
 }) => {
   const isDisabled = disabled || isLoading;
   const sizeConfig = BUTTON_CONFIG.sizes[size];
   const isFilled = variant === 'filled';
 
-  // ----- ADD: Scale animation for touch feedback -----
+  // ----- Scale animation for touch feedback (from remote) -----
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -97,18 +108,30 @@ export const Button: React.FC<ButtonProps> = ({
   const getButtonStyle = () => {
     const baseStyle = isFilled ? styles.filledButton : styles.outlineButton;
     const sizeStyle = styles[`${size}Button` as keyof typeof styles] as ViewStyle;
-    const disabledStyle = isDisabled
+    const disabledStyle: ViewStyle | undefined = isDisabled
       ? isFilled
-        ? styles.filledButtonDisabled
-        : styles.outlineButtonDisabled
+        ? { backgroundColor: disabledBackgroundColor ?? BUTTON_CONFIG.colors.primaryDisabled }
+        : { borderColor: disabledBorderColor ?? BUTTON_CONFIG.colors.outlineBorderDisabled }
       : undefined;
+
+    const customOverrides: ViewStyle = {};
+    if (backgroundColor) customOverrides.backgroundColor = backgroundColor;
+    if (borderColor) customOverrides.borderColor = borderColor;
+    if (borderRadius !== undefined) customOverrides.borderRadius = borderRadius;
+
+    if (showShadow) {
+      customOverrides.shadowColor = customShadowColor ?? backgroundColor ?? BUTTON_CONFIG.colors.primary;
+    } else {
+      customOverrides.shadowOpacity = 0;
+      customOverrides.elevation = 0;
+    }
 
     return [
       baseStyle,
       sizeStyle,
       disabledStyle,
       fullWidth && styles.fullWidth,
-      { borderRadius },
+      customOverrides,
       style,
     ].filter(Boolean) as ViewStyle[];
   };
@@ -120,13 +143,29 @@ export const Button: React.FC<ButtonProps> = ({
     const sizeTextStyle = styles[
       `${size}ButtonText` as keyof typeof styles
     ] as TextStyle;
-    const disabledTextStyle =
-      isDisabled && !isFilled ? styles.outlineButtonTextDisabled : null;
+    
+    const customTextOverrides: TextStyle = {};
+    if (textColor) customTextOverrides.color = textColor;
 
-    return [baseTextStyle, sizeTextStyle, disabledTextStyle, textStyle];
+    const disabledTextStyle =
+      isDisabled && !isFilled ? { color: disabledTextColor ?? BUTTON_CONFIG.colors.text.outlineDisabled } : null;
+    
+    if (isDisabled && isFilled && disabledTextColor) {
+      customTextOverrides.color = disabledTextColor;
+    }
+
+    return [
+      baseTextStyle,
+      sizeTextStyle,
+      disabledTextStyle,
+      customTextOverrides,
+      textStyle,
+    ];
   };
 
   const getLoadingColor = () => {
+    if (customLoadingColor) return customLoadingColor;
+    if (textColor) return textColor;
     if (isFilled) return BUTTON_CONFIG.colors.text.filled;
     return isDisabled
       ? BUTTON_CONFIG.colors.text.outlineDisabled
@@ -134,9 +173,12 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+    <Animated.View style={{ transform: [{ scale: scaleAnim }], width: fullWidth ? '100%' : undefined }}>
       <Pressable
-        style={getButtonStyle()}
+        style={({ pressed }) => [
+          ...getButtonStyle(),
+          pressed && pressedBackgroundColor ? { backgroundColor: pressedBackgroundColor } : undefined,
+        ]}
         onPress={onPress}
         onLongPress={onLongPress}
         onPressIn={handlePressIn}
@@ -162,7 +204,11 @@ export const Button: React.FC<ButtonProps> = ({
                   {icon}
                 </View>
               )}
-              {title && <Text style={getTextStyle()}>{title}</Text>}
+              {title && (
+                <Text style={getTextStyle()}>
+                  {title}
+                </Text>
+              )}
               {icon && iconPosition === 'right' && (
                 <View
                   style={[
@@ -173,7 +219,7 @@ export const Button: React.FC<ButtonProps> = ({
                   {icon}
                 </View>
               )}
-            </>
+              </>
           )}
         </View>
       </Pressable>
@@ -248,3 +294,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+export default Button;

@@ -13,10 +13,6 @@ import type { BottomSheetProps } from './BottomSheet.types';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-const DefaultCloseIcon = () => (
-  <Text style={styles.defaultCloseIcon}>✕</Text>
-);
-
 export default function BottomSheet({
   visible,
   onClose,
@@ -27,6 +23,28 @@ export default function BottomSheet({
   showDragHandle = true,
   swipeToClose = true,
   closeIcon,
+  // New customization props
+  containerStyle,
+  backdropStyle,
+  headerStyle,
+  titleStyle,
+  handleStyle,
+  handleContainerStyle,
+  closeButtonStyle,
+  closeIconStyle,
+  contentContainerStyle,
+  backgroundColor,
+  backdropColor,
+  textColor,
+  handleColor,
+  shadowColor,
+  borderColor,
+  borderRadius,
+  // Header Refinements
+  showHeaderBorder = true,
+  headerBorderBottomColor,
+  closePosition = 'right',
+  titlePosition = 'left',
 }: BottomSheetProps) {
   const slideAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
   const backdropAnim = useRef(new Animated.Value(0)).current;
@@ -38,12 +56,15 @@ export default function BottomSheet({
         return swipeToClose && gestureState.dy > 5;
       },
       onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dy > 0) {
+        if (gestureState.dy >= 0) {
           slideAnim.setValue(gestureState.dy);
         }
       },
       onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dy > dynamicHeight * 0.4) {
+        const threshold = dynamicHeight * 0.4;
+        const isSwipedDown = gestureState.dy > threshold || gestureState.vy > 0.5;
+
+        if (isSwipedDown) {
           closeModal();
         } else {
           Animated.spring(slideAnim, {
@@ -110,7 +131,12 @@ export default function BottomSheet({
         onPress={() => dismissOnTouchOutside && closeModal()}
       >
         <Animated.View
-          style={[styles.backdrop, { opacity: backdropAnim }]}
+          style={[
+            styles.backdrop,
+            { opacity: backdropAnim },
+            backdropColor ? { backgroundColor: backdropColor } : undefined,
+            backdropStyle,
+          ]}
         />
       </Pressable>
 
@@ -121,7 +147,13 @@ export default function BottomSheet({
           {
             maxHeight: SCREEN_HEIGHT * 0.9,
             transform: [{ translateY: slideAnim }],
+            borderTopLeftRadius: borderRadius ?? styles.modalContainer.borderTopLeftRadius,
+            borderTopRightRadius: borderRadius ?? styles.modalContainer.borderTopRightRadius,
           },
+          backgroundColor ? { backgroundColor } : undefined,
+          shadowColor ? { shadowColor } : undefined,
+          borderColor ? { borderColor, borderWidth: 1 } : undefined,
+          containerStyle,
         ]}
         onLayout={(event) => {
           const { height: layoutHeight } = event.nativeEvent.layout;
@@ -131,36 +163,84 @@ export default function BottomSheet({
             openModal();
           }
         }}
-        {...panResponder.panHandlers}
       >
-        {/* Drag handle */}
-        {showDragHandle && (
-          <View style={styles.dragHandleContainer}>
-            <View style={styles.dragHandle} />
-          </View>
-        )}
-
-        {/* Header */}
-        {(title || showCloseButton) && (
-          <View style={styles.header}>
-            <View style={styles.titleContainer}>
-              {title && <Text style={styles.title}>{title}</Text>}
+        {/* Interaction Wrapper: Handles drag gestures for handle + header */}
+        <View {...panResponder.panHandlers}>
+          {/* Drag handle */}
+          {showDragHandle && (
+            <View style={[styles.dragHandleContainer, handleContainerStyle]}>
+              <View
+                style={[
+                  styles.dragHandle,
+                  handleColor ? { backgroundColor: handleColor } : undefined,
+                  handleStyle,
+                ]}
+              />
             </View>
+          )}
 
-            {showCloseButton && (
-              <Pressable
-                style={styles.closeButton}
-                onPress={closeModal}
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              >
-                {closeIcon ?? <DefaultCloseIcon />}
-              </Pressable>
-            )}
-          </View>
-        )}
+          {/* Header */}
+          {(title || showCloseButton) && (
+            <View
+              style={[
+                styles.header,
+                {
+                  borderBottomWidth: showHeaderBorder ? StyleSheet.hairlineWidth : 0,
+                  borderBottomColor: headerBorderBottomColor ?? styles.header.borderBottomColor,
+                },
+                headerStyle,
+              ]}
+            >
+              {/* Left Slot: Extreme Left */}
+              <View style={[styles.headerSlot, { alignItems: 'flex-start' }]}>
+                {showCloseButton && closePosition === 'left' && (
+                  <Pressable
+                    style={[styles.closeButton, { marginLeft: 0 }, closeButtonStyle]}
+                    onPress={closeModal}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    {closeIcon ?? (
+                      <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
+                    )}
+                  </Pressable>
+                )}
+                {title && titlePosition === 'left' && (
+                  <Text style={[styles.title, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+                )}
+              </View>
+
+              {/* Center Slot: Extreme Center */}
+              <View style={[styles.headerSlot, { alignItems: 'center' }]}>
+                {title && titlePosition === 'center' && (
+                  <Text style={[styles.title, { textAlign: 'center' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+                )}
+              </View>
+
+              {/* Right Slot: Extreme Right */}
+              <View style={[styles.headerSlot, { alignItems: 'flex-end' }]}>
+                {title && titlePosition === 'right' && (
+                  <Text style={[styles.title, { textAlign: 'right' }, textColor ? { color: textColor } : undefined, titleStyle]} numberOfLines={1}>{title}</Text>
+                )}
+                {showCloseButton && closePosition === 'right' && (
+                  <Pressable
+                    style={[styles.closeButton, { marginRight: 0 }, closeButtonStyle]}
+                    onPress={closeModal}
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    {closeIcon ?? (
+                      <Text style={[styles.defaultCloseIcon, closeIconStyle]}>✕</Text>
+                    )}
+                  </Pressable>
+                )}
+              </View>
+            </View>
+          )}
+        </View>
 
         {/* Content */}
-        <View style={styles.contentContainer}>{children}</View>
+        <View style={[styles.contentContainer, contentContainerStyle]}>
+          {children}
+        </View>
       </Animated.View>
     </Modal>
   );
@@ -205,14 +285,15 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16, // lowered for more extreme edges
     paddingBottom: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#E5E7EB',
+    minHeight: 60,
   },
-  titleContainer: {
+  headerSlot: {
     flex: 1,
+    justifyContent: 'center',
   },
   title: {
     fontSize: 18,
@@ -225,7 +306,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 16,
     backgroundColor: '#F3F4F6',
   },
   contentContainer: {

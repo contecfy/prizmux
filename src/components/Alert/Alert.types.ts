@@ -18,6 +18,9 @@ export interface AlertProps {
   borderRadius?: number;        // default 16
   backgroundColor?: string;     // default #FFFFFF
   overlayColor?: string;        // default rgba(0,0,0,0.5)
+  shadowColor?: string;
+  titleColor?: string;
+  messageColor?: string;
 
   // Styles
   style?: ViewStyle;            // alert box

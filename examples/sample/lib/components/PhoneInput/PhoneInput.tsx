@@ -47,6 +47,26 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   inputStyle,
   labelStyle,
   errorStyle,
+  // New props
+  pickerSheetStyle,
+  pickerHeaderStyle,
+  pickerTitleStyle,
+  searchInputStyle,
+  countryRowStyle,
+  countryNameStyle,
+  countryDialStyle,
+  backdropStyle,
+  backgroundColor,
+  borderColor,
+  errorColor,
+  placeholderColor,
+  textColor,
+  selectionColor,
+  backdropColor,
+  pickerBackgroundColor,
+  searchBackgroundColor,
+  searchBorderColor,
+  labelColor,
 }) => {
   const countryPool = useMemo(() => {
     if (!allowedCountries || allowedCountries.length === 0) return COUNTRIES;
@@ -159,12 +179,24 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
+      {label && (
+        <Text
+          style={[
+            styles.label,
+            labelColor ? { color: labelColor } : (textColor ? { color: textColor } : undefined),
+            labelStyle,
+          ]}
+        >
+          {label}
+        </Text>
+      )}
 
       <View
         style={[
           styles.inputRow,
-          error ? styles.inputRowError : null,
+          backgroundColor ? { backgroundColor } : undefined,
+          borderColor ? { borderColor } : undefined,
+          error ? (errorColor ? { borderColor: errorColor } : styles.inputRowError) : null,
           disabled ? styles.inputRowDisabled : null,
           inputRowStyle,
         ]}
@@ -177,25 +209,57 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
             accessibilityRole="button"
           >
             {renderFlagNode(country)}
-            <Text style={styles.dialCode}>{country.dial}</Text>
-            {dropdownIcon ?? <Text style={styles.defaultDropdownIcon}>▾</Text>}
+            <Text
+              style={[
+                styles.dialCode,
+                textColor ? { color: textColor } : undefined,
+              ]}
+            >
+              {country.dial}
+            </Text>
+            {dropdownIcon ?? (
+              <Text
+                style={[
+                  styles.defaultDropdownIcon,
+                  textColor ? { color: textColor } : undefined,
+                ]}
+              >
+                ▾
+              </Text>
+            )}
           </Pressable>
         ) : (
           <View style={[styles.selector, selectorStyle]}>
             {renderFlagNode(country)}
-            <Text style={styles.dialCode}>{country.dial}</Text>
+            <Text
+              style={[
+                styles.dialCode,
+                textColor ? { color: textColor } : undefined,
+              ]}
+            >
+              {country.dial}
+            </Text>
           </View>
         )}
 
-        <View style={styles.divider} />
+        <View
+          style={[
+            styles.divider,
+            borderColor ? { backgroundColor: borderColor } : undefined,
+          ]}
+        />
 
         <TextInput
           ref={inputRef}
-          style={[styles.input, inputStyle]}
+          style={[
+            styles.input,
+            textColor ? { color: textColor } : undefined,
+            inputStyle,
+          ]}
           value={number}
           onChangeText={handleNumberChange}
           placeholder={placeholder}
-          placeholderTextColor="#9CA3AF"
+          placeholderTextColor={placeholderColor ?? '#9CA3AF'}
           keyboardType="phone-pad"
           editable={!disabled}
           accessibilityLabel="Phone number input"
@@ -203,7 +267,17 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
         />
       </View>
 
-      {error && <Text style={[styles.error, errorStyle]}>{error}</Text>}
+      {error && (
+        <Text
+          style={[
+            styles.error,
+            errorColor ? { color: errorColor } : undefined,
+            errorStyle,
+          ]}
+        >
+          {error}
+        </Text>
+      )}
 
       {/* Picker modal — animated exactly like BottomSheet */}
       <Modal
@@ -216,7 +290,12 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
         {/* Animated backdrop */}
         <Pressable style={styles.backdropPressable} onPress={closePicker}>
           <Animated.View
-            style={[styles.backdrop, { opacity: backdropAnim }]}
+            style={[
+              styles.backdrop,
+              { opacity: backdropAnim },
+              backdropColor ? { backgroundColor: backdropColor } : undefined,
+              backdropStyle,
+            ]}
           />
         </Pressable>
 
@@ -225,6 +304,8 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
           style={[
             styles.pickerSheet,
             { transform: [{ translateY: slideAnim }] },
+            pickerBackgroundColor ? { backgroundColor: pickerBackgroundColor } : undefined,
+            pickerSheetStyle,
           ]}
           onLayout={(e) => {
             const h = e.nativeEvent.layout.height;
@@ -235,13 +316,30 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
         >
           {/* Drag handle */}
           <View style={styles.dragHandleContainer}>
-            <View style={styles.dragHandle} />
+            <View
+              style={[
+                styles.dragHandle,
+                borderColor ? { backgroundColor: borderColor } : undefined,
+              ]}
+            />
           </View>
 
           {/* Header */}
-          <View style={styles.pickerHeader}>
-            <Text style={styles.pickerTitle}>{pickerTitle}</Text>
-            <Pressable onPress={closePicker} style={styles.pickerClose} hitSlop={10}>
+          <View style={[styles.pickerHeader, pickerHeaderStyle]}>
+            <Text
+              style={[
+                styles.pickerTitle,
+                textColor ? { color: textColor } : undefined,
+                pickerTitleStyle,
+              ]}
+            >
+              {pickerTitle}
+            </Text>
+            <Pressable
+              onPress={closePicker}
+              style={styles.pickerClose}
+              hitSlop={10}
+            >
               <Text style={styles.pickerCloseText}>✕</Text>
             </Pressable>
           </View>
@@ -249,11 +347,17 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
           {/* Search */}
           <View style={styles.searchContainer}>
             <TextInput
-              style={styles.searchInput}
+              style={[
+                styles.searchInput,
+                searchBackgroundColor ? { backgroundColor: searchBackgroundColor } : undefined,
+                searchBorderColor ? { borderColor: searchBorderColor } : undefined,
+                textColor ? { color: textColor } : undefined,
+                searchInputStyle,
+              ]}
               value={search}
               onChangeText={setSearch}
               placeholder={searchPlaceholder}
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={placeholderColor ?? '#9CA3AF'}
               autoCorrect={false}
               clearButtonMode="while-editing"
             />
@@ -267,21 +371,43 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
               <Pressable
                 style={[
                   styles.countryRow,
-                  item.code === country.code && styles.countryRowSelected,
+                  item.code === country.code && (selectionColor ? { backgroundColor: selectionColor } : styles.countryRowSelected),
+                  countryRowStyle,
                 ]}
                 onPress={() => handleSelectCountry(item)}
-                android_ripple={{ color: '#F3F4F6' }}
               >
                 {renderFlagNode(item)}
-                <Text style={styles.countryName} numberOfLines={1}>
+                <Text
+                  style={[
+                    styles.countryName,
+                    textColor ? { color: textColor } : undefined,
+                    countryNameStyle,
+                  ]}
+                  numberOfLines={1}
+                >
                   {item.name}
                 </Text>
-                <Text style={styles.countryDial}>{item.dial}</Text>
+                <Text
+                  style={[
+                    styles.countryDial,
+                    textColor ? { color: textColor } : undefined,
+                    countryDialStyle,
+                  ]}
+                >
+                  {item.dial}
+                </Text>
               </Pressable>
             )}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ItemSeparatorComponent={() => (
+              <View
+                style={[
+                  styles.separator,
+                  borderColor ? { backgroundColor: borderColor } : undefined,
+                ]}
+              />
+            )}
           />
         </Animated.View>
       </Modal>

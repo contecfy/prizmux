@@ -26,6 +26,21 @@ export interface PhoneInputProps {
   dropdownIcon?: ReactNode;
   renderFlag?: (country: Country) => ReactNode;
 
+  // Customization Colors
+  backgroundColor?: string;
+  borderColor?: string;
+  errorColor?: string;
+  placeholderColor?: string;
+  textColor?: string;
+  selectionColor?: string;
+  backdropColor?: string;
+  pickerBackgroundColor?: string;
+  searchBackgroundColor?: string;
+  searchBorderColor?: string;
+  dropdownIconColor?: string;
+  dividerColor?: string;
+  labelColor?: string;
+
   // Styles
   containerStyle?: ViewStyle;
   inputRowStyle?: ViewStyle;
@@ -33,4 +48,21 @@ export interface PhoneInputProps {
   inputStyle?: TextStyle;
   labelStyle?: TextStyle;
   errorStyle?: TextStyle;
+  
+  // Modal / Picker Styles
+  pickerSheetStyle?: ViewStyle;
+  pickerHeaderStyle?: ViewStyle;
+  pickerTitleStyle?: TextStyle;
+  closeIconStyle?: TextStyle;
+  closeButtonStyle?: ViewStyle;
+  searchInputStyle?: TextStyle;
+  searchInputContainerStyle?: ViewStyle;
+  pickerItemStyle?: ViewStyle;
+  pickerItemTextStyle?: TextStyle;
+  
+  // NEW from audit
+  countryRowStyle?: ViewStyle;
+  countryNameStyle?: TextStyle;
+  countryDialStyle?: TextStyle;
+  backdropStyle?: ViewStyle;
 }
