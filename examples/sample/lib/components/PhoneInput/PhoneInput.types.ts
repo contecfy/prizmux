@@ -40,6 +40,7 @@ export interface PhoneInputProps {
   dropdownIconColor?: string;
   dividerColor?: string;
   labelColor?: string;
+  selectedItemBackgroundColor?: string;
 
   // Styles
   containerStyle?: ViewStyle;

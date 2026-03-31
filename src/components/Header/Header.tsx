@@ -74,12 +74,19 @@ export const Header: React.FC<HeaderProps> = ({
       )}
 
       {/* Title */}
-      <Text
-        style={[styles.title, titleAlignStyle, customTitleStyle]}
-        numberOfLines={1}
+      <View
+        style={[
+          titlePosition === 'center' ? styles.absoluteTitleContainer : styles.titleContainer,
+        ]}
+        pointerEvents="none"
       >
-        {title}
-      </Text>
+        <Text
+          style={[styles.title, titleAlignStyle, customTitleStyle]}
+          numberOfLines={1}
+        >
+          {title}
+        </Text>
+      </View>
 
       {/* Actions */}
       <View style={styles.actionsContainer}>
@@ -157,8 +164,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  title: {
+  titleContainer: {
     flex: 1,
+  },
+  absoluteTitleContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 60,
+  },
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#111827',

@@ -67,6 +67,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   searchBackgroundColor,
   searchBorderColor,
   labelColor,
+  selectedItemBackgroundColor,
 }) => {
   const countryPool = useMemo(() => {
     if (!allowedCountries || allowedCountries.length === 0) return COUNTRIES;
@@ -371,7 +372,11 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
               <Pressable
                 style={[
                   styles.countryRow,
-                  item.code === country.code && (selectionColor ? { backgroundColor: selectionColor } : styles.countryRowSelected),
+                  item.code === country.code && (
+                    selectedItemBackgroundColor 
+                      ? { backgroundColor: selectedItemBackgroundColor } 
+                      : (selectionColor ? { backgroundColor: selectionColor } : styles.countryRowSelected)
+                  ),
                   countryRowStyle,
                 ]}
                 onPress={() => handleSelectCountry(item)}
@@ -577,7 +582,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   countryRowSelected: {
-    backgroundColor: '#F0F9FF',
+    backgroundColor: 'rgba(59, 130, 246, 0.1)',
   },
   countryName: {
     flex: 1,
