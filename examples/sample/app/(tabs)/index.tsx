@@ -1,119 +1,81 @@
-
-import { FAB } from '@/lib/components/Fab';
-import { PhoneInput, PhoneInputValue } from '@/lib/components/PhoneInput';
-import { Plus, Filter } from 'lucide-react-native';
-import { useState } from 'react';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
-import CountryFlag from 'react-native-country-flag';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '@/constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button } from '@/lib/components/Button/Button';
+import { Header } from '@/lib/components/Header/Header';
+import { useRouter } from 'expo-router';
+import { useAppTheme } from '../_layout';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme() ?? 'light';
-  const theme = Colors[colorScheme];
-  const [phone, setPhone] = useState<PhoneInputValue | undefined>();
+  const { theme } = useAppTheme();
+  const themeColors = Colors[theme];
+  const router = useRouter();
 
   return (
+    <SafeAreaView style={[styles.container, { backgroundColor: themeColors.background }]} edges={['top']}>
+      <Header
+        title="Prizmux"
+        backgroundColor={themeColors.background}
+          titleStyle={{
+          fontSize: 24,
+          fontWeight: '700',
+          color: themeColors.text,
+        }}
+        showBack={false}
+      />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: themeColors.text }]}>Welcome</Text>
+          <Text style={[styles.tagline, { color: themeColors.subtext }]}>
+            A developer-first React Native component system.
+          </Text>
+        </View>
 
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>Welcome to Prizmux!</Text>
+        <View style={[styles.heroSection, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}>
+          <Text style={[styles.heroText, { color: themeColors.text }]}>
+            "You should control your UI — not your UI library."
+          </Text>
+        </View>
 
-      <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border, borderWidth: 1, shadowColor: colorScheme === 'dark' ? '#fff' : '#000' }]}>
-        <Text style={[styles.cardTitle, { color: theme.text }]}>Phone Number</Text>
-        <PhoneInput
-          label="Phone Number"
-          defaultCountryCode="UG"
-          value={phone}
-          onChange={setPhone}
-          backgroundColor={theme.card}
-          borderColor={theme.border}
-          textColor={theme.text}
-          labelColor={theme.subtext}
-          pickerBackgroundColor={theme.background}
-          searchBackgroundColor={theme.card}
-          searchBorderColor={theme.border}
-          placeholderColor={theme.subtext}
-          renderFlag={(country) => (
-            <CountryFlag isoCode={country.code} size={22} />
-          )}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: themeColors.text }]}>Core Features</Text>
+          
+          <View style={styles.featureList}>
+            <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
+              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <View style={styles.featureContent}>
+                <Text style={[styles.featureName, { color: themeColors.text }]}>Centering Engine</Text>
+                <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Pixel-perfect alignment out of the box.</Text>
+              </View>
+            </View>
+            <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
+              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <View style={styles.featureContent}>
+                <Text style={[styles.featureName, { color: themeColors.text }]}>Theme Agnostic</Text>
+                <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Full control over colors and shadows.</Text>
+              </View>
+            </View>
+            <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
+              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <View style={styles.featureContent}>
+                <Text style={[styles.featureName, { color: themeColors.text }]}>Zero Bloat</Text>
+                <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Direct, lightweight, and performant primitives.</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <Button
+          title="See Components"
+          variant="filled"
+          fullWidth
+          onPress={() => router.push('/components')}
+          backgroundColor={themeColors.text}
+          textColor={themeColors.background}
+          style={styles.exploreButton}
         />
-        {phone?.full && (
-          <Text style={[styles.result, { color: theme.subtext }]}>Full number: {phone.full}</Text>
-        )}
-      </View>
-
-      <View style={{ gap: 10, marginTop: 20 }}>
-        <PhoneInput
-          defaultCountryCode="UG"
-          allowedCountries={['UG', 'KE', 'TZ', 'RW', 'BI']}
-          onChange={setPhone}
-          backgroundColor={theme.card}
-          borderColor={theme.border}
-          textColor={theme.text}
-          labelColor={theme.subtext}
-          pickerBackgroundColor={theme.background}
-          searchBackgroundColor={theme.card}
-          searchBorderColor={theme.border}
-          placeholderColor={theme.subtext}
-          renderFlag={(country) => (
-            <CountryFlag isoCode={country.code} size={22} />
-          )}
-        />
-
-        <PhoneInput
-          defaultCountryCode="UG"
-          allowedCountries={['UG']}
-          onChange={setPhone}
-          backgroundColor={theme.card}
-          borderColor={theme.border}
-          textColor={theme.text}
-          labelColor={theme.subtext}
-          pickerBackgroundColor={theme.background}
-          searchBackgroundColor={theme.card}
-          searchBorderColor={theme.border}
-          placeholderColor={theme.subtext}
-          renderFlag={(country) => (
-            <CountryFlag isoCode={country.code} size={22} />
-          )}
-        />
-
-        <PhoneInput
-          defaultCountryCode="US"
-          onChange={setPhone}
-          backgroundColor={theme.card}
-          borderColor={theme.border}
-          textColor={theme.text}
-          labelColor={theme.subtext}
-          pickerBackgroundColor={theme.background}
-          searchBackgroundColor={theme.card}
-          searchBorderColor={theme.border}
-          placeholderColor={theme.subtext}
-          renderFlag={(country) => (
-            <CountryFlag isoCode={country.code} size={22} />
-          )}
-        />
-      </View>
-
-      {/* Circle FAB */}
-      {/* <FAB
-        icon={<Plus size={24} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
-        onPress={() => {}}
-        position="bottom-left"
-        borderRadius={16}
-        backgroundColor={theme.text} // Black in light, White in dark
-        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
-      /> */}
-
-      {/* Circle FAB Top Left */}
-      {/* <FAB
-        icon={<Filter size={20} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
-        onPress={() => {}}
-        position="top-left"
-        size="small"
-        backgroundColor={theme.text}
-        offsetY={60}
-        shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
-      /> */}
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -121,28 +83,74 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+  },
+  scrollContent: {
+    paddingBottom: 40,
+  },
+  header: {
+    paddingHorizontal: 24,
+    paddingTop: 12,
+    marginBottom: 32,
   },
   title: {
-    fontSize: 24,
+    fontSize: 34,
     fontWeight: 'bold',
-    marginBottom: 24,
+    letterSpacing: -0.5,
   },
-  card: {
-    borderRadius: 12,
-    padding: 16,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
-    gap: 12,
-  },
-  cardTitle: {
+  tagline: {
     fontSize: 16,
-    fontWeight: '600',
+    marginTop: 8,
   },
-  result: {
-    fontSize: 13,
-    marginTop: 4,
+  heroSection: {
+    marginHorizontal: 24,
+    padding: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  heroText: {
+    fontSize: 20,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    lineHeight: 28,
+  },
+  section: {
+    paddingHorizontal: 24,
+    marginBottom: 40,
+  },
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 20,
+  },
+  featureList: {
+    gap: 0,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    gap: 16,
+  },
+  featureBullet: {
+    fontSize: 24,
+    lineHeight: 28,
+  },
+  featureContent: {
+    flex: 1,
+  },
+  featureName: {
+    fontSize: 17,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  featureDesc: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  exploreButton: {
+    marginHorizontal: 24,
   },
 });

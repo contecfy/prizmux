@@ -6,13 +6,11 @@
 
 A developer-first React Native component system.
 
-<p align="center">
-  <img src="https://img.shields.io/npm/v/prizmux?style=flat-square&color=007ec6" alt="version" />
-  <img src="https://img.shields.io/npm/dm/prizmux?style=flat-square&color=8252e1" alt="npm" />
-  <img src="https://img.shields.io/jsdelivr/npm/hm/prizmux?style=flat-square&color=ff4081" alt="jsdelivr" />
-  <img src="https://img.shields.io/npm/l/prizmux?style=flat-square&color=ff4081" alt="license" />
-  <img src="https://img.shields.io/badge/developer-Lukwago%20Joel%20Jr-brightgreen?style=flat-square" alt="developer" />
-</p>
+[![version](https://img.shields.io/npm/v/prizmux?style=flat-square&color=007ec6)](https://www.npmjs.com/package/prizmux)
+[![npm downloads](https://img.shields.io/npm/dm/prizmux?style=flat-square&color=8252e1)](https://www.npmjs.com/package/prizmux)
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/prizmux?style=flat-square&color=ff4081)](https://www.jsdelivr.com/package/npm/prizmux)
+[![license](https://img.shields.io/npm/l/prizmux?style=flat-square&color=ff4081)](https://www.npmjs.com/package/prizmux)
+[![developer](https://img.shields.io/badge/developer-Lukwago%20Joel%20Jr-brightgreen?style=flat-square)](https://github.com/contecfy/prizmux)
 
 > You should control your UI — not your UI library.
 
