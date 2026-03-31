@@ -47,14 +47,18 @@ Visual previews of Prizmux components in action. Click on any preview to see it 
 ### 📱 Phone Input
 International phone input with searchable country picker, dial-code auto-detection, and premium translucent selection styling.
 
-[![PhoneInput Demo](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif)](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif)
+<a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif">
+  <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif" alt="PhoneInput Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" width="100%" />
+</a>
 
 ---
 
 ### 🖼️ Image Preview
 High-performance gallery viewer with smooth pinch-to-zoom, swipe gestures, and pagination.
 
-[![ImagePreview Demo](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif)](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif)
+<a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif">
+  <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif" alt="ImagePreview Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" width="100%" />
+</a>
 
 ---
 
