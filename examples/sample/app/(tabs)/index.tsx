@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import CountryFlag from 'react-native-country-flag';
 import { Colors } from '@/constants/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const colorScheme = useColorScheme() ?? 'light';
@@ -13,7 +14,8 @@ export default function HomeScreen() {
   const [phone, setPhone] = useState<PhoneInputValue | undefined>();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.title, { color: theme.text }]}>Welcome to Prizmux!</Text>
 
       <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border, borderWidth: 1, shadowColor: colorScheme === 'dark' ? '#fff' : '#000' }]}>
@@ -93,17 +95,17 @@ export default function HomeScreen() {
       </View>
 
       {/* Circle FAB */}
-      <FAB
+      {/* <FAB
         icon={<Plus size={24} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
         onPress={() => {}}
         position="bottom-left"
         borderRadius={16}
         backgroundColor={theme.text} // Black in light, White in dark
         shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
-      />
+      /> */}
 
       {/* Circle FAB Top Left */}
-      <FAB
+      {/* <FAB
         icon={<Filter size={20} color={colorScheme === 'dark' ? '#000' : '#fff'} />}
         onPress={() => {}}
         position="top-left"
@@ -111,8 +113,8 @@ export default function HomeScreen() {
         backgroundColor={theme.text}
         offsetY={60}
         shadowColor={colorScheme === 'dark' ? '#fff' : '#000'}
-      />
-    </View>
+      /> */}
+    </SafeAreaView>
   );
 }
 

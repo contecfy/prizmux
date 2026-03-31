@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "sample",
-    "slug": "sample",
+    "name": "Prizmux",
+    "slug": "prizmux",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "sample",
+    "scheme": "prizmux",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

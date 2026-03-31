@@ -8,7 +8,7 @@ A developer-first React Native component system.
 
 > You should control your UI — not your UI library.
 
-Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Just clean components you can copy, modify, and ship.
+Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Optimized for smooth animations, precise centering, and theme-agnostic customization. Just clean components you can copy, modify, and ship.
 
 📖 **Full documentation at [prizmux.vercel.app](https://prizmux.vercel.app)**
 
@@ -24,18 +24,18 @@ npm install prizmux
 
 ## Components
 
-| Component      | Description                                                                           |
-| -------------- | ------------------------------------------------------------------------------------- |
+| Component      | Description                                                                           | Preview                                                                                         |
+| -------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | `Alert`        | Customizable modal alert — bring your own buttons                                     |
 | `BottomSheet`  | Swipeable sheet with drag handle and backdrop dismiss                                 |
-| `Button`       | Variants, sizes, loading state, icon support (your own icons), with touch feedback                      |
+| `Button`       | Variants, sizes, loading state, icon support (your own icons), with touch feedback    |
 | `Card`         | Composable container, put anything inside                                             |
 | `EmptyState`   | Placeholder UI for empty lists and zero-data screens                                  |
 | `FAB`          | Floating action button with icon, label, or both                                      |
 | `Header`       | Navigation header with or without a back button, avatar, and action icons with badges |
-| `ImagePreview` | Full screen image viewer with gallery support                                         |
-| `PhoneInput`   | International phone input with searchable country picker and auto-detection           |
-| `ContextMenu`      | Collapsible navigation panel with customizable items, icons, and active states        |
+| `ImagePreview` | Full screen image viewer with gallery support                                         | ![Preview](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif) |
+| `PhoneInput`   | International phone input with searchable country picker and auto-detection           | ![Preview](https://raw.githubusercontent.com/contecfy/Prizmux/main/assets/phone-input-demo.gif) |
+| `ContextMenu`  | Collapsible navigation panel with customizable items, icons, and active states        |
 | `Toast`        | Auto, manual, and swipe-to-dismiss notifications                                      |
 
 ---

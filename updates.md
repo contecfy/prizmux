@@ -42,7 +42,7 @@ To make the Prizmux library fully compatible with dynamic themes (Light/Dark mod
 ## 7. Header (`components/Header`)
 - **Modify**: `Header.js` & `Header.types.d.ts`
 - **Issue**: Background, title, and back button colors are hardcoded.
-- **Fix**: (Already patched in current workspace) Add `backgroundColor`, `titleStyle`, `backButtonStyle`, and `backIconStyle`.
+- **Fix**: (Already patched in current workspace) Add `backgroundColor`, `titleStyle`, `backButtonStyle`, and `backIconStyle`. Implemented absolute centering for `titlePosition='center'`.
 
 ## 8. PhoneInput (`components/PhoneInput`)
 - **Modify**: `PhoneInput.js`
@@ -50,6 +50,7 @@ To make the Prizmux library fully compatible with dynamic themes (Light/Dark mod
 - **Fix**: 
     - Add `inputStyle`, `containerStyle`, and `labelStyle` props.
     - Expose `modalStyle` for the country picker background to support dark mode.
+    - Adopted `rgba` selection background for theme compatibility and exposed `selectedItemBackgroundColor` prop.
 
 ## 9. Toast (`components/Toast`)
 - **Modify**: `Toast.js`

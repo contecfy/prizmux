@@ -277,7 +277,7 @@ A standard screen header with support for back buttons, avatars, and actions.
 | `showBack`                  | `boolean`                       | `false`    | Display back arrow.                     |
 | `avatar`                    | `ReactNode`                     | -          | Profile image or component.             |
 | `actions`                   | `HeaderAction[]`                | -          | List of icons with badges and handlers. |
-| `titlePosition`             | `'left' \| 'center' \| 'right'` | `'center'` | Text alignment.                         |
+| `titlePosition`             | `'left' \| 'center' \| 'right'` | `'center'` | Text alignment (center uses absolute positioning). |
 | `backgroundColor`           | `string`                        | -          | Custom header background color.         |
 | `borderColor`               | `string`                        | -          | Custom bottom border color.             |
 | `backButtonBackgroundColor` | `string`                        | -          | Background of the circle around back.   |
@@ -346,6 +346,7 @@ A sophisticated international phone number input with built-in country selector.
 | `pickerBackgroundColor` | `string`       | -       | Country picker background.     |
 | `searchBackgroundColor` | `string`       | -       | Country picker search input bg. |
 | `searchBorderColor`  | `string`          | -       | Country picker search input border. |
+| `selectedItemBackgroundColor` | `string`       | `rgba(59, 130, 246, 0.1)` | Selection highlight in country picker list. |
 
 #### Usage
 

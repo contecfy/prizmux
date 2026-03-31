@@ -13,8 +13,9 @@ import { Button } from "../../lib/components/Button/Button";
 import { Card } from "../../lib/components/Card/Card";
 import BottomSheet from "../../lib/components/BottomSheet/BottomSheet";
 import { ImagePreview } from "../../lib/components/ImagePreview/ImagePreview";
-import { LucideChevronLeft, LucideChevronRight, Star } from "lucide-react-native";
+import { LucideChevronLeft, LucideChevronRight, LucideX, Star } from "lucide-react-native";
 import { Colors } from "@/constants/theme";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SINGLE_IMAGE =
   "https://images.pexels.com/photos/208747/pexels-photo-208747.jpeg";
@@ -55,6 +56,7 @@ export default function ComponentsDemoScreen() {
   const shadowColor = colorScheme === 'dark' ? '#fff' : '#000';
 
   return (
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
     <ScrollView
       style={[styles.container, { backgroundColor: theme.background }]}
       contentContainerStyle={styles.contentContainer}
@@ -523,9 +525,12 @@ export default function ComponentsDemoScreen() {
 
       <ImagePreview
         visible={galleryVisible}
-        nextIcon={<LucideChevronRight color={theme.background} />}
-        prevIcon={<LucideChevronLeft color={theme.background} />}
+        title="Gallery"
+        closeIcon={<LucideX color={"white"} />}
+        nextIcon={<LucideChevronRight color={"white"} />}
+        prevIcon={<LucideChevronLeft color={"white"} />}
         images={MULTIPLE_IMAGES}
+
         initialIndex={galleryIndex}
         onClose={() => setGalleryVisible(false)}
         backgroundColor={theme.background}
@@ -534,6 +539,7 @@ export default function ComponentsDemoScreen() {
         headerBackgroundColor="transparent"
       />
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
