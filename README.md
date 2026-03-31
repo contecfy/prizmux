@@ -6,6 +6,14 @@
 
 A developer-first React Native component system.
 
+<p align="center">
+  <img src="https://img.shields.io/npm/v/prizmux?style=flat-square&color=007ec6" alt="version" />
+  <img src="https://img.shields.io/npm/dm/prizmux?style=flat-square&color=8252e1" alt="npm" />
+  <img src="https://img.shields.io/jsdelivr/npm/hm/prizmux?style=flat-square&color=ff4081" alt="jsdelivr" />
+  <img src="https://img.shields.io/npm/l/prizmux?style=flat-square&color=ff4081" alt="license" />
+  <img src="https://img.shields.io/badge/developer-Lukwago%20Joel%20Jr-brightgreen?style=flat-square" alt="developer" />
+</p>
+
 > You should control your UI — not your UI library.
 
 Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Optimized for smooth animations, precise centering, and theme-agnostic customization. Just clean components you can copy, modify, and ship.
