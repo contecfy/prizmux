@@ -50,7 +50,7 @@ International phone input with searchable country picker, dial-code auto-detecti
 
 <div align="center">
   <a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif">
-    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif" width="450" alt="PhoneInput Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
+    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif" width="350" alt="PhoneInput Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
   </a>
 </div>
 
@@ -62,7 +62,7 @@ High-performance gallery viewer with smooth pinch-to-zoom, swipe gestures, and p
 
 <div align="center">
   <a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif">
-    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif" width="450" alt="ImagePreview Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
+    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif" width="350" alt="ImagePreview Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
   </a>
 </div>
 
