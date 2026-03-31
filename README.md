@@ -24,8 +24,8 @@ npm install prizmux
 
 ## Components
 
-| Component      | Description                                                                           | Preview                                                                                         |
-| -------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Component      | Description                                                                           |
+| -------------- | ------------------------------------------------------------------------------------- |
 | `Alert`        | Customizable modal alert — bring your own buttons                                     |
 | `BottomSheet`  | Swipeable sheet with drag handle and backdrop dismiss                                 |
 | `Button`       | Variants, sizes, loading state, icon support (your own icons), with touch feedback    |
@@ -33,10 +33,28 @@ npm install prizmux
 | `EmptyState`   | Placeholder UI for empty lists and zero-data screens                                  |
 | `FAB`          | Floating action button with icon, label, or both                                      |
 | `Header`       | Navigation header with or without a back button, avatar, and action icons with badges |
-| `ImagePreview` | Full screen image viewer with gallery support                                         | ![Preview](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif) |
-| `PhoneInput`   | International phone input with searchable country picker and auto-detection           | ![Preview](https://raw.githubusercontent.com/contecfy/Prizmux/main/assets/phone-input-demo.gif) |
+| `ImagePreview` | Full screen image viewer with gallery support                                         |
+| `PhoneInput`   | International phone input with searchable country picker and auto-detection           |
 | `ContextMenu`  | Collapsible navigation panel with customizable items, icons, and active states        |
 | `Toast`        | Auto, manual, and swipe-to-dismiss notifications                                      |
+
+---
+
+## Component Preview
+
+Visual previews of Prizmux components in action. Click on any preview to see it in high resolution.
+
+### 📱 Phone Input
+International phone input with searchable country picker, dial-code auto-detection, and premium translucent selection styling.
+
+[![PhoneInput Demo](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif)](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif)
+
+---
+
+### 🖼️ Image Preview
+High-performance gallery viewer with smooth pinch-to-zoom, swipe gestures, and pagination.
+
+[![ImagePreview Demo](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif)](https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif)
 
 ---
 
@@ -50,7 +68,7 @@ npm install prizmux
 
 ---
 
-Contact
+## Contact
 
 Have questions, suggestions, or just want to say hi? Reach out via email:
 
