@@ -10,6 +10,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import CountryFlag from 'react-native-country-flag';
 import { COUNTRIES, Country } from './countries';
 import type { PhoneInputProps } from './PhoneInput.types';
 
@@ -23,9 +24,7 @@ function detectCountryFromInput(input: string, pool: Country[]): Country | null 
 }
 
 const FallbackFlag = ({ code }: { code: string }) => (
-  <View style={styles.fallbackFlag}>
-    <Text style={styles.fallbackFlagText}>{code}</Text>
-  </View>
+  <CountryFlag isoCode={code} size={20} style={{ borderRadius: 2 }} />
 );
 
 export const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -454,20 +453,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 14,
     gap: 6,
-  },
-  fallbackFlag: {
-    width: 28,
-    height: 20,
-    borderRadius: 3,
-    backgroundColor: '#E5E7EB',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  fallbackFlagText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: '#374151',
-    letterSpacing: 0.5,
   },
   dialCode: {
     fontSize: 15,

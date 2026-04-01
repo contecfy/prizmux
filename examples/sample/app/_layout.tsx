@@ -3,7 +3,13 @@ import { DarkTheme as NavDarkTheme, DefaultTheme as NavDefaultTheme, ThemeProvid
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme as useNativeColorScheme } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from 'expo-font';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import 'react-native-reanimated';
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 // ─── THEME CONTEXT ──────────────────────────────────────
 
@@ -34,6 +40,16 @@ export default function RootLayout() {
   const [mode, setMode] = useState<ThemeMode>('system');
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>(nativeColorScheme ?? 'light');
 
+  const [loaded, error] = useFonts({
+    ...MaterialIcons.font,
+  });
+
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded, error]);
+
   useEffect(() => {
     if (mode === 'system') {
       setCurrentTheme(nativeColorScheme ?? 'light');
@@ -41,6 +57,10 @@ export default function RootLayout() {
       setCurrentTheme(mode);
     }
   }, [mode, nativeColorScheme]);
+
+  if (!loaded && !error) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ theme: currentTheme, mode, setMode }}>

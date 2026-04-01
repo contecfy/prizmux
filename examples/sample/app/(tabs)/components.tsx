@@ -6,19 +6,20 @@ import { useRouter } from 'expo-router';
 import { LucideChevronRight } from 'lucide-react-native';
 import { Header } from '@/lib/components/Header/Header';
 import { useAppTheme } from '../_layout';
+import { IconSymbol } from '@/components/ui/icon-symbol';
 
 const COMPONENTS = [
-  { id: 'button', name: 'Button', description: 'Interactive button with variants and sizes' },
-  { id: 'card', name: 'Card', description: 'Versatile container for content' },
-  { id: 'phone-input', name: 'PhoneInput', description: 'International phone number input' },
-  { id: 'bottom-sheet', name: 'BottomSheet', description: 'Swipeable interactive sheet' },
-  { id: 'image-preview', name: 'ImagePreview', description: 'Full-screen image gallery' },
-  { id: 'header', name: 'Header', description: 'Navigation and action bar' },
-  { id: 'fab', name: 'FAB', description: 'Floating action button' },
-  { id: 'alert', name: 'Alert', description: 'Customizable modal alerts' },
-  { id: 'toast', name: 'Toast', description: 'Temporary notification overlays' },
-  { id: 'context-menu', name: 'ContextMenu', description: 'Collapsible popup menus' },
-  { id: 'empty-state', name: 'EmptyState', description: 'Placeholder for no-data screens' },
+  { id: 'button', name: 'Button', description: 'Interactive button with variants and sizes', icon: 'rectangle.fill' },
+  { id: 'card', name: 'Card', description: 'Versatile container for content', icon: 'square.grid.2x2.fill' },
+  { id: 'phone-input', name: 'PhoneInput', description: 'International phone number input', icon: 'phone.fill' },
+  { id: 'bottom-sheet', name: 'BottomSheet', description: 'Swipeable interactive sheet', icon: 'layers.fill' },
+  { id: 'image-preview', name: 'ImagePreview', description: 'Full-screen image gallery', icon: 'cube.fill' },
+  { id: 'header', name: 'Header', description: 'Navigation and action bar', icon: 'rectangle.fill' },
+  { id: 'fab', name: 'FAB', description: 'Floating action button', icon: 'house.fill' },
+  { id: 'alert', name: 'Alert', description: 'Customizable modal alerts', icon: 'bell.fill' },
+  { id: 'toast', name: 'Toast', description: 'Temporary notification overlays', icon: 'bubble.left.fill' },
+  { id: 'context-menu', name: 'ContextMenu', description: 'Collapsible popup menus', icon: 'cube.fill' },
+  { id: 'empty-state', name: 'EmptyState', description: 'Placeholder for no-data screens', icon: 'info.circle.fill' },
 ];
 
 export default function ComponentsScreen() {
@@ -43,12 +44,15 @@ export default function ComponentsScreen() {
           {COMPONENTS.map((comp) => (
             <Pressable
               key={comp.id}
-              onPress={() => router.push(`/components/${comp.id}` as any)}
+              onPress={() => router.push(`/componentlist/${comp.id}` as any)}
               style={({ pressed }) => [
                 styles.itemRow,
                 { borderBottomColor: themeColors.border, opacity: pressed ? 0.6 : 1 }
               ]}
             >
+              <View style={styles.iconContainer}>
+                <IconSymbol name={comp.icon as any} size={22} color={themeColors.tint} />
+              </View>
               <View style={styles.itemContent}>
                 <Text style={[styles.itemName, { color: themeColors.text }]}>{comp.name}</Text>
                 <Text style={[styles.itemSub, { color: themeColors.subtext }]}>{comp.description}</Text>
@@ -68,6 +72,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingVertical: 12,
+    paddingBottom: 100,
   },
   list: {
     paddingHorizontal: 20,
@@ -77,6 +82,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
   },
   itemContent: {
     flex: 1,

@@ -6,6 +6,8 @@ import { Button } from '@/lib/components/Button/Button';
 import { Header } from '@/lib/components/Header/Header';
 import { useRouter } from 'expo-router';
 import { useAppTheme } from '../_layout';
+import { Image } from 'react-native';
+import { IconSymbol } from '@/components/ui/icon-symbol';
 
 export default function HomeScreen() {
   const { theme } = useAppTheme();
@@ -26,7 +28,14 @@ export default function HomeScreen() {
       />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Text style={[styles.title, { color: themeColors.text }]}>Welcome</Text>
+          <View style={styles.logoRow}>
+            <Image 
+              source={require('@/assets/images/logo.png')} 
+              style={styles.logo} 
+              resizeMode="contain" 
+            />
+            <Text style={[styles.title, { color: themeColors.text }]}>Welcome</Text>
+          </View>
           <Text style={[styles.tagline, { color: themeColors.subtext }]}>
             A developer-first React Native component system.
           </Text>
@@ -43,21 +52,21 @@ export default function HomeScreen() {
           
           <View style={styles.featureList}>
             <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
-              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <IconSymbol name="layers.fill" size={28} color={themeColors.tint} />
               <View style={styles.featureContent}>
                 <Text style={[styles.featureName, { color: themeColors.text }]}>Centering Engine</Text>
                 <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Pixel-perfect alignment out of the box.</Text>
               </View>
             </View>
             <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
-              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <IconSymbol name="paintpalette.fill" size={28} color={themeColors.tint} />
               <View style={styles.featureContent}>
                 <Text style={[styles.featureName, { color: themeColors.text }]}>Theme Agnostic</Text>
                 <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Full control over colors and shadows.</Text>
               </View>
             </View>
             <View style={[styles.featureItem, { borderBottomColor: themeColors.border }]}>
-              <Text style={[styles.featureBullet, { color: themeColors.text }]}>•</Text>
+              <IconSymbol name="bolt.fill" size={28} color={themeColors.tint} />
               <View style={styles.featureContent}>
                 <Text style={[styles.featureName, { color: themeColors.text }]}>Zero Bloat</Text>
                 <Text style={[styles.featureDesc, { color: themeColors.subtext }]}>Direct, lightweight, and performant primitives.</Text>
@@ -100,6 +109,16 @@ const styles = StyleSheet.create({
   tagline: {
     fontSize: 16,
     marginTop: 8,
+  },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginBottom: 4,
+  },
+  logo: {
+    width: 40,
+    height: 40,
   },
   heroSection: {
     marginHorizontal: 24,
