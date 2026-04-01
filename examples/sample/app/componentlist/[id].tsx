@@ -77,7 +77,7 @@ export default function ComponentDetailScreen() {
         onBackPress={() => router.back()}
         backIconColor={themeColors.text}
       />
-      <View style={styles.content}>
+      <View style={[styles.content, { backgroundColor: themeColors.background }]}>
         {renderDemo()}
       </View>
     </SafeAreaView>
