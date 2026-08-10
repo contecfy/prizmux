@@ -1,6 +1,6 @@
 {
-  "name": "prizmux",
-  "version": "1.4.16",
+  "name": "@prizmux/ui",
+  "version": "1.4.17",
   "description": "A smooth and modern UI component library for React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
