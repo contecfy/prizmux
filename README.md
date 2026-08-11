@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./logo.png" alt="Prizmux Logo" width="160" />
+  <img src="./logo.png" alt="Prizmux-ui Logo" width="160" />
 </p>
 
-# Prizmux
+# Prizmux-ui
 
 A developer-first React Native component system.
 
@@ -14,7 +14,7 @@ A developer-first React Native component system.
 
 > You should control your UI — not your UI library.
 
-Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Optimized for smooth animations, precise centering, and theme-agnostic customization. Just clean components you can copy, modify, and ship.
+Prizmux-ui gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Optimized for smooth animations, precise centering, and theme-agnostic customization. Just clean components you can copy, modify, and ship.
 
 📖 **Full documentation at [prizmux-ui.vercel.app](https://prizmux-ui.vercel.app)**
 
@@ -48,15 +48,15 @@ npm install prizmux-ui
 
 ## Component Preview
 
-Visual previews of Prizmux components in action. Click on any preview to see it in high resolution.
+Visual previews of Prizmux-ui components in action. Click on any preview to see it in high resolution.
 
 ### 📱 Phone Input
 
 International phone input with searchable country picker, dial-code auto-detection, and premium translucent selection styling.
 
 <div align="center">
-  <a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif">
-    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/phoneinput.gif" width="350" alt="PhoneInput Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
+  <a href="https://raw.githubusercontent.com/contecfy/Prizmux-ui/main/component%20preview%20gifs/phoneinput.gif">
+    <img src="https://raw.githubusercontent.com/contecfy/Prizmux-ui/main/component%20preview%20gifs/phoneinput.gif" width="350" alt="PhoneInput Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
   </a>
 </div>
 
@@ -67,8 +67,8 @@ International phone input with searchable country picker, dial-code auto-detecti
 High-performance gallery viewer with smooth pinch-to-zoom, swipe gestures, and pagination.
 
 <div align="center">
-  <a href="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif">
-    <img src="https://raw.githubusercontent.com/contecfy/Prizmux/main/component%20preview%20gifs/imagepreview.gif" width="350" alt="ImagePreview Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
+  <a href="https://raw.githubusercontent.com/contecfy/Prizmux-ui/main/component%20preview%20gifs/imagepreview.gif">
+    <img src="https://raw.githubusercontent.com/contecfy/Prizmux-ui/main/component%20preview%20gifs/imagepreview.gif" width="350" alt="ImagePreview Demo" style="border-radius: 10px; border: 1px solid #e5e7eb;" />
   </a>
 </div>
 
