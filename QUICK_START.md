@@ -2,7 +2,7 @@
 
 ## 🚀 Running the Example App
 
-The example app showcases all the components in `prizmux`. Here's how to run it:
+The example app showcases all the components in `prizmux-ui`. Here's how to run it:
 
 ### Step 1: Install Example App Dependencies
 

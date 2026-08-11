@@ -139,14 +139,14 @@ npm version patch
 # 5. Publish
 npm publish
 
-# Done! Users can now update with: npm install prizmux@latest
+# Done! Users can now update with: npm install prizmux-ui@latest
 ```
 
 ## 🔐 Publishing Scoped Packages
 
-If you want to publish as a scoped package (e.g., `@yourname/prizmux`):
+If you want to publish as a scoped package (e.g., `@yourname/prizmux-ui`):
 
-1. Update `package.json` name: `"name": "@yourname/prizmux"`
+1. Update `package.json` name: `"name": "@yourname/prizmux-ui"`
 2. Publish with: `npm publish --access public`
 
 ## 🚨 Important Notes
@@ -176,7 +176,7 @@ npm run publish:minor
 npm run publish:major
 
 # View published package
-npm view prizmux
+npm view prizmux-ui
 ```
 
 ## 📚 Resources

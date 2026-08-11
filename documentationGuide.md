@@ -1,13 +1,13 @@
 # Prizmux Documentation Guide
 
-Prizmux is a smooth and modern UI component library for React Native, designed for performance and aesthetics.
+Prizmux-ui is a smooth and modern UI component library for React Native, designed for performance and aesthetics.
 
 ## Installation
 
 ```bash
-npm install prizmux
+npm install prizmux-ui
 # or
-yarn add prizmux
+yarn add prizmux-ui
 ```
 
 ### Peer Dependencies

@@ -6,24 +6,24 @@
 
 A developer-first React Native component system.
 
-[![version](https://img.shields.io/npm/v/prizmux?style=flat-square&color=007ec6)](https://www.npmjs.com/package/prizmux)
-[![npm downloads](https://img.shields.io/npm/dm/prizmux?style=flat-square&color=8252e1)](https://www.npmjs.com/package/prizmux)
-[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/prizmux?style=flat-square&color=ff4081)](https://www.jsdelivr.com/package/npm/prizmux)
-[![license](https://img.shields.io/npm/l/prizmux?style=flat-square&color=ff4081)](https://www.npmjs.com/package/prizmux)
-[![developer](https://img.shields.io/badge/developer-Lukwago%20Joel%20Jr-brightgreen?style=flat-square)](https://github.com/contecfy/prizmux)
+[![version](https://img.shields.io/npm/v/prizmux-ui?style=flat-square&color=007ec6)](https://www.npmjs.com/package/prizmux-ui)
+[![npm downloads](https://img.shields.io/npm/dm/prizmux-ui?style=flat-square&color=8252e1)](https://www.npmjs.com/package/prizmux-ui)
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/prizmux-ui?style=flat-square&color=ff4081)](https://www.jsdelivr.com/package/npm/prizmux-ui)
+[![license](https://img.shields.io/npm/l/prizmux-ui?style=flat-square&color=ff4081)](https://www.npmjs.com/package/prizmux-ui)
+[![developer](https://img.shields.io/badge/developer-Lukwago%20Joel%20Jr-brightgreen?style=flat-square)](https://github.com/contecfy/prizmux-ui)
 
 > You should control your UI — not your UI library.
 
 Prizmux gives you production-ready UI primitives with no bloated dependencies, no locked abstractions, and no fighting the framework. Optimized for smooth animations, precise centering, and theme-agnostic customization. Just clean components you can copy, modify, and ship.
 
-📖 **Full documentation at [prizmux.vercel.app](https://prizmux.vercel.app)**
+📖 **Full documentation at [prizmux-ui.vercel.app](https://prizmux-ui.vercel.app)**
 
 ---
 
 ## Install
 
 ```bash
-npm install prizmux
+npm install prizmux-ui
 ```
 
 ---
